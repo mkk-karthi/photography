@@ -3,7 +3,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Camera, Award, Heart, Frame, Star, Users } from "lucide-react";
-import { STUDIO_STATS, TRUST_BADGES, StatItem } from "@/data/portfolioData";
+import { STUDIO_STATS, TRUST_BADGES } from "@/data/portfolioData";
+import type { StatItem } from "@/data/types";
 
 // ── Icon map (UI layer, not data layer) ───────────────────────────────────────
 

@@ -43,7 +43,7 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
                 <div className="absolute -inset-1 rounded-full bg-amber-500/20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <div className="flex flex-col leading-none text-left">
-                <span className="text-sm sm:text-base font-black tracking-[0.5em] text-white uppercase group-hover:text-amber-300 transition-colors">
+                <span className="text-base font-black tracking-[0.5em] text-white uppercase group-hover:text-amber-300 transition-colors">
                   {STUDIO_INFO.brandFirstName}
                 </span>
                 <span className="text-xs font-bold tracking-[0.15em] text-amber-400 uppercase group-hover:text-amber-300 transition-colors mt-0.5">

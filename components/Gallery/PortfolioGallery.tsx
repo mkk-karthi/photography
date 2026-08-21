@@ -47,8 +47,9 @@ export default function PortfolioGallery() {
         </div>
 
         {/* Category Filter Tabs */}
+        {/* Category Filter Tabs (Horizontally Scrollable on Mobile with Padding) */}
         <div
-          className="flex items-center justify-center flex-wrap gap-2 mb-12"
+          className="flex items-center sm:justify-center overflow-x-auto gap-2 px-4 sm:px-0 pb-3 mb-10 scrollbar-none sm:flex-wrap w-full"
           data-aos="fade-up"
           data-aos-delay="100"
         >
@@ -63,7 +64,7 @@ export default function PortfolioGallery() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors duration-200 flex items-center gap-2 ${
+                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors duration-200 flex items-center gap-2 whitespace-nowrap shrink-0 ${
                   isActive
                     ? "bg-amber-400 text-black font-bold scale-105"
                     : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700"
@@ -104,26 +105,18 @@ export default function PortfolioGallery() {
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
 
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-[10px] text-amber-300 font-bold uppercase tracking-wider border border-amber-500/30">
+                  {/* Top Card Badges Bar (Flex layout prevents mobile overlap) */}
+                  <div className="absolute top-3 inset-x-3 z-10 flex items-center justify-between gap-1.5 pointer-events-none">
+                    <span className="px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md text-[10px] text-amber-300 font-bold uppercase tracking-wider border border-amber-500/30 whitespace-nowrap shrink-0">
                       {photo.categoryLabel}
                     </span>
-                  </div>
 
-                  {/* Featured Badge */}
-                  {photo.featured && (
-                    <div className="absolute top-4 right-12 z-10">
-                      <span className="px-2 py-1 rounded-full bg-amber-400/90 text-black text-[10px] font-extrabold uppercase tracking-wider">
-                        ★ Featured
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Hover Eye Icon */}
-                  <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                    <div className="p-2.5 rounded-full bg-amber-400 text-black shadow-lg">
-                      <Eye className="w-4 h-4" />
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-auto">
+                        <div className="p-1.5 rounded-full bg-amber-400 text-black shadow-lg">
+                          <Eye className="w-3.5 h-3.5" />
+                        </div>
+                      </div>
                     </div>
                   </div>
 

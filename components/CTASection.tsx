@@ -12,7 +12,8 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
-import { STUDIO_INFO, CONTACT_CARDS, AVAILABILITY_ITEMS, ContactCard } from "@/data/portfolioData";
+import { STUDIO_INFO, CONTACT_CARDS, AVAILABILITY_ITEMS } from "@/data/portfolioData";
+import type { ContactCard } from "@/data/types";
 
 interface CTASectionProps {
   onOpenEnquiry: () => void;

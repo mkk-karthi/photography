@@ -12,26 +12,10 @@ import type {
   FrameSize,
   SamplePhoto,
   Milestone,
-  NavLink,
   PhilosophyItem,
   StatItem,
   ContactCard,
 } from "./types";
-
-export type {
-  PhotoItem,
-  FramingOption,
-  ServicePackage,
-  Testimonial,
-  HeroSlide,
-  FrameSize,
-  SamplePhoto,
-  Milestone,
-  NavLink,
-  PhilosophyItem,
-  StatItem,
-  ContactCard,
-};
 
 /* ═════════════════════════════════════════════════════════════════════════════
    1. STUDIO IDENTITY & BRAND CONFIGURATION
@@ -68,21 +52,7 @@ export const STUDIO_INFO = {
 };
 
 /* ═════════════════════════════════════════════════════════════════════════════
-   2. NAVIGATION & SITE STRUCTURE
-   Navbar header links.
-   ═════════════════════════════════════════════════════════════════════════════ */
-
-export const NAV_LINKS: NavLink[] = [
-  { label: "Home",      href: "#" },
-  { label: "Services",  href: "#services" },
-  { label: "Portfolio", href: "#gallery" },
-  { label: "Framing",   href: "#framing" },
-  { label: "About",     href: "#about" },
-  { label: "Contact",   href: "#cta" },
-];
-
-/* ═════════════════════════════════════════════════════════════════════════════
-   3. HERO CAROUSEL CONTENT
+   2. HERO CAROUSEL CONTENT
    Slides for top landing hero carousel.
    ═════════════════════════════════════════════════════════════════════════════ */
 

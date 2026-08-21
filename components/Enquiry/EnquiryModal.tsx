@@ -94,7 +94,9 @@ export default function EnquiryModal({
   // Lock background scroll when modal is open
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "unset";
-    return () => { document.body.style.overflow = "unset"; };
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -116,7 +118,7 @@ export default function EnquiryModal({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="relative max-w-xl w-full glass-panel rounded-3xl mt-20 p-6 sm:p-8 border border-amber-500/30 shadow-2xl overflow-hidden bg-zinc-950"
+          className="relative max-w-xl w-full glass-panel rounded-3xl mt-75 sm:mt-20 p-6 sm:p-8 border border-amber-500/30 shadow-2xl overflow-hidden bg-zinc-950"
         >
           {/* Close Button */}
           <button
@@ -128,7 +130,7 @@ export default function EnquiryModal({
           </button>
 
           {/* Tab Switcher */}
-          <div className="flex items-center justify-center gap-2 p-1.5 bg-zinc-900/90 rounded-2xl border border-zinc-800 max-w-xs sm:max-w-sm mx-auto mb-6 clear-both">
+          <div className="flex items-center justify-center gap-2 p-1.5 bg-zinc-900/90 rounded-2xl border border-zinc-800 max-w-xs sm:max-w-sm mx-auto mt-12 mb-6 clear-both">
             {(["photoshoot", "framing"] as const).map((tab) => (
               <button
                 key={tab}
@@ -148,7 +150,7 @@ export default function EnquiryModal({
                 ) : (
                   <>
                     <Frame className="w-3.5 h-3.5" />
-                    <span>Frame Order</span>
+                    <span>Frame</span>
                   </>
                 )}
               </button>

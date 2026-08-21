@@ -57,7 +57,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative h-dvh min-h-150 max-h-screen w-full flex flex-col justify-center pt-16 sm:pt-20 pb-16 sm:pb-20 overflow-hidden bg-[#09090b]"
+      className="relative h-[100svh] min-h-[580px] sm:min-h-[650px] w-full flex flex-col justify-center pt-16 sm:pt-20 pb-16 sm:pb-20 overflow-hidden bg-[#09090b]"
     >
       {/* Background Images with Cross-Fade */}
       {HERO_SLIDES.map((s, index) => (
@@ -132,53 +132,55 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           {/* Left — Hero Copy */}
           <div className="lg:col-span-8 flex flex-col text-left">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSlide}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.55, ease: "easeOut" }}
-                className="flex flex-col"
-              >
-                {/* Category Tag */}
+            <div className="min-h-[220px] sm:min-h-[260px] flex flex-col justify-center">
+              <AnimatePresence mode="wait">
                 <motion.div
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1, duration: 0.4 }}
-                  className="mb-3"
+                  key={currentSlide}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.55, ease: "easeOut" }}
+                  className="flex flex-col justify-center"
                 >
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] sm:text-xs font-semibold uppercase tracking-widest backdrop-blur-md">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    <span>{slide.tag}</span>
+                  {/* Category Tag */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1, duration: 0.4 }}
+                    className="mb-3"
+                  >
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] sm:text-xs font-semibold uppercase tracking-widest backdrop-blur-md">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                      <span>{slide.tag}</span>
+                    </div>
+                  </motion.div>
+
+                  {/* Studio Name + Title */}
+                  <div className="mb-3">
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.15, duration: 0.5 }}
+                      className="block font-serif text-amber-300 italic font-normal text-lg sm:text-2xl lg:text-3xl mb-1 drop-shadow-lg"
+                    >
+                      {STUDIO_INFO.name}
+                    </motion.span>
+                    <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight gold-gradient-text">
+                      {slide.title}
+                    </h1>
+                  </div>
+
+                  {/* Subtitle */}
+                  <div className="mb-6">
+                    <p className="text-sm sm:text-lg text-zinc-200 max-w-xl font-light leading-relaxed drop-shadow-md">
+                      {slide.subtitle}. Specializing in traditional weddings, pre &amp; post-wedding
+                      shoots, outdoor baby shower photos, and photo framing across {STUDIO_INFO.state}
+                      .
+                    </p>
                   </div>
                 </motion.div>
-
-                {/* Studio Name + Title */}
-                <div className="mb-3">
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.15, duration: 0.5 }}
-                    className="block font-serif text-amber-300 italic font-normal text-lg sm:text-2xl lg:text-3xl mb-1 drop-shadow-lg"
-                  >
-                    {STUDIO_INFO.name}
-                  </motion.span>
-                  <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight gold-gradient-text">
-                    {slide.title}
-                  </h1>
-                </div>
-
-                {/* Subtitle */}
-                <div className="mb-6">
-                  <p className="text-sm sm:text-lg text-zinc-200 max-w-xl font-light leading-relaxed drop-shadow-md">
-                    {slide.subtitle}. Specializing in traditional weddings, pre &amp; post-wedding
-                    shoots, outdoor baby shower photos, and photo framing across {STUDIO_INFO.state}
-                    .
-                  </p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+              </AnimatePresence>
+            </div>
 
             {/* Action Buttons */}
             <motion.div

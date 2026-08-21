@@ -145,10 +145,3 @@ export interface ContactCard {
   sublabel: string;
   href: string;
 }
-
-// ── Navigation ────────────────────────────────────────────────────────────────
-
-export interface NavLink {
-  label: string;
-  href: string;
-}

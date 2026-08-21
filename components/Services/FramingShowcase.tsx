@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import {
   FRAMING_OPTIONS,
-  FramingOption,
   FRAME_SIZES,
   SAMPLE_PHOTOS,
   STUDIO_INFO,
 } from "@/data/portfolioData";
+import type { FramingOption } from "@/data/types";
 import { Frame, Check, Ruler, ArrowRight, Layers, Info } from "lucide-react";
 
 interface FramingShowcaseProps {
@@ -243,7 +243,7 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
               <p className="text-xs text-zinc-400 font-light mb-4">{selectedFrame.description}</p>
 
               <div className="space-y-1.5 mb-5">
-                {selectedFrame.features.slice(0, 3).map((feat, fIdx) => (
+                {selectedFrame.features.slice(0, 3).map((feat: string, fIdx: number) => (
                   <div key={fIdx} className="flex items-center gap-2 text-[11px] text-zinc-300">
                     <Check className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                     <span>{feat}</span>
