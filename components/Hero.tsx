@@ -33,10 +33,10 @@ const BOKEH_PARTICLES = [
 // ── Sidebar stats (derived from STUDIO_INFO, styled here) ────────────────────
 
 const HERO_STATS = [
-  { val: `${STUDIO_INFO.experienceYears}+ Yrs`, label: "Excellence", color: "text-amber-400" },
-  { val: STUDIO_INFO.weddingsCovered, label: "Events Covered", color: "text-white" },
-  { val: STUDIO_INFO.framedPrintsDelivered, label: "Framed Prints", color: "text-amber-400" },
-  { val: STUDIO_INFO.clientSatisfaction, label: "Happy Clients", color: "text-white" },
+  { val: STUDIO_INFO.weddingsCovered, label: "Events Covered", color: "text-amber-400" },
+  { val: STUDIO_INFO.framedPrintsDelivered, label: "Framed Prints", color: "text-white" },
+  { val: STUDIO_INFO.clientSatisfaction, label: "Satisfaction Rate", color: "text-amber-400" },
+  { val: "5★", label: "Client Rating", color: "text-white" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -191,7 +191,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
                 onClick={onOpenEnquiry}
                 className="group relative inline-flex items-center justify-center px-6 py-3 text-xs sm:text-sm font-bold text-black uppercase tracking-wider bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 active:scale-95 transition-all duration-300 whitespace-nowrap"
               >
-                <span>Book Event Consultation</span>
+                <span>Get a Free Quote</span>
                 <ArrowRight className="size-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
 
@@ -201,7 +201,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
                   className="flex-1 sm:flex-none inline-flex items-center justify-center px-5 py-3 text-xs sm:text-sm font-semibold text-zinc-200 hover:text-white uppercase tracking-wider bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700/80 rounded-full backdrop-blur-md transition-all hover:border-amber-500/40 whitespace-nowrap"
                 >
                   <Camera className="size-4 mr-2 text-amber-400" />
-                  <span>Portfolio</span>
+                  <span>Our Work</span>
                 </a>
                 <a
                   href="#framing"
@@ -258,9 +258,9 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
               <div className="p-3 rounded-xl bg-linear-to-r from-amber-500/15 to-transparent border border-amber-500/25 flex items-center justify-between">
                 <div>
                   <p className="text-xs text-amber-300 font-semibold uppercase">
-                    Booking 2026/2027 Dates
+                    Now Accepting Bookings
                   </p>
-                  <p className="text-xs text-zinc-300">Wedding &amp; Pre-wedding dates open</p>
+                  <p className="text-xs text-zinc-300">Mon–Sat · Free consultation available</p>
                 </div>
                 <Heart className="size-4 text-amber-400 fill-amber-400/30 shrink-0" />
               </div>

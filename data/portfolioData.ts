@@ -94,7 +94,8 @@ export const HERO_SLIDES: HeroSlide[] = [
 ];
 
 export const HERO_SECTION_TEXT = {
-  studioSubtitle: "Specializing in traditional weddings, pre & post-wedding shoots, outdoor baby shower photos, and photo framing in Tamil Nadu.",
+  studioSubtitle:
+    "Specializing in traditional weddings, pre & post-wedding shoots, outdoor baby shower photos, and photo framing in Tamil Nadu.",
 };
 
 /* ═════════════════════════════════════════════════════════════════════════════
@@ -202,12 +203,12 @@ export const SERVICE_PACKAGES: ServicePackage[] = [
 ];
 
 export const SERVICES_SECTION_TEXT = {
-  badge: "Our Specialties & Pricing",
-  titlePrefix: "Crafted Photography",
-  titleHighlight: "Experiences",
-  subtitle: "From sacred wedding rituals and candid couple portraits to outdoor baby showers and bridal solo shoots across Tamil Nadu.",
-  customPackageTitle: "Need a Customized Wedding Package?",
-  customPackageDesc: "We offer flexible multi-day packages for 2-3 day South Indian traditional weddings, destination pre-weddings, and combined framing orders.",
+  badge: "What We Offer",
+  titlePrefix: "Professional Photography",
+  titleHighlight: "Services",
+  subtitle: `Comprehensive coverage for weddings, pre & post-wedding shoots, outdoor baby showers, bridal sessions, and custom photo framing across ${STUDIO_INFO.region}.`,
+  customPackageTitle: "Need a Customized Package?",
+  customPackageDesc: `We build flexible multi-day packages for 2–3 day ${STUDIO_INFO.region} traditional weddings, destination shoots, and bulk framing orders. Contact us for a tailored quote.`,
 };
 
 /* ═════════════════════════════════════════════════════════════════════════════
@@ -216,7 +217,7 @@ export const SERVICES_SECTION_TEXT = {
    ═════════════════════════════════════════════════════════════════════════════ */
 
 export const PORTFOLIO_CATEGORIES = [
-  { id: "all", label: "All Works" },
+  { id: "all", label: "All Services" },
   { id: "wedding", label: "Wedding Photography" },
   { id: "pre-wedding", label: "Pre-Wedding Shoot" },
   { id: "post-wedding", label: "Post-Wedding Beach" },
@@ -244,7 +245,8 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
     },
     likes: 342,
     featured: true,
-    description: "A tender emotional moment during the sacred mangalsutra tying ritual amidst cascading marigold flora.",
+    description:
+      "A tender emotional moment during the sacred mangalsutra tying ritual amidst cascading marigold flora.",
   },
   {
     id: "w2",
@@ -282,7 +284,8 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
     },
     likes: 415,
     featured: false,
-    description: "Sparklers lit up the night sky as the newlywed couple made their grand ballroom walk.",
+    description:
+      "Sparklers lit up the night sky as the newlywed couple made their grand ballroom walk.",
   },
   {
     id: "w4",
@@ -301,7 +304,8 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
     },
     likes: 368,
     featured: false,
-    description: "High-energy joyful dance performances captured with vivid dynamic stage lighting.",
+    description:
+      "High-energy joyful dance performances captured with vivid dynamic stage lighting.",
   },
 
   // Bridal Portraits
@@ -322,7 +326,8 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
     },
     likes: 512,
     featured: true,
-    description: "Intricate antique kemp jewelry detail highlighted with soft Rembrandt studio lighting.",
+    description:
+      "Intricate antique kemp jewelry detail highlighted with soft Rembrandt studio lighting.",
   },
   {
     id: "b2",
@@ -341,7 +346,8 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
     },
     likes: 278,
     featured: false,
-    description: "Traditional Chettinad courtyard doorway framing the radiant bride in rich golden silk.",
+    description:
+      "Traditional Chettinad courtyard doorway framing the radiant bride in rich golden silk.",
   },
 
   // Pre-Wedding
@@ -362,7 +368,8 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
     },
     likes: 480,
     featured: true,
-    description: "Ethereal morning fog weaving through towering pine trees as the couple shares a quiet moment.",
+    description:
+      "Ethereal morning fog weaving through towering pine trees as the couple shares a quiet moment.",
   },
   {
     id: "pre2",
@@ -402,7 +409,8 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
     },
     likes: 425,
     featured: true,
-    description: "Golden hour backlighting framing expectant mother surrounded by pastel floral wreaths.",
+    description:
+      "Golden hour backlighting framing expectant mother surrounded by pastel floral wreaths.",
   },
   {
     id: "pre3",
@@ -546,10 +554,11 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
 ];
 
 export const PORTFOLIO_SECTION_TEXT = {
-  badge: "Curated Visual Collections",
-  titlePrefix: "Our Signature",
-  titleHighlight: "Portfolio",
-  subtitle: "Click on any photo to open full-screen High-Resolution Lightbox view with camera shot specifications & EXIF data.",
+  badge: "Client Work Showcase",
+  titlePrefix: "Real Sessions by",
+  titleHighlight: `${STUDIO_INFO.name}`,
+  subtitle:
+    "Browse real sessions captured across Tamil Nadu. Click any photo to view full-resolution details and technical specifications.",
 };
 
 /* ═════════════════════════════════════════════════════════════════════════════
@@ -564,7 +573,8 @@ export const FRAMING_OPTIONS: FramingOption[] = [
     subtitle: "Modern Rimless Glass Look with 3D Depth",
     pricePerSqFt: 650,
     basePrice: 4999,
-    description: "Museum-grade shatterproof acrylic glass bonded with archival metallic paper. Delivers unbelievable color saturation and deep shadow contrast.",
+    description:
+      "Museum-grade shatterproof acrylic glass bonded with archival metallic paper. Delivers unbelievable color saturation and deep shadow contrast.",
     features: [
       "99% UV Protection Coating",
       "Diamond-Polished Beveled Edges",
@@ -581,7 +591,8 @@ export const FRAMING_OPTIONS: FramingOption[] = [
     subtitle: "Classic Vintage Elegance for Royal Portraits",
     pricePerSqFt: 550,
     basePrice: 3999,
-    description: "Hand-carved solid South Indian Teak Wood with antique matte wax finish. Includes double acid-free archival matting board.",
+    description:
+      "Hand-carved solid South Indian Teak Wood with antique matte wax finish. Includes double acid-free archival matting board.",
     features: [
       "100% Solid Teak Wood",
       "Anti-Reflective Italian Glass",
@@ -598,7 +609,8 @@ export const FRAMING_OPTIONS: FramingOption[] = [
     subtitle: "Textured Oil-Painting Effect for Grand Walls",
     pricePerSqFt: 450,
     basePrice: 2999,
-    description: "100% Cotton canvas stretched over dried kiln wooden stretcher bars. Ideal for large living room focal statements.",
+    description:
+      "100% Cotton canvas stretched over dried kiln wooden stretcher bars. Ideal for large living room focal statements.",
     features: [
       "400 GSM 100% Cotton Canvas",
       "Satin Protective Varnish",
@@ -615,7 +627,8 @@ export const FRAMING_OPTIONS: FramingOption[] = [
     subtitle: "Italian Leather Cover & Seamless Lay-flat Pages",
     pricePerSqFt: 0,
     basePrice: 14999,
-    description: "Custom leather-bound heirlooms printed on thermal silk paper. Water-resistant, unbreakable pages designed to endure for generations.",
+    description:
+      "Custom leather-bound heirlooms printed on thermal silk paper. Water-resistant, unbreakable pages designed to endure for generations.",
     features: [
       "Italian Nappa Leather Cover",
       "Custom Engraved Gold Foil Name",
@@ -698,25 +711,25 @@ export const STUDIO_MILESTONES: Milestone[] = [
   {
     year: `${new Date().getFullYear()}`,
     title: `${STUDIO_INFO.weddingsCovered} Weddings & ${STUDIO_INFO.framedPrintsDelivered} Wall Frames`,
-    desc: `Celebrating ${STUDIO_INFO.experienceYears} years of timeless storytelling and client trust.`,
+    desc: `A trusted photography & framing business serving families across ${STUDIO_INFO.region} with quality and care.`,
   },
 ];
 
 export const PHILOSOPHY_ITEMS: PhilosophyItem[] = [
   {
-    iconName: "Aperture",
-    title: "Artistic Vision",
-    desc: "We approach every frame with a cinematic eye — capturing raw emotion, light, and cultural depth.",
+    iconName: "Shield",
+    title: "Reliable & Punctual",
+    desc: "We arrive on time, every time — with backup equipment, clear contracts, and a dedicated point-of-contact for your event.",
   },
   {
-    iconName: "Film",
-    title: "Cinematic Storytelling",
-    desc: "4K highlight reels and photo narratives that unfold like short films — timeless and emotional.",
+    iconName: "Clock",
+    title: "Fast Turnaround Delivery",
+    desc: `Edited galleries delivered within agreed timelines. Framing orders dispatched within 5–7 business days across ${STUDIO_INFO.region}.`,
   },
   {
-    iconName: "Mountain",
-    title: "Destination Specialists",
-    desc: "From Kodaikanal misty hills to Rameswaram beaches — we travel across South India with you.",
+    iconName: "ThumbsUp",
+    title: "Satisfaction Guaranteed",
+    desc: `${STUDIO_INFO.clientSatisfaction} client satisfaction across ${STUDIO_INFO.weddingsCovered} events. We don't close a project until you're 100% happy.`,
   },
 ];
 
@@ -732,12 +745,12 @@ export const STUDIO_SPECIALTIES: string[] = [
 ];
 
 export const ABOUT_SECTION_TEXT = {
-  badge: `About ${STUDIO_INFO.name}`,
-  titlePrefix: "We Preserve The",
-  titleHighlight: "Soul of Your Celebrations",
-  storyParagraph1: `At ${STUDIO_INFO.name}, we believe every wedding, pre-wedding couple laugh, baby shower smile, and bridal portrait deserves to be captured with deep artistic clarity and preserved for a lifetime.`,
-  storyParagraph2: `Based in ${STUDIO_INFO.city}, ${STUDIO_INFO.state}, our studio seamlessly blends traditional South Indian cultural reverence with modern 4K cinematic storytelling, professional drone aerial captures, and fine-art acrylic wall framing. Every image we deliver is color-graded, retouched, and archived to perfection.`,
-  storyParagraph3: `Over ${STUDIO_INFO.experienceYears} years, we have built trust with ${STUDIO_INFO.weddingsCovered} families across ${STUDIO_INFO.state} — from intimate home ceremonies to grand palace weddings. Our promise is simple: your memories, told with the honesty and warmth they deserve.`,
+  badge: "Why Choose Us",
+  titlePrefix: "Why Families Trust",
+  titleHighlight: `${STUDIO_INFO.name}`,
+  storyParagraph1: `${STUDIO_INFO.name} is a full-service photography studio based in ${STUDIO_INFO.city}, ${STUDIO_INFO.state}. We specialise in traditional South Indian weddings, pre & post-wedding shoots, outdoor baby shower sessions, bridal portraits, and custom photo framing — delivered with professional-grade quality and on-time every time.`,
+  storyParagraph2: `Our team uses 4K cinematic cameras, licensed drone operators, and a dedicated in-house acrylic & teak wood framing workshop. Every photo is colour-graded, retouched to perfection, and delivered via a secure digital gallery within the agreed timeline.`,
+  storyParagraph3: `With ${STUDIO_INFO.weddingsCovered} events covered and ${STUDIO_INFO.framedPrintsDelivered} frames delivered across ${STUDIO_INFO.region}, we have the experience to handle any scale of event — from intimate home ceremonies to grand palace weddings — with the same care and precision.`,
 };
 
 /* ═════════════════════════════════════════════════════════════════════════════
@@ -746,12 +759,48 @@ export const ABOUT_SECTION_TEXT = {
    ═════════════════════════════════════════════════════════════════════════════ */
 
 export const STUDIO_STATS: StatItem[] = [
-  { iconName: "Camera", value: 850,  suffix: "+",     label: "Weddings Covered",      sublabel: "From intimate to grand royal ceremonies" },
-  { iconName: "Frame",  value: 4500, suffix: "+",     label: "Wall Frames Delivered",  sublabel: `Acrylic, teak & canvas across ${STUDIO_INFO.region}` },
-  { iconName: "Heart",  value: 99,   suffix: ".8%",   label: "Client Satisfaction",    sublabel: "Verified across 850+ event families" },
-  { iconName: "Award",  value: STUDIO_INFO.experienceYears, suffix: "+ Yrs", label: "Years of Excellence", sublabel: `Founded ${STUDIO_INFO.establishedYear}, ${STUDIO_INFO.city}, ${STUDIO_INFO.state}` },
-  { iconName: "Star",   value: 5,    suffix: "★",     label: "Average Rating",         sublabel: "Google & Instagram verified reviews" },
-  { iconName: "Users",  value: 6,    suffix: "+",     label: "Expert Photographers",   sublabel: "Candid, traditional & drone specialists" },
+  {
+    iconName: "Camera",
+    value: 850,
+    suffix: "+",
+    label: "Weddings Covered",
+    sublabel: "From intimate to grand royal ceremonies",
+  },
+  {
+    iconName: "Frame",
+    value: 4500,
+    suffix: "+",
+    label: "Wall Frames Delivered",
+    sublabel: `Acrylic, teak & canvas across ${STUDIO_INFO.region}`,
+  },
+  {
+    iconName: "Heart",
+    value: 99,
+    suffix: ".8%",
+    label: "Client Satisfaction",
+    sublabel: "Verified across 850+ event families",
+  },
+  {
+    iconName: "Award",
+    value: 5,
+    suffix: "★",
+    label: "Client Rating",
+    sublabel: `${STUDIO_INFO.city}, ${STUDIO_INFO.state} · Google Verified`,
+  },
+  {
+    iconName: "Star",
+    value: 5,
+    suffix: "★",
+    label: "Average Rating",
+    sublabel: "Google & Instagram verified reviews",
+  },
+  {
+    iconName: "Users",
+    value: 6,
+    suffix: "+",
+    label: "Expert Photographers",
+    sublabel: "Candid, traditional & drone specialists",
+  },
 ];
 
 export const TRUST_BADGES: string[] = [
@@ -763,10 +812,10 @@ export const TRUST_BADGES: string[] = [
 ];
 
 export const STATS_SECTION_TEXT = {
-  badge: "Studio Achievements",
-  titlePrefix: "Numbers That",
-  titleHighlight: "Tell Our Story",
-  subtitle: `${STUDIO_INFO.experienceYears} years of dedication, trust, and artistry — reflected in real milestones from real families across ${STUDIO_INFO.state}.`,
+  badge: "Proven Track Record",
+  titlePrefix: "Our Impact",
+  titleHighlight: "in Numbers",
+  subtitle: `Professional photography and framing services trusted by families across ${STUDIO_INFO.state} — backed by verified results and ${STUDIO_INFO.clientSatisfaction} client satisfaction.`,
 };
 
 /* ═════════════════════════════════════════════════════════════════════════════
@@ -789,7 +838,8 @@ export const TESTIMONIALS: Testimonial[] = [
     id: "t2",
     coupleName: "Siddharth & Meera",
     eventType: "Post-Wedding Beach Shoot",
-    quote: "The post-wedding beach shoot at sunset was so relaxed and comfortable. Their drone shots and sunset color grading look like cinema scenes!",
+    quote:
+      "The post-wedding beach shoot at sunset was so relaxed and comfortable. Their drone shots and sunset color grading look like cinema scenes!",
     rating: 5,
     date: "Dec 2025",
     avatar: "/images/testimonials/avatar-2.webp",
@@ -799,7 +849,8 @@ export const TESTIMONIALS: Testimonial[] = [
     id: "t3",
     coupleName: "Dr. Rajesh & Divya",
     eventType: "Baby Shower Outdoor & Framing",
-    quote: "We opted for their outdoor garden baby shower photoshoot. The team was so patient with us. The Teak wood frame in our baby nursery is our favorite piece of art.",
+    quote:
+      "We opted for their outdoor garden baby shower photoshoot. The team was so patient with us. The Teak wood frame in our baby nursery is our favorite piece of art.",
     rating: 5,
     date: "Nov 2025",
     avatar: "/images/testimonials/avatar-3.webp",
@@ -808,10 +859,10 @@ export const TESTIMONIALS: Testimonial[] = [
 ];
 
 export const REVIEWS_SECTION_TEXT = {
-  badge: "Real Stories from Real Families",
-  titlePrefix: "Loved by Couples Across",
-  titleHighlight: `${STUDIO_INFO.state}`,
-  subtitle: "Read genuine feedback from families who trusted us to capture their most sacred weddings and craft their heirloom wall frames.",
+  badge: "Verified Client Reviews",
+  titlePrefix: "What Our Clients Say",
+  titleHighlight: `About ${STUDIO_INFO.name}`,
+  subtitle: `Genuine reviews from families across ${STUDIO_INFO.state} who trusted us to document their most important milestones and craft their heirloom wall frames.`,
 };
 
 /* ═════════════════════════════════════════════════════════════════════════════
@@ -820,17 +871,41 @@ export const REVIEWS_SECTION_TEXT = {
    ═════════════════════════════════════════════════════════════════════════════ */
 
 export const AVAILABILITY_ITEMS: string[] = [
-  "✦ Wedding Dates Open",
-  "✦ Pre-Wedding Slots Available",
-  "✦ Baby Shower Bookings",
-  "✦ Framing Orders Accepted",
+  "✦ Free Consultation Available",
+  "✦ Flexible Booking Options",
+  "✦ Transparent Pricing",
+  "✦ On-Time Delivery Guaranteed",
 ];
 
 export const CONTACT_CARDS: ContactCard[] = [
-  { iconName: "Phone",  label: "Call Us",         value: STUDIO_INFO.phone,     sublabel: "Mon–Sat, 9am–8pm IST",    href: `tel:${STUDIO_INFO.phone.replace(/\s+/g, "")}` },
-  { iconName: "Mail",   label: "Email",            value: STUDIO_INFO.email,     sublabel: "We reply within 24 hours", href: `mailto:${STUDIO_INFO.email}` },
-  { iconName: "MapPin", label: "Studio Location",  value: STUDIO_INFO.city,       sublabel: `${STUDIO_INFO.state} – ${STUDIO_INFO.zipCode}, ${STUDIO_INFO.country}`, href: `https://maps.google.com/?q=${encodeURIComponent(STUDIO_INFO.city + ", " + STUDIO_INFO.state)}` },
-  { iconName: "Share2", label: "Instagram",        value: STUDIO_INFO.instagram,  sublabel: "Follow our latest work",   href: `https://instagram.com/${STUDIO_INFO.instagram.replace("@", "")}` },
+  {
+    iconName: "Phone",
+    label: "Call Us",
+    value: STUDIO_INFO.phone,
+    sublabel: "Mon–Sat, 9am–8pm IST",
+    href: `tel:${STUDIO_INFO.phone.replace(/\s+/g, "")}`,
+  },
+  {
+    iconName: "Mail",
+    label: "Email",
+    value: STUDIO_INFO.email,
+    sublabel: "We reply within 24 hours",
+    href: `mailto:${STUDIO_INFO.email}`,
+  },
+  {
+    iconName: "MapPin",
+    label: "Studio Location",
+    value: STUDIO_INFO.city,
+    sublabel: `${STUDIO_INFO.state} – ${STUDIO_INFO.zipCode}, ${STUDIO_INFO.country}`,
+    href: `https://maps.google.com/?q=${encodeURIComponent(STUDIO_INFO.city + ", " + STUDIO_INFO.state)}`,
+  },
+  {
+    iconName: "Share2",
+    label: "Instagram",
+    value: STUDIO_INFO.instagram,
+    sublabel: "Follow our latest work",
+    href: `https://instagram.com/${STUDIO_INFO.instagram.replace("@", "")}`,
+  },
 ];
 
 export const SHOOT_TYPES: string[] = [
@@ -849,36 +924,34 @@ export const FRAMING_MATERIALS: string[] = [
 ];
 
 /** Human-readable frame size labels with price for the enquiry form dropdown. */
-export const ENQUIRY_FRAME_SIZES: string[] = FRAME_SIZES.map(
-  (s) => `${s.label} (₹${s.price})`
-);
+export const ENQUIRY_FRAME_SIZES: string[] = FRAME_SIZES.map((s) => `${s.label} (₹${s.price})`);
 
 export const CTA_SECTION_TEXT = {
-  titlePrefix: "Ready to",
-  titleHighlight: "Preserve",
-  titleSuffix: "Your Most Precious Moments?",
-  subtitle: `From royal wedding ceremonies and cinematic pre-wedding shoots to outdoor baby showers and premium photo framing — ${STUDIO_INFO.name} is here to capture every milestone with heart.`,
+  titlePrefix: "Book Your",
+  titleHighlight: "Photography Session",
+  titleSuffix: "Today",
+  subtitle: `Weddings, pre & post-wedding shoots, outdoor baby showers, bridal portraits, and custom photo framing — ${STUDIO_INFO.name} delivers professional results for every milestone. Get a free, no-obligation quote in 24 hours.`,
   hoursNotice: "Studio Hours: Mon–Sat, 9:00 AM – 8:00 PM IST · Walk-ins welcome",
 };
 
 export const FOOTER_CONTENT = {
-  aboutText: `Professional wedding, pre-wedding, beach post-wedding, outdoor baby shower maternity, bridal portrait, and custom photo framing studio based out of ${STUDIO_INFO.city}, ${STUDIO_INFO.state}.`,
+  aboutText: `A professional photography & custom framing business based in ${STUDIO_INFO.city}, ${STUDIO_INFO.state}. Serving families across ${STUDIO_INFO.region} since ${STUDIO_INFO.establishedYear} with weddings, pre & post-wedding shoots, baby shower sessions, bridal portraits, and archival photo framing.`,
   specialtiesList: [
-    { label: "Wedding Photography", href: "#gallery" },
-    { label: "Pre-Wedding Shoots", href: "#gallery" },
-    { label: "Post-Wedding Beach Photoshoot", href: "#gallery" },
-    { label: "Baby Shower Outdoor Photos", href: "#gallery" },
-    { label: "Bridal Solo Portraits", href: "#gallery" },
+    { label: "Wedding Photography", href: "#services" },
+    { label: "Pre-Wedding Shoots", href: "#services" },
+    { label: "Post-Wedding Beach Photoshoot", href: "#services" },
+    { label: "Baby Shower Outdoor Photos", href: "#services" },
+    { label: "Bridal Solo Portraits", href: "#services" },
     { label: "Acrylic & Teak Photo Framing", href: "#framing" },
   ],
-  eventPlanningTitle: `Planning a ${STUDIO_INFO.currentYear}/${STUDIO_INFO.nextYear} Event?`,
-  eventPlanningSubtitle: `Get in touch with ${STUDIO_INFO.name} for custom dates, resort venue advice, and lay-flat album preview packages.`
+  eventPlanningTitle: `Get a Free Quote for Your ${STUDIO_INFO.currentYear}/${STUDIO_INFO.nextYear} Event`,
+  eventPlanningSubtitle: `Contact ${STUDIO_INFO.name} for a no-obligation quote, custom package pricing, and available date confirmation.`,
 };
 
 export const SEO_METADATA = {
-  titleDefault: `${STUDIO_INFO.name} | Professional Wedding & Event Photography Studio`,
+  titleDefault: `${STUDIO_INFO.name} | Wedding & Event Photography Services in ${STUDIO_INFO.city}`,
   titleTemplate: `%s | ${STUDIO_INFO.name}`,
-  description: `Official portfolio for ${STUDIO_INFO.name}, ${STUDIO_INFO.city}, ${STUDIO_INFO.state}. Premium traditional wedding photography, post-wedding beach shoots, outdoor baby shower maternity photos, bridal portraits, and custom Ultra-HD acrylic photo framing. Serving ${STUDIO_INFO.region} since ${STUDIO_INFO.establishedYear}.`,
+  description: `${STUDIO_INFO.name} — professional photography services in ${STUDIO_INFO.city}, ${STUDIO_INFO.state}. Specialising in traditional wedding photography, pre & post-wedding shoots, outdoor baby shower sessions, bridal portraits, and custom Ultra-HD acrylic & teak wood photo framing. Serving ${STUDIO_INFO.region} since ${STUDIO_INFO.establishedYear}.`,
   keywords: [
     STUDIO_INFO.name,
     `${STUDIO_INFO.name} ${STUDIO_INFO.city}`,
@@ -891,11 +964,10 @@ export const SEO_METADATA = {
     "Acrylic Photo Prints",
     "Candid Wedding Photographer",
     `${STUDIO_INFO.state} Wedding Photographer`,
-    `Best Photography Studio ${STUDIO_INFO.region}`,
+    `Best Photography Services ${STUDIO_INFO.region}`,
   ],
   ogImage: "/images/portfolio/portfolio-2.webp",
   ogType: "website",
   locale: "en_IN",
   siteUrl: "https://photography.mkkcreation.com",
 };
-

@@ -7,13 +7,11 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Heart,
   MapPin,
-  Camera,
-  Sliders,
   Maximize2,
   Share2,
   Check,
+  ArrowRight,
 } from "lucide-react";
 
 interface LightboxModalProps {
@@ -30,7 +28,6 @@ export default function LightboxModal({
   onNavigate,
 }: LightboxModalProps) {
   const [copied, setCopied] = useState(false);
-  const [liked, setLiked] = useState(false);
   const [zoom, setZoom] = useState(false);
 
   const currentIndex = photo ? photosList.findIndex((p) => p.id === photo.id) : 0;
@@ -77,7 +74,7 @@ export default function LightboxModal({
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-50 p-3 rounded-full bg-zinc-900/80 text-zinc-300 hover:text-white border border-zinc-700 hover:border-amber-400 transition-colors"
-          aria-label="Close Lightbox"
+          aria-label="Close"
         >
           <X className="size-6" />
         </button>
@@ -137,7 +134,7 @@ export default function LightboxModal({
                 <button
                   onClick={handleShare}
                   className="p-2 rounded-full bg-black/70 text-zinc-300 hover:text-white border border-zinc-700"
-                  title="Share Photo"
+                  title="Share"
                 >
                   {copied ? (
                     <Check className="size-4 text-emerald-400" />
@@ -149,8 +146,8 @@ export default function LightboxModal({
             </div>
           </div>
 
-          {/* Right: Metadata & Details Panel */}
-          <div className="w-full lg:w-96 bg-zinc-950 p-6 flex flex-col justify-between overflow-y-auto border-t lg:border-t-0 lg:border-l border-zinc-800">
+          {/* Right: Details Panel */}
+          <div className="w-full lg:w-80 bg-zinc-950 p-6 flex flex-col justify-between overflow-y-auto border-t lg:border-t-0 lg:border-l border-zinc-800">
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-extrabold uppercase tracking-widest text-amber-400">
@@ -172,48 +169,19 @@ export default function LightboxModal({
                 {photo.description}
               </p>
 
-              {/* Camera EXIF Details Box */}
-              <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 mb-6 space-y-3">
-                <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider pb-2 border-b border-zinc-800">
-                  <Camera className="size-4" />
-                  <span>Camera & Shot EXIF Specs</span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 text-xs">
-                  <div>
-                    <span className="text-zinc-500 text-xs uppercase block">Camera Body</span>
-                    <span className="text-zinc-200 font-medium">{photo.exif.camera}</span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-500 text-xs uppercase block">Prime Lens</span>
-                    <span className="text-zinc-200 font-medium">{photo.exif.lens}</span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-500 text-xs uppercase block">Aperture</span>
-                    <span className="text-amber-300 font-semibold">{photo.exif.aperture}</span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-500 text-xs uppercase block">Shutter Speed</span>
-                    <span className="text-amber-300 font-semibold">{photo.exif.shutter}</span>
-                  </div>
-                </div>
-              </div>
+              {/* Enquiry CTA */}
+              <a
+                href="#cta"
+                onClick={onClose}
+                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-bold text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 hover:shadow-amber-500/35 hover:scale-105 active:scale-95 transition-all duration-300"
+              >
+                <span>Enquire About This Service</span>
+                <ArrowRight className="size-4" />
+              </a>
             </div>
 
-            {/* Footer Interaction */}
-            <div className="pt-4 border-t border-zinc-800 flex items-center justify-between">
-              <button
-                onClick={() => setLiked(!liked)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-bold transition-all ${
-                  liked
-                    ? "bg-rose-500/20 border-rose-500/50 text-rose-400"
-                    : "bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white"
-                }`}
-              >
-                <Heart className={`size-4 ${liked ? "fill-rose-500 text-rose-500" : ""}`} />
-                <span>{photo.likes + (liked ? 1 : 0)} Appreciations</span>
-              </button>
-
+            {/* Footer navigation (mobile) */}
+            <div className="pt-4 border-t border-zinc-800 flex items-center justify-end mt-4">
               <div className="flex items-center gap-2 md:hidden">
                 <button
                   onClick={handlePrev}

@@ -24,16 +24,11 @@ export const metadata: Metadata = {
   description: SEO_METADATA.description,
   keywords: SEO_METADATA.keywords,
   icons: {
-    icon: [
-      { url: "/logo.svg", type: "image/svg+xml" },
-    ],
+    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
     shortcut: "/logo.svg",
     apple: "/logo.svg",
   },
-  authors: [
-    { name: STUDIO_INFO.name },
-    { name: "MKK Creation", url: "https://mkkcreation.com" },
-  ],
+  authors: [{ name: STUDIO_INFO.name }, { name: "MKK Creation", url: "https://mkkcreation.com" }],
   category: "Photography & Framing Studio",
   openGraph: {
     title: SEO_METADATA.titleDefault,
@@ -73,7 +68,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable} dark scroll-smooth`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${cormorant.variable} ${inter.variable} dark scroll-smooth`}
+      suppressHydrationWarning
+    >
       <body
         className="min-h-screen bg-[#09090b] text-[#f4f4f5] antialiased selection:bg-amber-400 selection:text-black"
         suppressHydrationWarning

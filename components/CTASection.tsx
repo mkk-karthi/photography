@@ -114,7 +114,7 @@ export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
             >
               <Sparkles className="size-3.5" />
               <span>
-                Booking {STUDIO_INFO.currentYear} / {STUDIO_INFO.nextYear} Events
+                Serving {STUDIO_INFO.region} Since {STUDIO_INFO.establishedYear}
               </span>
             </motion.div>
 
@@ -152,7 +152,7 @@ export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
                 className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-bold text-sm uppercase tracking-wider shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300"
               >
                 <CalendarCheck className="size-4" />
-                <span>Book a Free Consultation</span>
+                <span>Get a Free Quote</span>
                 <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
               </motion.button>
 

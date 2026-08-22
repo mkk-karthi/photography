@@ -8,7 +8,7 @@ import {
 } from "@/data/portfolioData";
 import type { PhotoItem } from "@/data/types";
 import LightboxModal from "./LightboxModal";
-import { Camera, Heart, Eye, MapPin } from "lucide-react";
+import { Camera, Eye, MapPin } from "lucide-react";
 
 export default function PortfolioGallery() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
@@ -131,15 +131,10 @@ export default function PortfolioGallery() {
                       {photo.title}
                     </h3>
 
-                    <div className="flex items-center justify-between text-xs text-zinc-300 mt-1.5">
+                    <div className="flex items-center text-xs text-zinc-300 mt-1.5">
                       <div className="flex items-center gap-1.5 text-zinc-400">
                         <MapPin className="size-3.5 text-amber-400" />
                         <span>{photo.location}</span>
-                      </div>
-
-                      <div className="flex items-center gap-1.5 text-rose-400">
-                        <Heart className="size-3.5 fill-rose-500/40" />
-                        <span>{photo.likes}</span>
                       </div>
                     </div>
                   </div>

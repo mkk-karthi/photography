@@ -114,7 +114,7 @@ export interface Milestone {
   desc: string;
 }
 
-export type PhilosophyIconName = "Aperture" | "Film" | "Mountain";
+export type PhilosophyIconName = "Shield" | "Clock" | "ThumbsUp";
 
 export interface PhilosophyItem {
   iconName: PhilosophyIconName;

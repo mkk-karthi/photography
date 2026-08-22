@@ -18,7 +18,7 @@ const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "#" },
   { label: "Services", href: "#services" },
   { label: "Framing", href: "#framing" },
-  { label: "Portfolio", href: "#gallery" },
+  { label: "Our Work", href: "#gallery" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#cta" },
 ];
@@ -134,7 +134,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                     onClick={(e) => handleNavClick(e, link.href)}
                     className={`group relative px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 text-zinc-200 ${
                       isActive ? "" : "hover:text-white hover:bg-white/10"
-                    } hover:border hover:border-amber-500/40 hover:shadow-[0_0_15px_rgba(245,158,11,0.25)] hover:scale-105 active:scale-95 border border-transparent whitespace-nowrap`}
+                    } hover:scale-105 active:scale-95 border border-transparent whitespace-nowrap`}
                   >
                     {isActive && (
                       <motion.div
@@ -172,7 +172,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                 className="group relative inline-flex items-center justify-center px-4 py-2 text-xs font-bold text-black uppercase tracking-wider bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-lg shadow-amber-500/20 hover:shadow-amber-500/35 hover:scale-105 active:scale-95 transition-all duration-300 whitespace-nowrap shrink-0"
               >
                 <Sparkles className="size-3.5 mr-1.5 text-black" />
-                <span>Book Consultation</span>
+                <span>Get Free Quote</span>
               </button>
             </div>
 
@@ -281,7 +281,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                 className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 active:scale-98 transition-all cursor-pointer"
               >
                 <CalendarCheck className="size-4 text-black" />
-                <span>Book Event Consultation</span>
+                <span>Get a Free Quote</span>
               </button>
             </div>
           </motion.div>

@@ -85,7 +85,7 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
           {/* Quick Links */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-widest text-white">
-              Our Specialties
+              Our Services
             </h4>
             <ul className="space-y-2 text-xs font-light">
               {FOOTER_CONTENT.specialtiesList.map((item) => (
@@ -114,7 +114,7 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
               className="w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-bold uppercase tracking-wider text-xs transition-colors flex items-center justify-center gap-2"
             >
               <CalendarCheck className="size-4" />
-              <span>Send Event Enquiry</span>
+              <span>Request a Free Quote</span>
             </button>
           </div>
         </div>
