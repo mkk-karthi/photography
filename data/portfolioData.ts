@@ -30,12 +30,10 @@ export const STUDIO_INFO = {
   name: "Nanban Photography",
   brandFirstName: "NANBAN",
   brandSecondName: "PHOTOGRAPHY",
-  shortName: "Nanban",
   establishedYear: ESTABLISHED_YEAR,
   experienceYears: EXPERIENCE_YEARS,
   currentYear: CURRENT_YEAR,
   nextYear: CURRENT_YEAR + 1,
-  tagline: "Preserving Timeless Emotions & Royal Heritage Celebrations",
   phone: "+91 9786152034",
   email: "nanbanphotographyvnr@gmail.com",
   address: "No.60 Keelakadai Street (near Makesh Bakery), Virudhunagar, Tamil Nadu - 626001, India",
@@ -52,8 +50,8 @@ export const STUDIO_INFO = {
 };
 
 /* ═════════════════════════════════════════════════════════════════════════════
-   2. HERO CAROUSEL CONTENT
-   Slides for top landing hero carousel.
+   2. HERO CAROUSEL CONTENT & TEXT
+   Hero background slides and title copy.
    ═════════════════════════════════════════════════════════════════════════════ */
 
 export const HERO_SLIDES: HeroSlide[] = [
@@ -94,6 +92,10 @@ export const HERO_SLIDES: HeroSlide[] = [
     bgUrl: "/images/hero/hero-6.webp",
   },
 ];
+
+export const HERO_SECTION_TEXT = {
+  studioSubtitle: "Specializing in traditional weddings, pre & post-wedding shoots, outdoor baby shower photos, and photo framing in Tamil Nadu.",
+};
 
 /* ═════════════════════════════════════════════════════════════════════════════
    4. SERVICE PACKAGES & PRICING
@@ -198,6 +200,15 @@ export const SERVICE_PACKAGES: ServicePackage[] = [
     recommendedAddons: ["Anti-Glare Museum Glass Upgrade"],
   },
 ];
+
+export const SERVICES_SECTION_TEXT = {
+  badge: "Our Specialties & Pricing",
+  titlePrefix: "Crafted Photography",
+  titleHighlight: "Experiences",
+  subtitle: "From sacred wedding rituals and candid couple portraits to outdoor baby showers and bridal solo shoots across Tamil Nadu.",
+  customPackageTitle: "Need a Customized Wedding Package?",
+  customPackageDesc: "We offer flexible multi-day packages for 2-3 day South Indian traditional weddings, destination pre-weddings, and combined framing orders.",
+};
 
 /* ═════════════════════════════════════════════════════════════════════════════
    5. PORTFOLIO GALLERY & CATEGORIES
@@ -311,91 +322,93 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
     },
     likes: 512,
     featured: true,
-    description: "Close-up solo portrait capturing intricate handcrafted Kundan and gold temple ornaments.",
+    description: "Intricate antique kemp jewelry detail highlighted with soft Rembrandt studio lighting.",
   },
   {
     id: "b2",
-    title: "Kanjivaram Silk Drapery",
+    title: "Silken Kanchipuram Drape",
     category: "bridal",
     categoryLabel: "Bridal Portraits",
     imageUrl: "/images/portfolio/portfolio-6.webp",
-    aspectRatio: "aspect-[3/4]",
-    location: "Karaikudi Chettinad Mansion",
+    aspectRatio: "aspect-[4/3]",
+    location: "Heritage Illam, Karaikudi",
     exif: {
-      camera: "Sony A7 IV",
-      lens: "FE 135mm f/1.8 GM",
-      aperture: "f/1.8",
+      camera: "Canon EOS R5",
+      lens: "RF 85mm f/1.2L DS",
+      aperture: "f/1.4",
       shutter: "1/400s",
       iso: "ISO 100",
     },
-    likes: 388,
+    likes: 278,
     featured: false,
-    description: "Sunlight filtering through carved wooden pillars illuminating traditional crimson silk.",
-  },
-  {
-    id: "b3",
-    title: "The Bride's Reflection",
-    category: "bridal",
-    categoryLabel: "Bridal Portraits",
-    imageUrl: "/images/portfolio/portfolio-7.webp",
-    aspectRatio: "aspect-[3/4]",
-    location: "Virudhunagar Studio",
-    exif: {
-      camera: "Canon R5",
-      lens: "RF 85mm f/1.2 L USM DS",
-      aperture: "f/1.2",
-      shutter: "1/320s",
-      iso: "ISO 100",
-    },
-    likes: 476,
-    featured: true,
-    description: "Quiet contemplative moment of anticipation as the bride finalizes her veil.",
-  },
-  {
-    id: "b4",
-    title: "Mehndi Henna Art Detail",
-    category: "wedding",
-    categoryLabel: "Haldi & Rituals",
-    imageUrl: "/images/portfolio/portfolio-8.webp",
-    aspectRatio: "aspect-[16/9]",
-    location: "Madurai Heritage Villa",
-    exif: {
-      camera: "Sony A7R IV",
-      lens: "FE 90mm f/2.8 Macro",
-      aperture: "f/2.8",
-      shutter: "1/200s",
-      iso: "ISO 100",
-    },
-    likes: 410,
-    featured: false,
-    description: "Macro fine-art shot highlighting intricate bridal henna patterns.",
+    description: "Traditional Chettinad courtyard doorway framing the radiant bride in rich golden silk.",
   },
 
   // Pre-Wedding
   {
-    id: "pw1",
-    title: "Cinematic Misty Hills Romance",
+    id: "pre1",
+    title: "Mist & Mountains Romance",
     category: "pre-wedding",
-    categoryLabel: "Pre-Wedding Photography",
-    imageUrl: "/images/portfolio/portfolio-9.webp",
-    aspectRatio: "aspect-[4/3]",
+    categoryLabel: "Pre-Wedding Shoot",
+    imageUrl: "/images/portfolio/portfolio-7.webp",
+    aspectRatio: "aspect-[16/9]",
     location: "Kodaikanal Pine Forest",
     exif: {
       camera: "Sony A1",
-      lens: "FE 35mm f/1.4 GM",
-      aperture: "f/1.4",
+      lens: "FE 50mm f/1.2 GM",
+      aperture: "f/1.2",
       shutter: "1/800s",
       iso: "ISO 100",
     },
-    likes: 620,
+    likes: 480,
     featured: true,
-    description: "Dreamy early morning session tucked away in the foggy pine canopy.",
+    description: "Ethereal morning fog weaving through towering pine trees as the couple shares a quiet moment.",
   },
   {
-    id: "pw2",
-    title: "Ancient Architecture Romance",
+    id: "pre2",
+    title: "Sunset Boat Drift",
     category: "pre-wedding",
-    categoryLabel: "Pre-Wedding Photography",
+    categoryLabel: "Pre-Wedding Shoot",
+    imageUrl: "/images/portfolio/portfolio-8.webp",
+    aspectRatio: "aspect-[3/4]",
+    location: "Pichavaram Mangrove Lake",
+    exif: {
+      camera: "Fujifilm GFX 100 II",
+      lens: "GF 110mm f/2",
+      aperture: "f/2.0",
+      shutter: "1/640s",
+      iso: "ISO 160",
+    },
+    likes: 310,
+    featured: false,
+    description: "Wooden rowboat gliding across calm golden reflections during twilight hour.",
+  },
+
+  // Baby Shower Outdoor
+  {
+    id: "bs1",
+    title: "Sunlit Maternity Garden Bloom",
+    category: "baby-shower",
+    categoryLabel: "Baby Shower Outdoor Photos",
+    imageUrl: "/images/portfolio/portfolio-9.webp",
+    aspectRatio: "aspect-[3/4]",
+    location: "Yercaud Estate Garden",
+    exif: {
+      camera: "Sony A7 IV",
+      lens: "FE 135mm f/1.8 GM",
+      aperture: "f/1.8",
+      shutter: "1/1000s",
+      iso: "ISO 100",
+    },
+    likes: 425,
+    featured: true,
+    description: "Golden hour backlighting framing expectant mother surrounded by pastel floral wreaths.",
+  },
+  {
+    id: "pre3",
+    title: "Heritage Pillar Reflections",
+    category: "pre-wedding",
+    categoryLabel: "Pre-Wedding Shoot",
     imageUrl: "/images/portfolio/portfolio-10.webp",
     aspectRatio: "aspect-[4/3]",
     location: "Thanjavur Temple Courtyard",
@@ -532,8 +545,15 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
   },
 ];
 
+export const PORTFOLIO_SECTION_TEXT = {
+  badge: "Curated Visual Collections",
+  titlePrefix: "Our Signature",
+  titleHighlight: "Portfolio",
+  subtitle: "Click on any photo to open full-screen High-Resolution Lightbox view with camera shot specifications & EXIF data.",
+};
+
 /* ═════════════════════════════════════════════════════════════════════════════
-   6. CUSTOM PHOTO FRAMING CATALOG
+   6. CUSTOM PHOTO FRAMING CATALOG & SIZES
    Materials, frame sizes, and sample photo previews.
    ═════════════════════════════════════════════════════════════════════════════ */
 
@@ -647,6 +667,13 @@ export const SAMPLE_PHOTOS: SamplePhoto[] = [
   },
 ];
 
+export const FRAMING_SECTION_TEXT = {
+  badge: `${STUDIO_INFO.name} Custom Framing Studio`,
+  titlePrefix: "Transform Photos Into",
+  titleHighlight: "Archival Wall Art",
+  subtitle: `Handcrafted in ${STUDIO_INFO.city} with museum-grade UV protection glass, seasoned South Indian teak wood, and 100-year anti-fade guarantees.`,
+};
+
 /* ═════════════════════════════════════════════════════════════════════════════
    7. ABOUT STUDIO & PHILOSOPHY
    Studio milestones, philosophy pillars, and specialties.
@@ -704,6 +731,15 @@ export const STUDIO_SPECIALTIES: string[] = [
   "Drone Aerial Photography",
 ];
 
+export const ABOUT_SECTION_TEXT = {
+  badge: `About ${STUDIO_INFO.name}`,
+  titlePrefix: "We Preserve The",
+  titleHighlight: "Soul of Your Celebrations",
+  storyParagraph1: `At ${STUDIO_INFO.name}, we believe every wedding, pre-wedding couple laugh, baby shower smile, and bridal portrait deserves to be captured with deep artistic clarity and preserved for a lifetime.`,
+  storyParagraph2: `Based in ${STUDIO_INFO.city}, ${STUDIO_INFO.state}, our studio seamlessly blends traditional South Indian cultural reverence with modern 4K cinematic storytelling, professional drone aerial captures, and fine-art acrylic wall framing. Every image we deliver is color-graded, retouched, and archived to perfection.`,
+  storyParagraph3: `Over ${STUDIO_INFO.experienceYears} years, we have built trust with ${STUDIO_INFO.weddingsCovered} families across ${STUDIO_INFO.state} — from intimate home ceremonies to grand palace weddings. Our promise is simple: your memories, told with the honesty and warmth they deserve.`,
+};
+
 /* ═════════════════════════════════════════════════════════════════════════════
    8. STATS & TRUST INDICATORS
    Numerical metrics and trust badges.
@@ -725,6 +761,13 @@ export const TRUST_BADGES: string[] = [
   "✦ 4K Cinematic Delivery",
   "✦ Drone Certified",
 ];
+
+export const STATS_SECTION_TEXT = {
+  badge: "Studio Achievements",
+  titlePrefix: "Numbers That",
+  titleHighlight: "Tell Our Story",
+  subtitle: `${STUDIO_INFO.experienceYears} years of dedication, trust, and artistry — reflected in real milestones from real families across ${STUDIO_INFO.state}.`,
+};
 
 /* ═════════════════════════════════════════════════════════════════════════════
    9. CLIENT TESTIMONIALS & REVIEWS
@@ -764,6 +807,13 @@ export const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
+export const REVIEWS_SECTION_TEXT = {
+  badge: "Real Stories from Real Families",
+  titlePrefix: "Loved by Couples Across",
+  titleHighlight: `${STUDIO_INFO.state}`,
+  subtitle: "Read genuine feedback from families who trusted us to capture their most sacred weddings and craft their heirloom wall frames.",
+};
+
 /* ═════════════════════════════════════════════════════════════════════════════
    10. CONTACT, CTA & ENQUIRY CONFIG
    Availability callouts, contact cards, and modal options.
@@ -802,3 +852,50 @@ export const FRAMING_MATERIALS: string[] = [
 export const ENQUIRY_FRAME_SIZES: string[] = FRAME_SIZES.map(
   (s) => `${s.label} (₹${s.price})`
 );
+
+export const CTA_SECTION_TEXT = {
+  titlePrefix: "Ready to",
+  titleHighlight: "Preserve",
+  titleSuffix: "Your Most Precious Moments?",
+  subtitle: `From royal wedding ceremonies and cinematic pre-wedding shoots to outdoor baby showers and premium photo framing — ${STUDIO_INFO.name} is here to capture every milestone with heart.`,
+  hoursNotice: "Studio Hours: Mon–Sat, 9:00 AM – 8:00 PM IST · Walk-ins welcome",
+};
+
+export const FOOTER_CONTENT = {
+  aboutText: `Professional wedding, pre-wedding, beach post-wedding, outdoor baby shower maternity, bridal portrait, and custom photo framing studio based out of ${STUDIO_INFO.city}, ${STUDIO_INFO.state}.`,
+  specialtiesList: [
+    { label: "Wedding Photography", href: "#gallery" },
+    { label: "Pre-Wedding Shoots", href: "#gallery" },
+    { label: "Post-Wedding Beach Photoshoot", href: "#gallery" },
+    { label: "Baby Shower Outdoor Photos", href: "#gallery" },
+    { label: "Bridal Solo Portraits", href: "#gallery" },
+    { label: "Acrylic & Teak Photo Framing", href: "#framing" },
+  ],
+  eventPlanningTitle: `Planning a ${STUDIO_INFO.currentYear}/${STUDIO_INFO.nextYear} Event?`,
+  eventPlanningSubtitle: `Get in touch with ${STUDIO_INFO.name} for custom dates, resort venue advice, and lay-flat album preview packages.`
+};
+
+export const SEO_METADATA = {
+  titleDefault: `${STUDIO_INFO.name} | Professional Wedding & Event Photography Studio`,
+  titleTemplate: `%s | ${STUDIO_INFO.name}`,
+  description: `Official portfolio for ${STUDIO_INFO.name}, ${STUDIO_INFO.city}, ${STUDIO_INFO.state}. Premium traditional wedding photography, post-wedding beach shoots, outdoor baby shower maternity photos, bridal portraits, and custom Ultra-HD acrylic photo framing. Serving ${STUDIO_INFO.region} since ${STUDIO_INFO.establishedYear}.`,
+  keywords: [
+    STUDIO_INFO.name,
+    `${STUDIO_INFO.name} ${STUDIO_INFO.city}`,
+    `Wedding Photography ${STUDIO_INFO.city}`,
+    `Pre-wedding Photoshoot ${STUDIO_INFO.state}`,
+    "Post-wedding Beach Shoot",
+    "Baby Shower Outdoor Photos",
+    "Bridal Portraits",
+    `Photo Framing ${STUDIO_INFO.city}`,
+    "Acrylic Photo Prints",
+    "Candid Wedding Photographer",
+    `${STUDIO_INFO.state} Wedding Photographer`,
+    `Best Photography Studio ${STUDIO_INFO.region}`,
+  ],
+  ogImage: "/images/portfolio/portfolio-2.webp",
+  ogType: "website",
+  locale: "en_IN",
+  siteUrl: "https://photography.mkkcreation.com",
+};
+

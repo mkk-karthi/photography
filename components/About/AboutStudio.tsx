@@ -8,28 +8,29 @@ import {
   STUDIO_MILESTONES,
   PHILOSOPHY_ITEMS,
   STUDIO_SPECIALTIES,
+  ABOUT_SECTION_TEXT,
 } from "@/data/portfolioData";
 import type { PhilosophyIconName } from "@/data/types";
 
 // Map icon name strings to actual Lucide components
 const PHILOSOPHY_ICONS: Record<PhilosophyIconName, React.ReactNode> = {
-  Aperture: <Aperture className="w-5 h-5 text-amber-400" />,
-  Film: <Film className="w-5 h-5 text-amber-400" />,
-  Mountain: <Mountain className="w-5 h-5 text-amber-400" />,
+  Aperture: <Aperture className="size-5 text-amber-400" />,
+  Film: <Film className="size-5 text-amber-400" />,
+  Mountain: <Mountain className="size-5 text-amber-400" />,
 };
 
 export default function AboutStudio() {
   return (
-    <section id="about" className="py-24 bg-[#09090b] relative overflow-hidden">
+    <section id="about" className="py-24 bg-zinc-950 relative overflow-hidden">
       {/* Ambient glow orbs */}
-      <div className="absolute top-1/4 left-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-0 w-72 h-72 bg-amber-400/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-0 size-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-0 size-72 bg-amber-400/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Rotating aperture decoration (desktop) */}
       <motion.div
         animate={{ rotate: -360 }}
         transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-        className="absolute top-10 right-10 w-64 h-64 rounded-full border border-amber-500/10 border-dashed pointer-events-none hidden lg:block"
+        className="absolute top-10 right-10 size-64 rounded-full border border-amber-500/10 border-dashed pointer-events-none hidden lg:block"
       >
         <div className="absolute inset-6 rounded-full border border-amber-500/10" />
         <div className="absolute inset-14 rounded-full border border-amber-500/10 border-dashed" />
@@ -45,13 +46,13 @@ export default function AboutStudio() {
           className="text-center mb-14"
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-4">
-            <Camera className="w-3.5 h-3.5" />
-            <span>About {STUDIO_INFO.name}</span>
+            <Camera className="size-3.5" />
+            <span>{ABOUT_SECTION_TEXT.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-            We Preserve The{" "}
+            {ABOUT_SECTION_TEXT.titlePrefix}{" "}
             <span className="font-serif text-amber-300 italic font-normal">
-              Soul of Your Celebrations
+              {ABOUT_SECTION_TEXT.titleHighlight}
             </span>
           </h2>
         </motion.div>
@@ -81,7 +82,7 @@ export default function AboutStudio() {
                 <div>
                   <p className="text-sm font-bold text-white">{STUDIO_INFO.name} Studio</p>
                   <p className="text-xs text-amber-300 flex items-center gap-1 mt-0.5">
-                    <MapPin className="w-3.5 h-3.5" />
+                    <MapPin className="size-3.5" />
                     <span>
                       {STUDIO_INFO.city}, {STUDIO_INFO.state}
                     </span>
@@ -129,22 +130,13 @@ export default function AboutStudio() {
             {/* Studio Story */}
             <div className="mb-8 space-y-4">
               <p className="text-zinc-200 text-sm sm:text-base font-light leading-relaxed">
-                At <strong className="text-amber-400 font-semibold">{STUDIO_INFO.name}</strong>, we
-                believe every wedding, pre-wedding couple laugh, baby shower smile, and bridal
-                portrait deserves to be captured with deep artistic clarity and preserved for a
-                lifetime.
+                {ABOUT_SECTION_TEXT.storyParagraph1}
               </p>
               <p className="text-zinc-400 text-sm font-light leading-relaxed">
-                Based in {STUDIO_INFO.city}, {STUDIO_INFO.state}, our studio seamlessly blends
-                traditional South Indian cultural reverence with modern 4K cinematic storytelling,
-                professional drone aerial captures, and fine-art acrylic wall framing. Every image
-                we deliver is color-graded, retouched, and archived to perfection.
+                {ABOUT_SECTION_TEXT.storyParagraph2}
               </p>
               <p className="text-zinc-400 text-sm font-light leading-relaxed">
-                Over {STUDIO_INFO.experienceYears} years, we have built trust with{" "}
-                {STUDIO_INFO.weddingsCovered} families across {STUDIO_INFO.state} — from intimate
-                home ceremonies to grand palace weddings. Our promise is simple: your memories, told
-                with the honesty and warmth they deserve.
+                {ABOUT_SECTION_TEXT.storyParagraph3}
               </p>
             </div>
 
@@ -156,7 +148,7 @@ export default function AboutStudio() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {STUDIO_SPECIALTIES.map((item) => (
                   <div key={item} className="flex items-center gap-2.5 text-xs text-zinc-300">
-                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                    <CheckCircle2 className="size-4 text-amber-400 shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}

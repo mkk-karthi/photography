@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
-import { STUDIO_INFO } from "@/data/portfolioData";
+import { STUDIO_INFO, SEO_METADATA } from "@/data/portfolioData";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -17,28 +17,53 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: `${STUDIO_INFO.name} | Professional Wedding & Event Photography Studio`,
-  description:
-    `Official portfolio for ${STUDIO_INFO.name}, ${STUDIO_INFO.city}, ${STUDIO_INFO.state}. Premium traditional wedding photography, post-wedding beach shoots, outdoor baby shower maternity photos, bridal portraits, and custom Ultra-HD acrylic photo framing. Serving ${STUDIO_INFO.region} since ${STUDIO_INFO.establishedYear}.`,
-  keywords: [
-    STUDIO_INFO.name,
-    `Wedding Photography ${STUDIO_INFO.city}`,
-    `Pre-wedding Photoshoot ${STUDIO_INFO.state}`,
-    "Post-wedding Beach Shoot",
-    "Baby Shower Outdoor Photos",
-    "Bridal Portraits",
-    `Photo Framing ${STUDIO_INFO.city}`,
-    "Acrylic Photo Prints",
-    "Candid Wedding Photographer",
-    `${STUDIO_INFO.state} Wedding Photographer`,
-    `Best Photography Studio ${STUDIO_INFO.region}`,
+  title: {
+    default: SEO_METADATA.titleDefault,
+    template: SEO_METADATA.titleTemplate,
+  },
+  description: SEO_METADATA.description,
+  keywords: SEO_METADATA.keywords,
+  icons: {
+    icon: [
+      { url: "/logo.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/logo.svg",
+    apple: "/logo.svg",
+  },
+  authors: [
+    { name: STUDIO_INFO.name },
+    { name: "MKK Creation", url: "https://mkkcreation.com" },
   ],
+  category: "Photography & Framing Studio",
   openGraph: {
-    title: `${STUDIO_INFO.name} | Professional Wedding Studio`,
-    description:
-      `Premium wedding, pre-wedding & baby shower photography with custom photo framing. Based in ${STUDIO_INFO.city}, ${STUDIO_INFO.state}.`,
+    title: SEO_METADATA.titleDefault,
+    description: SEO_METADATA.description,
     type: "website",
-    locale: "en_IN",
+    locale: SEO_METADATA.locale,
+    siteName: STUDIO_INFO.name,
+    images: [
+      {
+        url: SEO_METADATA.ogImage,
+        width: 1200,
+        height: 630,
+        alt: `${STUDIO_INFO.name} Portfolio`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SEO_METADATA.titleDefault,
+    description: SEO_METADATA.description,
+    images: [SEO_METADATA.ogImage],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+    },
   },
 };
 

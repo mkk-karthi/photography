@@ -3,18 +3,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Camera, Award, Heart, Frame, Star, Users } from "lucide-react";
-import { STUDIO_STATS, TRUST_BADGES } from "@/data/portfolioData";
+import { STUDIO_STATS, TRUST_BADGES, STATS_SECTION_TEXT } from "@/data/portfolioData";
 import type { StatItem } from "@/data/types";
 
 // ── Icon map (UI layer, not data layer) ───────────────────────────────────────
 
 const STAT_ICONS: Record<StatItem["iconName"], React.ReactNode> = {
-  Camera: <Camera className="w-6 h-6" />,
-  Frame: <Frame className="w-6 h-6" />,
-  Heart: <Heart className="w-6 h-6" />,
-  Award: <Award className="w-6 h-6" />,
-  Star: <Star className="w-6 h-6" />,
-  Users: <Users className="w-6 h-6" />,
+  Camera: <Camera className="size-6" />,
+  Frame: <Frame className="size-6" />,
+  Heart: <Heart className="size-6" />,
+  Award: <Award className="size-6" />,
+  Star: <Star className="size-6" />,
+  Users: <Users className="size-6" />,
 };
 
 // Gradient styles per stat type — visual treatment owned by this component
@@ -97,8 +97,8 @@ export default function StatsSection() {
       }}
     >
       {/* Decorative orbs */}
-      <div className="absolute top-0 left-1/4 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-amber-400/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/4 size-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 size-64 bg-amber-400/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
@@ -110,16 +110,17 @@ export default function StatsSection() {
           className="text-center mb-14"
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-4">
-            <Award className="w-3.5 h-3.5" />
-            <span>Studio Achievements</span>
+            <Award className="size-3.5" />
+            <span>{STATS_SECTION_TEXT.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Numbers That{" "}
-            <span className="font-serif text-amber-300 italic font-normal">Tell Our Story</span>
+            {STATS_SECTION_TEXT.titlePrefix}{" "}
+            <span className="font-serif text-amber-300 italic font-normal">
+              {STATS_SECTION_TEXT.titleHighlight}
+            </span>
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base mt-3 max-w-xl mx-auto font-light leading-relaxed">
-            Twelve years of dedication, trust, and artistry — reflected in real milestones from real
-            families across Tamil Nadu.
+            {STATS_SECTION_TEXT.subtitle}
           </p>
         </motion.div>
 
@@ -152,7 +153,7 @@ export default function StatsSection() {
               <h3 className="text-xs sm:text-sm font-bold text-white mt-1 leading-tight">
                 {stat.label}
               </h3>
-              <p className="text-[10px] sm:text-xs text-zinc-500 font-light mt-1 leading-snug hidden sm:block">
+              <p className="text-xs text-zinc-500 font-light mt-1 leading-snug hidden sm:block">
                 {stat.sublabel}
               </p>
 

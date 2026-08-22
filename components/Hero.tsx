@@ -12,7 +12,7 @@ import {
   Award,
   ChevronDown,
 } from "lucide-react";
-import { STUDIO_INFO, HERO_SLIDES } from "@/data/portfolioData";
+import { STUDIO_INFO, HERO_SLIDES, HERO_SECTION_TEXT } from "@/data/portfolioData";
 
 interface HeroProps {
   onOpenEnquiry: () => void;
@@ -57,7 +57,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative h-[100svh] min-h-[580px] sm:min-h-[650px] w-full flex flex-col justify-center pt-16 sm:pt-20 pb-16 sm:pb-20 overflow-hidden bg-[#09090b]"
+      className="relative h-svh min-h-145 sm:min-h-162.5 w-full flex flex-col justify-center pt-16 sm:pt-20 pb-16 sm:pb-20 overflow-hidden bg-zinc-950"
     >
       {/* Background Images with Cross-Fade */}
       {HERO_SLIDES.map((s, index) => (
@@ -78,7 +78,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
       <div className="absolute inset-0 z-1 bg-black/55 pointer-events-none" />
       <div className="absolute inset-x-0 top-0 h-48 z-1 bg-linear-to-b from-black/95 via-black/75 to-transparent pointer-events-none" />
       <div className="absolute inset-0 z-1 bg-linear-to-r from-black/85 via-black/65 to-black/30 pointer-events-none" />
-      <div className="absolute inset-x-0 bottom-0 h-64 z-1 bg-linear-to-t from-[#09090b] via-[#09090b]/60 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-64 z-1 bg-linear-to-t from-zinc-950 via-zinc-950/60 to-transparent pointer-events-none" />
 
       {/* Animated Bokeh Particles */}
       <div className="absolute inset-0 z-2 pointer-events-none overflow-hidden">
@@ -110,7 +110,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        className="absolute right-4 top-1/4 w-120 h-120 rounded-full pointer-events-none hidden lg:block opacity-[0.07]"
+        className="absolute right-4 top-1/4 size-128 rounded-full pointer-events-none hidden lg:block opacity-[0.07]"
         style={{ border: "1px dashed rgba(212,175,55,0.6)" }}
       >
         <div className="absolute inset-8 rounded-full border border-amber-400/50 border-dashed" />
@@ -119,7 +119,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
       </motion.div>
 
       {/* Aperture Center Pulse */}
-      <div className="absolute right-[calc(50%-240px+50px)] top-1/2 w-4 h-4 rounded-full bg-amber-400/30 hidden lg:block pointer-events-none">
+      <div className="absolute right-[calc(50%-240px+50px)] top-1/2 size-4 rounded-full bg-amber-400/30 hidden lg:block pointer-events-none">
         <motion.div
           className="absolute inset-0 rounded-full border border-amber-400/20"
           animate={{ scale: [1, 2], opacity: [0.5, 0] }}
@@ -132,7 +132,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           {/* Left — Hero Copy */}
           <div className="lg:col-span-8 flex flex-col text-left">
-            <div className="min-h-[220px] sm:min-h-[260px] flex flex-col justify-center">
+            <div className="min-h-56 sm:min-h-64 flex flex-col justify-center">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSlide}
@@ -149,8 +149,8 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
                     transition={{ delay: 0.1, duration: 0.4 }}
                     className="mb-3"
                   >
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] sm:text-xs font-semibold uppercase tracking-widest backdrop-blur-md">
-                      <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest backdrop-blur-md">
+                      <Sparkles className="size-3.5 text-amber-400" />
                       <span>{slide.tag}</span>
                     </div>
                   </motion.div>
@@ -173,9 +173,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
                   {/* Subtitle */}
                   <div className="mb-6">
                     <p className="text-sm sm:text-lg text-zinc-200 max-w-xl font-light leading-relaxed drop-shadow-md">
-                      {slide.subtitle}. Specializing in traditional weddings, pre &amp; post-wedding
-                      shoots, outdoor baby shower photos, and photo framing across {STUDIO_INFO.state}
-                      .
+                      {slide.subtitle}. {HERO_SECTION_TEXT.studioSubtitle}
                     </p>
                   </div>
                 </motion.div>
@@ -194,7 +192,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
                 className="group relative inline-flex items-center justify-center px-6 py-3 text-xs sm:text-sm font-bold text-black uppercase tracking-wider bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 active:scale-95 transition-all duration-300 whitespace-nowrap"
               >
                 <span>Book Event Consultation</span>
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="size-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
 
               <div className="flex items-center gap-2.5">
@@ -202,14 +200,14 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
                   href="#gallery"
                   className="flex-1 sm:flex-none inline-flex items-center justify-center px-5 py-3 text-xs sm:text-sm font-semibold text-zinc-200 hover:text-white uppercase tracking-wider bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700/80 rounded-full backdrop-blur-md transition-all hover:border-amber-500/40 whitespace-nowrap"
                 >
-                  <Camera className="w-4 h-4 mr-2 text-amber-400" />
+                  <Camera className="size-4 mr-2 text-amber-400" />
                   <span>Portfolio</span>
                 </a>
                 <a
                   href="#framing"
                   className="flex-1 sm:flex-none inline-flex items-center justify-center px-5 py-3 text-xs sm:text-sm font-semibold text-amber-300 hover:text-amber-200 uppercase tracking-wider bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 rounded-full backdrop-blur-md transition-all whitespace-nowrap"
                 >
-                  <Frame className="w-4 h-4 mr-2" />
+                  <Frame className="size-4 mr-2" />
                   <span>Framing</span>
                 </a>
               </div>
@@ -224,20 +222,20 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
               transition={{ delay: 0.45, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="glass-panel rounded-2xl p-5 border border-amber-500/20 shadow-2xl relative overflow-hidden bg-zinc-900/80 backdrop-blur-xl"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute top-0 right-0 size-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
               <div className="flex items-center justify-between pb-3 border-b border-zinc-800 mb-4">
                 <div>
                   <h3 className="text-white font-semibold text-base">{STUDIO_INFO.city} Studio</h3>
                   <p className="text-zinc-400 text-xs flex items-center gap-1 mt-0.5">
-                    <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                    <MapPin className="size-3.5 text-amber-400" />
                     <span>
                       {STUDIO_INFO.state}, {STUDIO_INFO.country}
                     </span>
                   </p>
                 </div>
                 <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
-                  <Award className="w-5 h-5" />
+                  <Award className="size-5" />
                 </div>
               </div>
 
@@ -249,7 +247,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
                     className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800"
                   >
                     <p className={`text-xl font-black ${stat.color}`}>{stat.val}</p>
-                    <p className="text-[10px] text-zinc-400 uppercase font-medium mt-0.5">
+                    <p className="text-xs text-zinc-400 uppercase font-medium mt-0.5">
                       {stat.label}
                     </p>
                   </div>
@@ -259,12 +257,12 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
               {/* Booking Callout */}
               <div className="p-3 rounded-xl bg-linear-to-r from-amber-500/15 to-transparent border border-amber-500/25 flex items-center justify-between">
                 <div>
-                  <p className="text-[11px] text-amber-300 font-semibold uppercase">
+                  <p className="text-xs text-amber-300 font-semibold uppercase">
                     Booking 2026/2027 Dates
                   </p>
-                  <p className="text-[11px] text-zinc-300">Wedding &amp; Pre-wedding dates open</p>
+                  <p className="text-xs text-zinc-300">Wedding &amp; Pre-wedding dates open</p>
                 </div>
-                <Heart className="w-4 h-4 text-amber-400 fill-amber-400/30 shrink-0" />
+                <Heart className="size-4 text-amber-400 fill-amber-400/30 shrink-0" />
               </div>
             </motion.div>
           </div>
@@ -278,7 +276,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
             <button
               key={s.tag}
               onClick={() => setCurrentSlide(index)}
-              className={`px-3.5 py-1 rounded-full text-[10px] sm:text-[11px] font-medium transition-all whitespace-nowrap shrink-0 ${
+              className={`px-3.5 py-1 rounded-full text-xs font-medium transition-all whitespace-nowrap shrink-0 ${
                 currentSlide === index
                   ? "bg-amber-400 text-black font-bold shadow-md shadow-amber-500/30"
                   : "bg-black/60 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/80 border border-zinc-800"
@@ -289,18 +287,6 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
           ))}
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-20 sm:bottom-24 right-4 sm:right-8 z-20 hidden sm:flex flex-col items-center gap-1.5 text-zinc-500"
-      >
-        <span className="text-[9px] uppercase tracking-[0.2em] rotate-90 origin-center font-medium">
-          Scroll
-        </span>
-        <ChevronDown className="w-4 h-4" />
-      </motion.div>
     </section>
   );
 }

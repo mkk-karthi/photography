@@ -108,8 +108,8 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
               onClick={(e) => handleNavClick(e, "#")}
               className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer shrink-0"
             >
-              <div className="relative flex items-center justify-center size-9 sm:w-10 sm:h-10 rounded-full bg-amber-500/10 border border-amber-500/30 group-hover:border-amber-400 group-hover:bg-amber-500/20 transition-all duration-300 shadow-md">
-                <Camera className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 group-hover:scale-110 transition-transform" />
+              <div className="relative flex items-center justify-center size-9 sm:size-10 rounded-full bg-amber-500/10 border border-amber-500/30 group-hover:border-amber-400 group-hover:bg-amber-500/20 transition-all duration-300 shadow-md">
+                <Camera className="size-4 sm:size-5 text-amber-400 group-hover:scale-110 transition-transform" />
                 <div className="absolute -inset-1 rounded-full bg-amber-500/20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <div className="flex flex-col leading-none text-left drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
@@ -163,7 +163,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                 href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, "")}`}
                 className="flex items-center gap-2 text-xs font-semibold text-zinc-200 hover:text-amber-400 transition-colors px-2.5 py-1.5 rounded-full border-transparent whitespace-nowrap shrink-0 drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]"
               >
-                <Phone className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <Phone className="size-3.5 text-amber-400 shrink-0" />
                 <span>{STUDIO_INFO.phone}</span>
               </a>
 
@@ -171,7 +171,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                 onClick={onOpenEnquiry}
                 className="group relative inline-flex items-center justify-center px-4 py-2 text-xs font-bold text-black uppercase tracking-wider bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-lg shadow-amber-500/20 hover:shadow-amber-500/35 hover:scale-105 active:scale-95 transition-all duration-300 whitespace-nowrap shrink-0"
               >
-                <Sparkles className="w-3.5 h-3.5 mr-1.5 text-black" />
+                <Sparkles className="size-3.5 mr-1.5 text-black" />
                 <span>Book Consultation</span>
               </button>
             </div>
@@ -183,7 +183,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                 className="p-2.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 hover:text-white hover:bg-amber-500/20 shadow-lg shadow-amber-500/10 transition-all duration-300 cursor-pointer"
                 aria-label="Toggle Navigation Menu"
               >
-                <Menu className="w-5 h-5" />
+                <Menu className="size-5" />
               </button>
             </div>
           </div>
@@ -198,22 +198,20 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            data-aos="fade-down"
-            data-aos-duration="300"
-            className="fixed inset-0 z-50 h-screen max-h-dvh w-screen bg-[#09090b]/98 backdrop-blur-3xl flex flex-col justify-start p-5 sm:p-6 overflow-y-auto"
+            className="fixed inset-0 z-50 h-screen max-h-dvh w-screen bg-zinc-950/98 backdrop-blur-3xl flex flex-col justify-start p-5 sm:p-6 overflow-y-auto"
           >
             {/* Overlay Subtle Ambient Glow */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 size-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
             {/* Header: Logo & Close Button */}
             <div
               className="flex items-center justify-between relative z-10 pb-4 border-b border-white/10"
-              data-aos="fade-down"
+              data-aos="fade-up"
               data-aos-delay="50"
             >
               <div className="flex items-center gap-2.5">
                 <div className="flex items-center justify-center size-8 rounded-full bg-amber-500/10 border border-amber-500/30">
-                  <Camera className="w-4 h-4 text-amber-400" />
+                  <Camera className="size-4 text-amber-400" />
                 </div>
                 <div className="flex flex-col leading-none text-left">
                   <span className="text-base font-black tracking-[0.5em] text-white uppercase">
@@ -230,7 +228,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                 className="p-2 rounded-full bg-white/5 text-zinc-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
                 aria-label="Close Navigation Menu"
               >
-                <X className="w-5 h-5" />
+                <X className="size-5" />
               </button>
             </div>
 
@@ -245,7 +243,6 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                     href={link.href}
                     data-aos="fade-up"
                     data-aos-delay={i * 50 + 100}
-                    data-aos-duration="400"
                     onClick={(e) => handleNavClick(e, link.href)}
                     className={`flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 ${
                       isActive
@@ -257,7 +254,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                       {link.label}
                     </span>
                     <ChevronRight
-                      className={`w-4 h-4 transition-transform ${
+                      className={`size-4 transition-transform ${
                         isActive ? "text-amber-400 translate-x-0.5" : "text-zinc-600 opacity-60"
                       }`}
                     />
@@ -272,7 +269,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                 href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, "")}`}
                 className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-white/5 text-xs font-semibold text-zinc-200 hover:text-amber-300 transition-colors"
               >
-                <Phone className="w-3.5 h-3.5 text-amber-400" />
+                <Phone className="size-3.5 text-amber-400" />
                 <span>Call: {STUDIO_INFO.phone}</span>
               </a>
 
@@ -283,7 +280,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                 }}
                 className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-amber-500/20 active:scale-98 transition-all cursor-pointer"
               >
-                <CalendarCheck className="w-4 h-4 text-black" />
+                <CalendarCheck className="size-4 text-black" />
                 <span>Book Event Consultation</span>
               </button>
             </div>

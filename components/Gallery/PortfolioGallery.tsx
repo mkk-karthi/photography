@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { PORTFOLIO_PHOTOS, PORTFOLIO_CATEGORIES } from "@/data/portfolioData";
+import {
+  PORTFOLIO_PHOTOS,
+  PORTFOLIO_CATEGORIES,
+  PORTFOLIO_SECTION_TEXT,
+} from "@/data/portfolioData";
 import type { PhotoItem } from "@/data/types";
 import LightboxModal from "./LightboxModal";
 import { Camera, Heart, Eye, MapPin } from "lucide-react";
@@ -16,7 +20,7 @@ export default function PortfolioGallery() {
       : PORTFOLIO_PHOTOS.filter((photo) => photo.category === activeCategory);
 
   return (
-    <section id="gallery" className="py-24 bg-[#09090b] relative overflow-hidden min-h-212.5">
+    <section id="gallery" className="py-24 bg-zinc-950 relative overflow-hidden min-h-212">
       {/* Ambient radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -31,18 +35,19 @@ export default function PortfolioGallery() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12" data-aos="fade-up">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-4">
-            <Camera className="w-3.5 h-3.5" />
-            <span>Curated Visual Collections</span>
+            <Camera className="size-3.5" />
+            <span>{PORTFOLIO_SECTION_TEXT.badge}</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Our Signature{" "}
-            <span className="font-serif text-amber-300 italic font-normal">Portfolio</span>
+            {PORTFOLIO_SECTION_TEXT.titlePrefix}{" "}
+            <span className="font-serif text-amber-300 italic font-normal">
+              {PORTFOLIO_SECTION_TEXT.titleHighlight}
+            </span>
           </h2>
 
           <p className="text-zinc-400 text-base sm:text-lg mt-4 font-light leading-relaxed">
-            Click any photo to open full-screen High-Resolution Lightbox view with camera
-            specifications &amp; EXIF data.
+            {PORTFOLIO_SECTION_TEXT.subtitle}
           </p>
         </div>
 
@@ -114,7 +119,7 @@ export default function PortfolioGallery() {
                     <div className="flex items-center gap-1.5 shrink-0">
                       <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-auto">
                         <div className="p-1.5 rounded-full bg-amber-400 text-black shadow-lg">
-                          <Eye className="w-3.5 h-3.5" />
+                          <Eye className="size-3.5" />
                         </div>
                       </div>
                     </div>
@@ -128,12 +133,12 @@ export default function PortfolioGallery() {
 
                     <div className="flex items-center justify-between text-xs text-zinc-300 mt-1.5">
                       <div className="flex items-center gap-1.5 text-zinc-400">
-                        <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                        <MapPin className="size-3.5 text-amber-400" />
                         <span>{photo.location}</span>
                       </div>
 
                       <div className="flex items-center gap-1.5 text-rose-400">
-                        <Heart className="w-3.5 h-3.5 fill-rose-500/40" />
+                        <Heart className="size-3.5 fill-rose-500/40" />
                         <span>{photo.likes}</span>
                       </div>
                     </div>

@@ -79,7 +79,7 @@ export default function LightboxModal({
           className="absolute top-4 right-4 z-50 p-3 rounded-full bg-zinc-900/80 text-zinc-300 hover:text-white border border-zinc-700 hover:border-amber-400 transition-colors"
           aria-label="Close Lightbox"
         >
-          <X className="w-6 h-6" />
+          <X className="size-6" />
         </button>
 
         {/* Previous Button */}
@@ -88,7 +88,7 @@ export default function LightboxModal({
           className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-zinc-900/80 text-zinc-300 hover:text-amber-400 border border-zinc-700 hover:border-amber-400 transition-all hidden md:flex items-center justify-center"
           aria-label="Previous Photo"
         >
-          <ChevronLeft className="w-7 h-7" />
+          <ChevronLeft className="size-7" />
         </button>
 
         {/* Next Button */}
@@ -97,7 +97,7 @@ export default function LightboxModal({
           className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-zinc-900/80 text-zinc-300 hover:text-amber-400 border border-zinc-700 hover:border-amber-400 transition-all hidden md:flex items-center justify-center"
           aria-label="Next Photo"
         >
-          <ChevronRight className="w-7 h-7" />
+          <ChevronRight className="size-7" />
         </button>
 
         {/* Modal Main Content */}
@@ -121,7 +121,7 @@ export default function LightboxModal({
 
             {/* Floating Quick Action Overlay */}
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-              <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-[11px] text-amber-300 font-semibold border border-amber-500/30">
+              <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-xs text-amber-300 font-semibold border border-amber-500/30">
                 {photo.categoryLabel}
               </span>
 
@@ -131,7 +131,7 @@ export default function LightboxModal({
                   className="p-2 rounded-full bg-black/70 text-zinc-300 hover:text-white border border-zinc-700"
                   title="Toggle Zoom"
                 >
-                  <Maximize2 className="w-4 h-4" />
+                  <Maximize2 className="size-4" />
                 </button>
 
                 <button
@@ -140,9 +140,9 @@ export default function LightboxModal({
                   title="Share Photo"
                 >
                   {copied ? (
-                    <Check className="w-4 h-4 text-emerald-400" />
+                    <Check className="size-4 text-emerald-400" />
                   ) : (
-                    <Share2 className="w-4 h-4" />
+                    <Share2 className="size-4" />
                   )}
                 </button>
               </div>
@@ -153,7 +153,7 @@ export default function LightboxModal({
           <div className="w-full lg:w-96 bg-zinc-950 p-6 flex flex-col justify-between overflow-y-auto border-t lg:border-t-0 lg:border-l border-zinc-800">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400">
+                <span className="text-xs font-extrabold uppercase tracking-widest text-amber-400">
                   {photo.categoryLabel}
                 </span>
                 <span className="text-xs text-zinc-400">
@@ -164,7 +164,7 @@ export default function LightboxModal({
               <h3 className="text-2xl font-bold text-white mb-2">{photo.title}</h3>
 
               <div className="flex items-center gap-1.5 text-xs text-zinc-400 mb-4">
-                <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <MapPin className="size-3.5 text-amber-400 shrink-0" />
                 <span>{photo.location}</span>
               </div>
 
@@ -175,25 +175,25 @@ export default function LightboxModal({
               {/* Camera EXIF Details Box */}
               <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 mb-6 space-y-3">
                 <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider pb-2 border-b border-zinc-800">
-                  <Camera className="w-4 h-4" />
+                  <Camera className="size-4" />
                   <span>Camera & Shot EXIF Specs</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
-                    <span className="text-zinc-500 text-[10px] uppercase block">Camera Body</span>
+                    <span className="text-zinc-500 text-xs uppercase block">Camera Body</span>
                     <span className="text-zinc-200 font-medium">{photo.exif.camera}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-500 text-[10px] uppercase block">Prime Lens</span>
+                    <span className="text-zinc-500 text-xs uppercase block">Prime Lens</span>
                     <span className="text-zinc-200 font-medium">{photo.exif.lens}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-500 text-[10px] uppercase block">Aperture</span>
+                    <span className="text-zinc-500 text-xs uppercase block">Aperture</span>
                     <span className="text-amber-300 font-semibold">{photo.exif.aperture}</span>
                   </div>
                   <div>
-                    <span className="text-zinc-500 text-[10px] uppercase block">Shutter Speed</span>
+                    <span className="text-zinc-500 text-xs uppercase block">Shutter Speed</span>
                     <span className="text-amber-300 font-semibold">{photo.exif.shutter}</span>
                   </div>
                 </div>
@@ -210,7 +210,7 @@ export default function LightboxModal({
                     : "bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white"
                 }`}
               >
-                <Heart className={`w-4 h-4 ${liked ? "fill-rose-500 text-rose-500" : ""}`} />
+                <Heart className={`size-4 ${liked ? "fill-rose-500 text-rose-500" : ""}`} />
                 <span>{photo.likes + (liked ? 1 : 0)} Appreciations</span>
               </button>
 

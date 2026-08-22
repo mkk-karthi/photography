@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import Footer from '../components/Footer';
-import { STUDIO_INFO } from '../data/portfolioData';
+import { STUDIO_INFO, FOOTER_CONTENT } from '../data/portfolioData';
 import { expect, test, vi } from 'vitest';
 
 test('renders Footer studio info and contact details', () => {
@@ -8,5 +8,6 @@ test('renders Footer studio info and contact details', () => {
   render(<Footer onOpenEnquiry={handleOpenEnquiry} />);
 
   expect(screen.getAllByText(new RegExp(STUDIO_INFO.brandFirstName, 'i')).length).toBeGreaterThan(0);
-  expect(screen.getByText(new RegExp(STUDIO_INFO.email, 'i'))).toBeInTheDocument();
+  expect(screen.getByText(FOOTER_CONTENT.specialtiesList[0].label)).toBeInTheDocument();
+  expect(screen.getByText(/MKK Creation/i)).toBeInTheDocument();
 });

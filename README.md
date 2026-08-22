@@ -37,7 +37,7 @@ npm install
 npm run dev
 
 # Run unit tests
-npx vitest run
+npm run test
 
 # Build for production
 npm run build

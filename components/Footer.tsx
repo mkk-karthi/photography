@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Camera, MapPin, Phone, Mail, ArrowUp, CalendarCheck } from "lucide-react";
-import { STUDIO_INFO } from "@/data/portfolioData";
+import { STUDIO_INFO, FOOTER_CONTENT } from "@/data/portfolioData";
 
 interface FooterProps {
   onOpenEnquiry: () => void;
@@ -30,7 +30,7 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
   return (
     <footer
       id="contact"
-      className="bg-[#060608] border-t border-zinc-800 text-zinc-400 pt-16 pb-12 relative"
+      className="bg-zinc-950 border-t border-zinc-800 text-zinc-400 pt-16 pb-12 relative"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-zinc-800/80">
@@ -38,8 +38,8 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
           <div className="lg:col-span-5 space-y-4">
             {/* Matching Navbar Brand Logo Style */}
             <a href="#" className="inline-flex items-center gap-3 group cursor-pointer">
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/30 group-hover:border-amber-400 group-hover:bg-amber-500/20 transition-all duration-300">
-                <Camera className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform" />
+              <div className="relative flex items-center justify-center size-10 rounded-full bg-amber-500/10 border border-amber-500/30 group-hover:border-amber-400 group-hover:bg-amber-500/20 transition-all duration-300">
+                <Camera className="size-5 text-amber-400 group-hover:scale-110 transition-transform" />
                 <div className="absolute -inset-1 rounded-full bg-amber-500/20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <div className="flex flex-col leading-none text-left">
@@ -53,18 +53,16 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
             </a>
 
             <p className="text-xs text-zinc-400 max-w-md font-light leading-relaxed">
-              Professional wedding, pre-wedding, beach post-wedding, outdoor baby shower maternity,
-              bridal portrait, and custom photo framing studio based out of {STUDIO_INFO.city},{" "}
-              {STUDIO_INFO.state}.
+              {FOOTER_CONTENT.aboutText}
             </p>
 
             <div className="space-y-2 text-xs pt-2">
               <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <MapPin className="size-4 text-amber-400 shrink-0 mt-0.5" />
                 <span className="text-zinc-300">{STUDIO_INFO.address}</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-amber-400 shrink-0" />
+                <Phone className="size-4 text-amber-400 shrink-0" />
                 <a
                   href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, "")}`}
                   className="text-zinc-300 hover:text-amber-300"
@@ -73,7 +71,7 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-amber-400 shrink-0" />
+                <Mail className="size-4 text-amber-400 shrink-0" />
                 <a
                   href={`mailto:${STUDIO_INFO.email}`}
                   className="text-zinc-300 hover:text-amber-300"
@@ -90,36 +88,13 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
               Our Specialties
             </h4>
             <ul className="space-y-2 text-xs font-light">
-              <li>
-                <a href="#gallery" className="hover:text-amber-300 transition-colors">
-                  Wedding Photography
-                </a>
-              </li>
-              <li>
-                <a href="#gallery" className="hover:text-amber-300 transition-colors">
-                  Pre-Wedding Shoots
-                </a>
-              </li>
-              <li>
-                <a href="#gallery" className="hover:text-amber-300 transition-colors">
-                  Post-Wedding Beach Photoshoot
-                </a>
-              </li>
-              <li>
-                <a href="#gallery" className="hover:text-amber-300 transition-colors">
-                  Baby Shower Outdoor Photos
-                </a>
-              </li>
-              <li>
-                <a href="#gallery" className="hover:text-amber-300 transition-colors">
-                  Bridal Solo Portraits
-                </a>
-              </li>
-              <li>
-                <a href="#framing" className="hover:text-amber-300 transition-colors">
-                  Acrylic & Teak Photo Framing
-                </a>
-              </li>
+              {FOOTER_CONTENT.specialtiesList.map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} className="hover:text-amber-300 transition-colors">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -127,11 +102,10 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
           <div className="lg:col-span-4 glass-panel p-6 rounded-2xl border border-amber-500/20 bg-zinc-900/90 flex flex-col justify-between">
             <div>
               <h4 className="text-sm font-bold text-white mb-2">
-                Planning a {STUDIO_INFO.currentYear}/{STUDIO_INFO.nextYear} Event?
+                {FOOTER_CONTENT.eventPlanningTitle}
               </h4>
               <p className="text-xs text-zinc-400 font-light mb-4">
-                Get in touch with {STUDIO_INFO.name} for custom dates, resort venue advice, and
-                lay-flat album preview packages.
+                {FOOTER_CONTENT.eventPlanningSubtitle}
               </p>
             </div>
 
@@ -139,7 +113,7 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
               onClick={onOpenEnquiry}
               className="w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-bold uppercase tracking-wider text-xs transition-colors flex items-center justify-center gap-2"
             >
-              <CalendarCheck className="w-4 h-4" />
+              <CalendarCheck className="size-4" />
               <span>Send Event Enquiry</span>
             </button>
           </div>
@@ -169,11 +143,11 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
       {showTopBtn && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-5 right-5 z-40 w-9 h-9 rounded-full bg-linear-to-r from-amber-400 to-amber-500 text-black shadow-lg shadow-amber-500/20 flex items-center justify-center border border-amber-300 hover:scale-110 active:scale-95 transition-all duration-300 group"
+          className="fixed bottom-5 right-5 z-40 size-9 rounded-full bg-linear-to-r from-amber-400 to-amber-500 text-black shadow-lg shadow-amber-500/20 flex items-center justify-center border border-amber-300 hover:scale-110 active:scale-95 transition-all duration-300 group"
           title="Move to top"
           aria-label="Move to top"
         >
-          <ArrowUp className="w-4 h-4 font-bold group-hover:-translate-y-0.5 transition-transform" />
+          <ArrowUp className="size-4 font-bold group-hover:-translate-y-0.5 transition-transform" />
         </button>
       )}
     </footer>

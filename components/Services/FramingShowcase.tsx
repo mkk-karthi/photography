@@ -5,7 +5,7 @@ import {
   FRAMING_OPTIONS,
   FRAME_SIZES,
   SAMPLE_PHOTOS,
-  STUDIO_INFO,
+  FRAMING_SECTION_TEXT,
 } from "@/data/portfolioData";
 import type { FramingOption } from "@/data/types";
 import { Frame, Check, Ruler, ArrowRight, Layers, Info } from "lucide-react";
@@ -44,24 +44,25 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
   return (
     <section
       id="framing"
-      className="py-24 bg-[#09090b] relative overflow-hidden border-t border-b border-zinc-800/80"
+      className="py-24 bg-zinc-950 relative overflow-hidden border-t border-b border-zinc-800/80"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-4">
-            <Frame className="w-3.5 h-3.5" />
-            <span>{STUDIO_INFO.shortName} Custom Framing Studio</span>
+            <Frame className="size-3.5" />
+            <span>{FRAMING_SECTION_TEXT.badge}</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Transform Photos Into{" "}
-            <span className="font-serif text-amber-300 italic font-normal">Archival Wall Art</span>
+            {FRAMING_SECTION_TEXT.titlePrefix}{" "}
+            <span className="font-serif text-amber-300 italic font-normal">
+              {FRAMING_SECTION_TEXT.titleHighlight}
+            </span>
           </h2>
 
           <p className="text-zinc-400 text-base sm:text-lg mt-4 font-light leading-relaxed">
-            Handcrafted in {STUDIO_INFO.city} with museum-grade UV protection glass, seasoned{" "}
-            {STUDIO_INFO.region} teak wood, and 100-year anti-fade guarantees.
+            {FRAMING_SECTION_TEXT.subtitle}
           </p>
         </div>
 
@@ -70,13 +71,13 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
           {/* Left Column: Studio Wall Stage for High-Contrast Frame Visibility */}
           <div className="lg:col-span-7 flex flex-col items-center" data-aos="fade-right">
             {/* Studio Wall Stage Container */}
-            <div className="relative w-full max-w-xl p-6 sm:p-10 rounded-3xl bg-linear-to-b from-zinc-800/90 via-zinc-900 to-black border border-zinc-700/80 flex items-center justify-center h-115 shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden">
+            <div className="relative w-full max-w-xl p-6 sm:p-10 rounded-3xl bg-linear-to-b from-zinc-800/90 via-zinc-900 to-black border border-zinc-700/80 flex items-center justify-center h-112 shadow-2xl overflow-hidden">
               {/* Wall Light Spotlight Effect */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 size-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
 
-              {/* Dynamic Frame Box (Resizes visually according to selected dimension aspect ratio) */}
+              {/* Dynamic Frame Box */}
               <div
-                className={`relative transition-all duration-500 ease-out flex items-center justify-center shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] ${
+                className={`relative transition-all duration-500 ease-out flex items-center justify-center shadow-2xl ${
                   animState === "hiding"
                     ? "opacity-0 scale-90 pointer-events-none"
                     : animState === "zooming"
@@ -84,12 +85,12 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
                       : "opacity-100 scale-100 transition-all duration-500 ease-out"
                 } ${
                   selectedFrame.id === "acrylic-luxe"
-                    ? "p-2.5 bg-linear-to-r from-zinc-100 via-white to-zinc-200 rounded-lg shadow-[0_0_35px_rgba(255,255,255,0.4)]"
+                    ? "p-2.5 bg-linear-to-r from-zinc-100 via-white to-zinc-200 rounded-lg shadow-xl"
                     : selectedFrame.id === "teak-wood"
-                      ? "p-4 sm:p-5 bg-[#3e2723] rounded-lg border-[6px] border-[#5d4037] shadow-[0_25px_60px_rgba(0,0,0,0.95)]"
+                      ? "p-4 sm:p-5 bg-amber-950 rounded-lg border-4 border-amber-900 shadow-2xl"
                       : selectedFrame.id === "canvas-wrap"
-                        ? "p-0 rounded-none shadow-[15px_15px_40px_rgba(0,0,0,0.9)] border-2 border-zinc-700"
-                        : "p-4 bg-linear-to-br from-amber-900 via-zinc-900 to-black rounded-2xl border-2 border-amber-500/60 shadow-[0_20px_50px_rgba(0,0,0,0.9)]"
+                        ? "p-0 rounded-none shadow-2xl border-2 border-zinc-700"
+                        : "p-4 bg-linear-to-br from-amber-900 via-zinc-900 to-black rounded-2xl border-2 border-amber-500/60 shadow-2xl"
                 }`}
                 style={{
                   aspectRatio: sizeAspectRatio,
@@ -145,7 +146,7 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
                       handleStyleChange(() => setSamplePhoto(sp.url));
                     }}
                     title={sp.label}
-                    className={`w-9 h-9 rounded-full overflow-hidden transition-all duration-300 focus:outline-none ${
+                    className={`size-9 rounded-full overflow-hidden transition-all duration-300 focus:outline-none ${
                       isActive
                         ? "border-2 border-amber-400 ring-2 ring-amber-400/40 scale-110 shadow-lg shadow-amber-500/30"
                         : "border-2 border-zinc-700 opacity-60 hover:opacity-100 hover:border-zinc-500"
@@ -168,7 +169,7 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
             {/* Material Selector */}
             <div>
               <label className="text-xs font-bold text-amber-400 uppercase tracking-widest flex items-center gap-2 mb-3">
-                <Layers className="w-4 h-4" />
+                <Layers className="size-4" />
                 <span>1. Select Frame Material</span>
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -198,7 +199,7 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
             <div>
               <div className="flex items-center justify-between mb-3">
                 <label className="text-xs font-bold text-amber-400 uppercase tracking-widest flex items-center gap-2">
-                  <Ruler className="w-4 h-4" />
+                  <Ruler className="size-4" />
                   <span>2. Select Frame Dimension ({FRAME_SIZES.length} Options)</span>
                 </label>
                 <span className="text-[10px] text-amber-300/80 font-medium italic">
@@ -245,7 +246,7 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
               <div className="space-y-1.5 mb-5">
                 {selectedFrame.features.slice(0, 3).map((feat: string, fIdx: number) => (
                   <div key={fIdx} className="flex items-center gap-2 text-[11px] text-zinc-300">
-                    <Check className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <Check className="size-3.5 text-amber-400 shrink-0" />
                     <span>{feat}</span>
                   </div>
                 ))}
@@ -258,12 +259,12 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
                 className="w-full py-3.5 rounded-xl bg-linear-to-r from-amber-400 to-amber-500 text-black font-bold uppercase tracking-wider text-xs shadow-lg shadow-amber-500/25 hover:from-amber-300 hover:to-amber-400 transition-all flex items-center justify-center gap-2"
               >
                 <span>Order Frame (₹{calculatedPrice})</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="size-4" />
               </button>
 
               {/* Explicit Pricing Variable Note */}
               <p className="text-[11px] text-zinc-400 font-light italic mt-3 text-center flex items-center justify-center gap-1.5">
-                <Info className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <Info className="size-3.5 text-amber-400 shrink-0" />
                 <span>
                   <strong className="text-amber-300 not-italic font-semibold">* Note:</strong>{" "}
                   Prices are variable depending on custom glass, finish & bulk order requirements.
