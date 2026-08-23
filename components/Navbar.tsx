@@ -244,7 +244,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                     data-aos="fade-up"
                     data-aos-delay={i * 50 + 100}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className={`flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 ${
+                    className={`flex items-center justify-center px-4 py-2.5 rounded-xl transition-all duration-200 ${
                       isActive
                         ? "bg-amber-500/15 text-amber-300 font-bold"
                         : "text-zinc-300 hover:text-white hover:bg-white/5 font-medium"
@@ -253,11 +253,6 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                     <span className="text-sm uppercase tracking-wider font-semibold">
                       {link.label}
                     </span>
-                    <ChevronRight
-                      className={`size-4 transition-transform ${
-                        isActive ? "text-amber-400 translate-x-0.5" : "text-zinc-600 opacity-60"
-                      }`}
-                    />
                   </a>
                 );
               })}

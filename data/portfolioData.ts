@@ -964,7 +964,7 @@ export const SEO_METADATA = {
     "Acrylic Photo Prints",
     "Candid Wedding Photographer",
     `${STUDIO_INFO.state} Wedding Photographer`,
-    `Best Photography Services ${STUDIO_INFO.region}`,
+    `Best Photography Studio ${STUDIO_INFO.region}`,
   ],
   ogImage: "/images/portfolio/portfolio-2.webp",
   ogType: "website",

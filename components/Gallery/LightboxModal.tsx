@@ -3,16 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { PhotoItem } from "@/data/types";
-import {
-  X,
-  ChevronLeft,
-  ChevronRight,
-  MapPin,
-  Maximize2,
-  Share2,
-  Check,
-  ArrowRight,
-} from "lucide-react";
+import { X, ChevronLeft, ChevronRight, MapPin, Share2, Check, ArrowRight } from "lucide-react";
 
 interface LightboxModalProps {
   photo: PhotoItem | null;
@@ -28,7 +19,6 @@ export default function LightboxModal({
   onNavigate,
 }: LightboxModalProps) {
   const [copied, setCopied] = useState(false);
-  const [zoom, setZoom] = useState(false);
 
   const currentIndex = photo ? photosList.findIndex((p) => p.id === photo.id) : 0;
 
@@ -36,15 +26,23 @@ export default function LightboxModal({
     if (!photo) return;
     const prevIdx = (currentIndex - 1 + photosList.length) % photosList.length;
     onNavigate(photosList[prevIdx]);
-    setZoom(false);
   };
 
   const handleNext = () => {
     if (!photo) return;
     const nextIdx = (currentIndex + 1) % photosList.length;
     onNavigate(photosList[nextIdx]);
-    setZoom(false);
   };
+
+  // Lock background scroll when lightbox is open
+  useEffect(() => {
+    if (!photo) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow || "";
+    };
+  }, [photo]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -69,7 +67,7 @@ export default function LightboxModal({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/95 backdrop-blur-xl">
+      <div className="fixed inset-0 h-dvh w-screen z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-md overscroll-none touch-none overflow-hidden">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -103,17 +101,14 @@ export default function LightboxModal({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.3 }}
-          className="max-w-6xl w-full max-h-[90vh] flex flex-col lg:flex-row rounded-2xl overflow-hidden glass-panel border border-zinc-800 shadow-2xl"
+          className="max-w-6xl w-full max-h-[calc(100dvh-2rem)] lg:max-h-[90dvh] flex flex-col lg:flex-row rounded-2xl overflow-hidden glass-panel border border-zinc-800 shadow-2xl overscroll-contain"
         >
           {/* Left: Image Container */}
-          <div className="relative flex-1 bg-black flex items-center justify-center overflow-hidden min-h-87.5 lg:min-h-150">
+          <div className="relative flex-1 bg-black flex items-center justify-center overflow-hidden">
             <img
               src={photo.imageUrl}
               alt={photo.title}
-              className={`max-h-[85vh] w-auto object-contain transition-transform duration-300 cursor-zoom-in ${
-                zoom ? "scale-125" : "scale-100"
-              }`}
-              onClick={() => setZoom(!zoom)}
+              className="max-h-[50dvh] sm:max-h-[70dvh] lg:max-h-[85dvh] w-auto object-contain select-none pointer-events-none"
             />
 
             {/* Floating Quick Action Overlay */}
@@ -122,15 +117,8 @@ export default function LightboxModal({
                 {photo.categoryLabel}
               </span>
 
-              <div className="flex items-center gap-2 pointer-events-auto">
-                <button
-                  onClick={() => setZoom(!zoom)}
-                  className="p-2 rounded-full bg-black/70 text-zinc-300 hover:text-white border border-zinc-700"
-                  title="Toggle Zoom"
-                >
-                  <Maximize2 className="size-4" />
-                </button>
-
+              {/* Hidden share button */}
+              <div className="hidden items-center gap-2 pointer-events-auto">
                 <button
                   onClick={handleShare}
                   className="p-2 rounded-full bg-black/70 text-zinc-300 hover:text-white border border-zinc-700"
@@ -147,7 +135,7 @@ export default function LightboxModal({
           </div>
 
           {/* Right: Details Panel */}
-          <div className="w-full lg:w-80 bg-zinc-950 p-6 flex flex-col justify-between overflow-y-auto border-t lg:border-t-0 lg:border-l border-zinc-800">
+          <div className="w-full lg:w-80 bg-zinc-950 p-6 flex flex-col justify-between overflow-y-auto overscroll-contain border-t lg:border-t-0 lg:border-l border-zinc-800">
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-extrabold uppercase tracking-widest text-amber-400">
