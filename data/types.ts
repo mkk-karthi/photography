@@ -12,11 +12,7 @@ export type PhotoCategory =
   | "bridal"
   | "framing";
 
-export type PhotoAspectRatio =
-  | "aspect-[3/4]"
-  | "aspect-[4/3]"
-  | "aspect-[1/1]"
-  | "aspect-[16/9]";
+export type PhotoAspectRatio = "aspect-[3/4]" | "aspect-[4/3]" | "aspect-[1/1]" | "aspect-[16/9]";
 
 export interface PhotoExif {
   camera: string;
@@ -124,7 +120,7 @@ export interface PhilosophyItem {
 
 // ── Stats Section ─────────────────────────────────────────────────────────────
 
-export type StatIconName = "Camera" | "Frame" | "Heart" | "Award" | "Star" | "Users";
+export type StatIconName = "Camera" | "Frame" | "Award" | "Users";
 
 export interface StatItem {
   iconName: StatIconName;

@@ -24,7 +24,7 @@ interface CTASectionProps {
   onOpenEnquiry: () => void;
 }
 
-// ── Icon & style maps (UI layer, not data layer) ──────────────────────────────
+// ── Icon & style maps ─────────────────────────────────────────────────────────
 
 const CONTACT_ICONS: Record<ContactCard["iconName"], React.ReactNode> = {
   Phone: <Phone className="size-5" />,
@@ -33,50 +33,36 @@ const CONTACT_ICONS: Record<ContactCard["iconName"], React.ReactNode> = {
   Share2: <Share2 className="size-5" />,
 };
 
-const CONTACT_GRADIENTS: Record<ContactCard["iconName"], string> = {
-  Phone: "from-amber-500/15 to-transparent",
-  Mail: "from-amber-400/10 to-transparent",
-  MapPin: "from-amber-500/15 to-transparent",
-  Share2: "from-amber-400/10 to-transparent",
-};
-
 const EXTERNAL_LABELS = new Set(["Instagram", "Studio Location"]);
 
 // ── Animation variants ────────────────────────────────────────────────────────
 
 const containerVariants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.09 } },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
   return (
-    <section
-      id="cta"
-      className="relative py-24 overflow-hidden"
-      style={{
-        background:
-          "radial-gradient(ellipse 90% 60% at 50% 0%, rgba(212,175,55,0.09) 0%, transparent 65%), #08080b",
-      }}
-    >
+    <section id="cta" className="relative py-20 sm:py-28 overflow-hidden film-strip-top bg-surface">
       {/* Pulsing aperture rings */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-        {[320, 480, 640, 800].map((size, i) => (
+        {[320, 480, 640, 820].map((size, i) => (
           <motion.div
             key={size}
-            className="absolute rounded-full border border-amber-500/5"
+            className="absolute rounded-full border border-amber-500/4"
             style={{ width: size, height: size }}
-            animate={{ scale: [1, 1.04, 1], opacity: [0.07, 0.18, 0.07] }}
+            animate={{ scale: [1, 1.05, 1], opacity: [0.06, 0.16, 0.06] }}
             transition={{
-              duration: 4 + i * 1.5,
-              delay: i * 0.8,
+              duration: 5 + i * 1.5,
+              delay: i * 0.9,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -84,41 +70,43 @@ export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
         ))}
       </div>
 
-      {/* Bokeh orbs */}
-      <div className="absolute top-10 left-10 size-48 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 size-56 bg-amber-400/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Ambient glows */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-80 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 100% at 50% 0%, rgba(212,175,55,0.07) 0%, transparent 100%)",
+        }}
+      />
+      <div className="absolute bottom-10 right-10 size-64 rounded-full blur-3xl pointer-events-none bg-amber-500/4" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Hero CTA Banner */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative rounded-3xl overflow-hidden border border-amber-500/20 shadow-2xl mb-16"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(9,9,11,0.95) 50%, rgba(212,175,55,0.06) 100%)",
-          }}
+          className="relative rounded-3xl overflow-hidden border border-amber-500/20 bg-linear-to-br from-card via-elevated to-surface shadow-2xl shadow-black/50 mb-12 sm:mb-16"
         >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-linear-to-r from-transparent via-amber-500/60 to-transparent" />
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-linear-to-r from-transparent via-amber-500/30 to-transparent" />
+          {/* Top accent line */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-0.5 bg-linear-to-r from-transparent via-amber-400/60 to-transparent" />
 
-          <div className="p-8 sm:p-12 lg:p-16 text-center">
+          <div className="p-8 sm:p-12 lg:p-16 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-6"
+              className="photo-badge mb-6 inline-flex"
             >
-              <Sparkles className="size-3.5" />
+              <Sparkles className="size-3 text-amber-400" />
               <span>
                 Serving {STUDIO_INFO.region} Since {STUDIO_INFO.establishedYear}
               </span>
             </motion.div>
 
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-4 leading-tight">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-text-primary tracking-tight mb-4 leading-tight">
               {CTA_SECTION_TEXT.titlePrefix}{" "}
               <span className="font-serif text-amber-300 italic font-normal">
                 {CTA_SECTION_TEXT.titleHighlight}
@@ -127,16 +115,16 @@ export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
               {CTA_SECTION_TEXT.titleSuffix}
             </h2>
 
-            <p className="text-zinc-400 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed mb-8">
+            <p className="text-text-secondary text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed mb-8">
               {CTA_SECTION_TEXT.subtitle}
             </p>
 
             {/* Availability Items */}
-            <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10">
               {AVAILABILITY_ITEMS.map((item) => (
                 <span
                   key={item}
-                  className="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-medium"
+                  className="px-3 py-1 rounded-full border border-amber-500/20 text-amber-300 text-[11px] font-medium bg-amber-500/10"
                 >
                   {item}
                 </span>
@@ -144,41 +132,42 @@ export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <motion.button
                 onClick={onOpenEnquiry}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.97 }}
-                className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-bold text-sm uppercase tracking-wider shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all duration-300"
+                transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-bold text-sm uppercase tracking-wider shadow-xl shadow-amber-500/30 hover:shadow-amber-500/45 will-change-transform"
               >
-                <CalendarCheck className="size-4" />
+                <CalendarCheck className="size-4 shrink-0" />
                 <span>Get a Free Quote</span>
-                <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform shrink-0" />
               </motion.button>
 
               <a
                 href={`tel:${STUDIO_INFO.phone.replace(/\s+/g, "")}`}
-                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-zinc-900/90 border border-zinc-700 text-zinc-200 hover:text-white hover:border-amber-500/50 font-semibold text-sm uppercase tracking-wider backdrop-blur-sm transition-all duration-300 hover:bg-zinc-800/90"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full border border-white/10 bg-surface text-text-primary hover:text-amber-300 hover:border-amber-400/50 font-semibold text-sm uppercase tracking-wider backdrop-blur-xs transition-all duration-300"
               >
-                <Phone className="size-4 text-amber-400" />
+                <Phone className="size-4 text-amber-400 shrink-0" />
                 <span>Call Now</span>
               </a>
             </div>
 
-            <div className="flex items-center justify-center gap-2 mt-6 text-xs text-zinc-500">
-              <Clock className="size-3.5 text-amber-500/60" />
+            <div className="flex items-center justify-center gap-2 mt-6 text-xs text-text-secondary">
+              <Clock className="size-3.5 text-amber-400 shrink-0" />
               <span>{CTA_SECTION_TEXT.hoursNotice}</span>
             </div>
           </div>
         </motion.div>
 
-        {/* Contact Cards */}
+        {/* Contact Cards — 2x2 on mobile, 4 col on lg */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-40px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
         >
           {CONTACT_CARDS.map((card) => (
             <motion.a
@@ -187,19 +176,19 @@ export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
               href={card.href}
               target={EXTERNAL_LABELS.has(card.label) ? "_blank" : undefined}
               rel={EXTERNAL_LABELS.has(card.label) ? "noopener noreferrer" : undefined}
-              className={`flex items-start gap-4 p-5 rounded-2xl border border-zinc-800 hover:border-amber-500/40 bg-linear-to-br ${CONTACT_GRADIENTS[card.iconName]} backdrop-blur-sm group cursor-pointer hover:-translate-y-1 hover:scale-105 transition-transform duration-300 ease-out`}
+              className="flex flex-col sm:flex-row items-start gap-3 p-4 sm:p-5 rounded-2xl border border-white/10 hover:border-amber-400/50 group cursor-pointer hover:-translate-y-1 transition-transform duration-300 bg-card hover:bg-card-hover shadow-lg shadow-black/40"
             >
-              <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0 group-hover:bg-amber-500/20 group-hover:border-amber-500/40 transition-colors">
+              <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0 group-hover:bg-amber-500/20 group-hover:border-amber-400/40 transition-colors">
                 {CONTACT_ICONS[card.iconName]}
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-0.5">
+                <p className="text-xs font-bold uppercase tracking-widest text-text-secondary mb-0.5">
                   {card.label}
                 </p>
-                <p className="text-sm font-semibold text-white group-hover:text-amber-300 transition-colors truncate">
+                <p className="text-sm font-semibold text-text-primary group-hover:text-amber-300 transition-colors truncate">
                   {card.value}
                 </p>
-                <p className="text-xs text-zinc-500 font-light mt-0.5">{card.sublabel}</p>
+                <p className="text-xs text-text-muted font-light mt-0.5">{card.sublabel}</p>
               </div>
             </motion.a>
           ))}

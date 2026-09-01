@@ -1,62 +1,199 @@
 @import "tailwindcss";
 
+/* ── Design Tokens (Tailwind v4 @theme) ─────────────────────────────────────
+   Registers custom CSS variables AND generates bg-*, text-*, border-* utilities.
+   Use bg-void, bg-deep, bg-surface, bg-elevated, bg-card in JSX directly.
+   ─────────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-void: #0e0e1a;
+  --color-deep: #13131f;
+  --color-surface: #1a1a28;
+  --color-elevated: #222236;
+  --color-card: #232332;
+  --color-card-hover: #282838;
+
+  --color-accent-gold: #d4af37;
+  --color-accent-amber: #f59e0b;
+  --color-accent-silver: #b8b8c8;
+  --color-accent-warm: #e8a020;
+
+  --color-text-primary: #ededf5;
+  --color-text-secondary: #8888a8;
+  --color-text-muted: #5a5a7a;
+}
+
+/* ── Base Styles ──────────────────────────────────────────────────────────── */
 @layer base {
-  :root {
-    --bg-main: #09090b;
-    --bg-surface: #121215;
-    --bg-card: #18181c;
-    --accent-gold: #d4af37;
-    --accent-amber: #f59e0b;
-    --accent-rose: #e11d48;
-    --text-primary: #f4f4f5;
-    --text-secondary: #a1a1aa;
+  html {
+    overflow-x: hidden;
   }
-}
 
-html {
-  scroll-behavior: smooth;
-  color-scheme: dark;
-}
-
-body {
-  background-color: var(--bg-main);
-  color: var(--text-primary);
-  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
-  overflow-x: hidden;
+  body {
+    /* font-family: set via --font-sans CSS variable from next/font in layout.tsx */
+    font-family: var(--font-sans, 'DM Sans', system-ui, -apple-system, sans-serif);
+    overflow-x: hidden;
+    width: 100%;
+    /* color + bg handled by Tailwind classes in layout.tsx */
+  }
 }
 
 /* ── Custom Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #09090b; }
-::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
+::-webkit-scrollbar-track { background: var(--color-void); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d4af37, #8a7020);
+  border-radius: 2px;
+}
 ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
 
-.scrollbar-none::-webkit-scrollbar { display: none; }
-.scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+/* ── Tailwind v4 Custom Utilities ── */
+@utility scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
 
-/* ── Glassmorphism ── */
-.glass-panel {
-  background: rgba(24, 24, 28, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+/* ── Glassmorphism & Studio Visual Utilities ──────────────────────────────── */
+@utility glass-panel {
+  background-color: rgba(26, 26, 40, 0.85);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.glass-nav {
-  background: rgba(9, 9, 11, 0.92);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+@utility glass-dark {
+  background-color: rgba(14, 14, 26, 0.90);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ── Gradient Text ── */
-.gold-gradient-text {
-  background: linear-gradient(135deg, #fff 0%, #fef08a 45%, #d4af37 100%);
+/* ── Gradient Text ─────────────────────────────────────────────────────────── */
+@utility gold-gradient-text {
+  background-image: linear-gradient(135deg, #fff8e8 0%, #f0d060 40%, #d4af37 70%, #a87c20 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.gold-border-glow {
-  box-shadow: 0 0 25px -5px rgba(212, 175, 55, 0.25);
+@utility silver-gradient-text {
+  background-image: linear-gradient(135deg, #ffffff 0%, #d8d8e8 50%, #b0b0c8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Shadow & Glow Utilities ───────────────────────────────────────────────── */
+@utility cinematic-shadow {
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.08),
+    0 4px 24px rgba(0, 0, 0, 0.6),
+    0 16px 64px rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(212, 175, 55, 0.04);
+}
+
+@utility gold-glow {
+  box-shadow:
+    0 0 20px -4px rgba(212, 175, 55, 0.35),
+    0 0 60px -12px rgba(212, 175, 55, 0.15);
+}
+
+/* ── Overlay Utilities ─────────────────────────────────────────────────────── */
+@utility vignette {
+  background-image: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* ── Photography Decorators ────────────────────────────────────────────────── */
+@utility film-grain {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.45;
+    mix-blend-mode: overlay;
+  }
+}
+
+@utility film-strip-top {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(212,175,55,0.0) 5%,
+      rgba(212,175,55,0.6) 20%,
+      rgba(212,175,55,1.0) 50%,
+      rgba(212,175,55,0.6) 80%,
+      rgba(212,175,55,0.0) 95%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+}
+
+/* ── Badge & Card Utilities ────────────────────────────────────────────────── */
+@utility photo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.875rem;
+  border-radius: 9999px;
+  background-color: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  color: #d4af37;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@utility card-lift {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.3s ease;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.5),
+      0 0 40px rgba(212, 175, 55, 0.08);
+  }
+}
+
+/* ── Ambient Glow Decorators ───────────────────────────────────────────────── */
+@utility ambient-glow-left {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 500px;
+  height: 500px;
+  border-radius: 9999px;
+  filter: blur(120px);
+  pointer-events: none;
+  background-color: rgba(212, 175, 55, 0.04);
+}
+
+@utility ambient-glow-right {
+  position: absolute;
+  bottom: 10%;
+  right: 0;
+  width: 400px;
+  height: 400px;
+  border-radius: 9999px;
+  filter: blur(100px);
+  pointer-events: none;
+  background-color: rgba(212, 175, 55, 0.03);
 }

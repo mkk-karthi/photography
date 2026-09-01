@@ -10,7 +10,7 @@ test('renders Hero title and book consultation button', () => {
   expect(screen.getAllByText(new RegExp(STUDIO_INFO.name, 'i')).length).toBeGreaterThan(0);
   expect(screen.getAllByText(HERO_SLIDES[0].title).length).toBeGreaterThan(0);
 
-  const bookButton = screen.getByRole('button', { name: /Book Event Consultation/i });
+  const bookButton = screen.getByRole('button', { name: /Get a Free Quote/i });
   expect(bookButton).toBeInTheDocument();
 
   fireEvent.click(bookButton);

@@ -2,67 +2,82 @@
 
 import React from "react";
 import { TESTIMONIALS, REVIEWS_SECTION_TEXT } from "@/data/portfolioData";
-import { Star, Quote, Heart } from "lucide-react";
+import { Star, Heart } from "lucide-react";
+
+import SectionHeader from "@/components/Common/SectionHeader";
 
 export default function ReviewsSection() {
   return (
-    <section id="reviews" className="py-24 bg-zinc-950 relative overflow-hidden">
+    <section
+      id="reviews"
+      className="py-20 sm:py-28 relative overflow-hidden bg-deep"
+    >
+      {/* Ambient glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(212,175,55,0.04) 0%, transparent 70%)",
+        }}
+      />
+      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-amber-500/15 to-transparent" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-4">
-            <Heart className="size-3.5 fill-amber-400/30" />
-            <span>{REVIEWS_SECTION_TEXT.badge}</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            {REVIEWS_SECTION_TEXT.titlePrefix}{" "}
-            <span className="font-serif text-amber-300 italic font-normal">
-              {REVIEWS_SECTION_TEXT.titleHighlight}
-            </span>
-          </h2>
-
-          <p className="text-zinc-400 text-base sm:text-lg mt-4 font-light leading-relaxed">
-            {REVIEWS_SECTION_TEXT.subtitle}
-          </p>
-        </div>
+        <SectionHeader
+          badgeIcon={Heart}
+          badgeText={REVIEWS_SECTION_TEXT.badge}
+          badgeIconClassName="size-3 fill-amber-400/30"
+          titlePrefix={REVIEWS_SECTION_TEXT.titlePrefix}
+          titleHighlight={REVIEWS_SECTION_TEXT.titleHighlight}
+          subtitle={REVIEWS_SECTION_TEXT.subtitle}
+        />
 
         {/* Testimonials Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {TESTIMONIALS.map((t, idx) => (
             <div
               key={t.id}
               data-aos="fade-up"
-              data-aos-delay={idx * 150}
-              className="glass-panel p-6 rounded-2xl border border-zinc-800 flex flex-col justify-between hover:border-amber-500/40 transition-all duration-300 relative overflow-hidden bg-zinc-950/80 hover:-translate-y-1 shadow-lg"
+              data-aos-delay={idx * 100}
+              className="relative p-6 sm:p-7 rounded-2xl border border-white/10 hover:border-amber-400/50 flex flex-col justify-between overflow-hidden group card-lift bg-card hover:bg-card-hover shadow-xl shadow-black/40"
             >
-              <Quote className="size-10 text-amber-500/10 absolute top-4 right-4 pointer-events-none" />
+              {/* Large decorative quote mark */}
+              <div
+                className="absolute top-3 right-4 font-serif text-[80px] sm:text-[96px] leading-none font-black select-none pointer-events-none text-amber-400/10"
+                aria-hidden="true"
+              >
+                &ldquo;
+              </div>
 
-              <div>
+              {/* Hover top glow line */}
+              <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-amber-500/0 to-transparent group-hover:via-amber-500/40 transition-all duration-500" />
+
+              <div className="relative z-10">
                 {/* Rating Stars */}
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(t.rating)].map((_, i) => (
-                    <Star key={i} className="size-4 text-amber-400 fill-amber-400" />
+                    <Star key={i} className="size-3.5 text-amber-400 fill-amber-400" />
                   ))}
                 </div>
 
-                <p className="text-zinc-300 text-xs sm:text-sm font-light leading-relaxed italic mb-6">
+                <p className="text-text-primary text-sm font-light leading-relaxed italic mb-6">
                   &quot;{t.quote}&quot;
                 </p>
               </div>
 
               {/* Author Footer */}
-              <div className="flex items-center gap-3 pt-4 border-t border-zinc-800">
+              <div className="flex items-center gap-3 pt-4 border-t border-white/5 relative z-10">
                 <img
                   src={t.avatar}
                   alt={t.coupleName}
                   loading="lazy"
-                  className="size-10 rounded-full object-cover border border-amber-500/40"
+                  className="size-10 rounded-full object-cover border border-amber-500/30"
                 />
                 <div>
-                  <h4 className="text-sm font-bold text-white">{t.coupleName}</h4>
-                  <p className="text-[11px] text-amber-300 font-medium">
-                    {t.eventType} • {t.location}
+                  <h4 className="text-sm font-bold text-text-primary group-hover:text-amber-200 transition-colors">{t.coupleName}</h4>
+                  <p className="text-[11px] text-amber-400/90 font-medium">
+                    {t.eventType} · {t.location}
                   </p>
                 </div>
               </div>

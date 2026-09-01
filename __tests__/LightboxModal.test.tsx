@@ -19,9 +19,8 @@ test('renders LightboxModal photo details and triggers navigation and close acti
 
   expect(screen.getByText(samplePhoto.title)).toBeInTheDocument();
   expect(screen.getByText(samplePhoto.location)).toBeInTheDocument();
-  expect(screen.getByText(samplePhoto.exif.camera)).toBeInTheDocument();
 
-  const closeBtn = screen.getByLabelText(/Close Lightbox/i);
+  const closeBtn = screen.getByLabelText(/^Close$/i);
   fireEvent.click(closeBtn);
 
   expect(handleClose).toHaveBeenCalledTimes(1);

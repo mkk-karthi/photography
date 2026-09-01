@@ -2,29 +2,32 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Camera, Award, Heart, Frame, Star, Users } from "lucide-react";
+import { Camera, Award, Frame, Users } from "lucide-react";
 import { STUDIO_STATS, TRUST_BADGES, STATS_SECTION_TEXT } from "@/data/portfolioData";
 import type { StatItem } from "@/data/types";
 
 // ── Icon map (UI layer, not data layer) ───────────────────────────────────────
 
 const STAT_ICONS: Record<StatItem["iconName"], React.ReactNode> = {
-  Camera: <Camera className="size-6" />,
-  Frame: <Frame className="size-6" />,
-  Heart: <Heart className="size-6" />,
-  Award: <Award className="size-6" />,
-  Star: <Star className="size-6" />,
-  Users: <Users className="size-6" />,
+  Camera: <Camera className="size-5" />,
+  Frame: <Frame className="size-5" />,
+  Award: <Award className="size-5" />,
+  Users: <Users className="size-5" />,
 };
 
-// Gradient styles per stat type — visual treatment owned by this component
-const STAT_GRADIENTS: Record<StatItem["iconName"], string> = {
-  Camera: "from-amber-500/20 to-amber-600/5",
-  Frame: "from-amber-400/15 to-transparent",
-  Heart: "from-rose-500/15 to-transparent",
-  Award: "from-amber-500/20 to-amber-600/5",
-  Star: "from-amber-400/15 to-transparent",
-  Users: "from-amber-500/15 to-transparent",
+// Accent colors per stat type
+const STAT_ACCENT: Record<StatItem["iconName"], string> = {
+  Camera: "text-amber-400",
+  Frame: "text-amber-300",
+  Award: "text-amber-400",
+  Users: "text-amber-400",
+};
+
+const STAT_GLOW: Record<StatItem["iconName"], string> = {
+  Camera: "rgba(212,175,55,0.15)",
+  Frame: "rgba(212,175,55,0.10)",
+  Award: "rgba(212,175,55,0.15)",
+  Users: "rgba(212,175,55,0.12)",
 };
 
 // ── Animated counter ──────────────────────────────────────────────────────────
@@ -74,12 +77,12 @@ function AnimatedCounter({
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.09 } },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 24, scale: 0.96 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: "easeOut" as const } },
+  hidden: { opacity: 0, y: 28, scale: 0.95 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: "easeOut" as const } },
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -89,37 +92,27 @@ export default function StatsSection() {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section
-      className="relative py-20 overflow-hidden border-t border-b border-zinc-800/60"
-      style={{
-        background:
-          "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(212,175,55,0.06) 0%, transparent 70%), #0a0a0d",
-      }}
-    >
-      {/* Decorative orbs */}
-      <div className="absolute top-0 left-1/4 size-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 size-64 bg-amber-400/5 rounded-full blur-3xl pointer-events-none" />
-
+    <section className="relative py-20 sm:py-24 overflow-hidden film-strip-top bg-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-14"
+          className="text-center mb-12 sm:mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-4">
-            <Award className="size-3.5" />
+          <div className="photo-badge mb-4">
+            <Award className="size-3 text-amber-400" />
             <span>{STATS_SECTION_TEXT.badge}</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-text-primary tracking-tight">
             {STATS_SECTION_TEXT.titlePrefix}{" "}
             <span className="font-serif text-amber-300 italic font-normal">
               {STATS_SECTION_TEXT.titleHighlight}
             </span>
           </h2>
-          <p className="text-zinc-400 text-sm sm:text-base mt-3 max-w-xl mx-auto font-light leading-relaxed">
+          <p className="text-text-secondary text-sm sm:text-base mt-3 max-w-xl mx-auto font-light leading-relaxed">
             {STATS_SECTION_TEXT.subtitle}
           </p>
         </motion.div>
@@ -130,34 +123,35 @@ export default function StatsSection() {
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
         >
           {STUDIO_STATS.map((stat, idx) => (
             <motion.div
               key={idx}
               variants={cardVariants}
-              whileHover={{ y: -4, scale: 1.03 }}
-              className={`relative flex flex-col items-center text-center p-5 sm:p-6 rounded-2xl border border-zinc-800 hover:border-amber-500/40 transition-colors duration-300 overflow-hidden bg-linear-to-b ${STAT_GRADIENTS[stat.iconName]} backdrop-blur-sm`}
+              whileHover={{ y: -5, scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="relative flex flex-col items-center text-center p-4 sm:p-5 rounded-2xl border border-white/10 hover:border-amber-400/50 bg-card hover:bg-card-hover shadow-xl shadow-black/40 overflow-hidden cursor-default will-change-transform"
             >
-              <div className="mb-3 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
+              {/* Icon */}
+              <div
+                className={`mb-3 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 ${STAT_ACCENT[stat.iconName]}`}
+              >
                 {STAT_ICONS[stat.iconName]}
               </div>
 
-              <p
-                className="text-2xl sm:text-3xl font-black text-amber-400 leading-none mb-1"
-                style={{ textShadow: "0 0 30px rgba(245,158,11,0.4)" }}
-              >
+              {/* Number */}
+              <p className={`text-2xl sm:text-3xl font-black leading-none mb-1.5 ${STAT_ACCENT[stat.iconName]}`}>
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} parentInView={inView} />
               </p>
 
-              <h3 className="text-xs sm:text-sm font-bold text-white mt-1 leading-tight">
-                {stat.label}
-              </h3>
-              <p className="text-xs text-zinc-500 font-light mt-1 leading-snug hidden sm:block">
+              <h3 className="text-xs font-bold text-text-primary leading-tight">{stat.label}</h3>
+              <p className="text-[11px] text-text-secondary font-light mt-0.5 leading-snug hidden sm:block">
                 {stat.sublabel}
               </p>
 
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-amber-500/40 to-transparent" />
+              {/* Bottom accent line */}
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-amber-500/40 to-transparent" />
             </motion.div>
           ))}
         </motion.div>
@@ -168,10 +162,10 @@ export default function StatsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs text-zinc-500 font-medium"
+          className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-8 text-xs text-text-secondary font-medium"
         >
           {TRUST_BADGES.map((badge) => (
-            <span key={badge} className="hover:text-amber-400 transition-colors">
+            <span key={badge} className="hover:text-amber-400 transition-colors cursor-default">
               {badge}
             </span>
           ))}

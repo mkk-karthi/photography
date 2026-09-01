@@ -10,7 +10,7 @@ test('renders CTASection header, phone number and triggers consultation booking'
   expect(screen.getByText(CTA_SECTION_TEXT.subtitle)).toBeInTheDocument();
   expect(screen.getByText(STUDIO_INFO.phone)).toBeInTheDocument();
 
-  const bookBtn = screen.getByRole('button', { name: /Book a Free Consultation/i });
+  const bookBtn = screen.getByRole('button', { name: /Get a Free Quote/i });
   fireEvent.click(bookBtn);
 
   expect(handleOpenEnquiry).toHaveBeenCalledTimes(1);

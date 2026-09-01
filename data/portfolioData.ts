@@ -522,7 +522,7 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
     aspectRatio: "aspect-[1/1]",
     location: "Client Residence, Madurai",
     exif: {
-      camera: "Nanban Print Studio",
+      camera: `${STUDIO_INFO.brandFirstName} Print Studio`,
       lens: "6mm Optical Glass",
       aperture: "N/A",
       shutter: "UV Resistant",
@@ -541,7 +541,7 @@ export const PORTFOLIO_PHOTOS: PhotoItem[] = [
     aspectRatio: "aspect-[4/3]",
     location: "Client Villa, Chennai",
     exif: {
-      camera: "Nanban Print Studio",
+      camera: "Shivam Print Studio",
       lens: "Handmade Teak Wood",
       aperture: "N/A",
       shutter: "Museum Mat",
@@ -774,25 +774,11 @@ export const STUDIO_STATS: StatItem[] = [
     sublabel: `Acrylic, teak & canvas across ${STUDIO_INFO.region}`,
   },
   {
-    iconName: "Heart",
-    value: 99,
-    suffix: ".8%",
-    label: "Client Satisfaction",
-    sublabel: "Verified across 850+ event families",
-  },
-  {
     iconName: "Award",
     value: 5,
     suffix: "★",
     label: "Client Rating",
     sublabel: `${STUDIO_INFO.city}, ${STUDIO_INFO.state} · Google Verified`,
-  },
-  {
-    iconName: "Star",
-    value: 5,
-    suffix: "★",
-    label: "Average Rating",
-    sublabel: "Google & Instagram verified reviews",
   },
   {
     iconName: "Users",
@@ -828,7 +814,7 @@ export const TESTIMONIALS: Testimonial[] = [
     id: "t1",
     coupleName: "Karthik & Ananya",
     eventType: "Wedding & Pre-Wedding",
-    quote: `Nanban Photography made our wedding in ${STUDIO_INFO.city} feel like a fairytale. The candid emotions captured during our Muhurtham and the acrylic frames delivered to our home are breathtaking!`,
+    quote: `${STUDIO_INFO.brandFirstName} Photography made our wedding in ${STUDIO_INFO.city} feel like a fairytale. The candid emotions captured during our Muhurtham and the acrylic frames delivered to our home are breathtaking!`,
     rating: 5,
     date: "Jan 2026",
     avatar: "/images/testimonials/avatar-1.webp",

@@ -31,19 +31,49 @@ interface EnquiryModalProps {
   initialQuote?: number;
 }
 
-const INPUT_CLASS =
-  "w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400";
+// ── Shared class constants ────────────────────────────────────────────────────
 
-const TEXTAREA_CLASS =
-  "w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400";
-
-const SELECT_WITH_ICON_CLASS =
-  "w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400";
-
+const INPUT_BASE =
+  "w-full bg-zinc-900 border border-zinc-800 rounded-xl py-2.5 pr-3 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400";
 const LABEL_CLASS = "text-xs font-semibold text-zinc-300 uppercase block mb-1";
-
 const SUBMIT_BTN_CLASS =
   "w-full py-3.5 rounded-xl bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-bold uppercase tracking-wider text-xs shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 mt-2";
+
+// ── FormField: reusable label + optional icon + input/select/textarea ─────────
+
+interface FormFieldProps {
+  label: string;
+  icon?: React.ReactNode;
+  children: React.ReactNode;
+}
+
+function FormField({ label, icon, children }: FormFieldProps) {
+  return (
+    <div>
+      <label className={LABEL_CLASS}>{label}</label>
+      {icon ? (
+        <div className="relative">
+          <span className="absolute left-3 top-3 text-zinc-500">{icon}</span>
+          {children}
+        </div>
+      ) : (
+        children
+      )}
+    </div>
+  );
+}
+
+// ── IconInput: standard text/date/tel/email input with left icon ──────────────
+
+interface IconInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  icon: React.ReactNode;
+}
+
+function IconInput({ icon: _icon, ...props }: IconInputProps) {
+  return <input {...props} className={`${INPUT_BASE} pl-9`} />;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function EnquiryModal({
   isOpen,
@@ -77,22 +107,27 @@ export default function EnquiryModal({
   });
 
   const [refId, setRefId] = useState("");
-  const [prevService, setPrevService] = useState(initialService);
 
-  if (initialService !== prevService) {
-    setPrevService(initialService);
-    if (initialService?.toLowerCase().includes("framing")) {
-      setActiveFormTab("framing");
-    } else {
-      setActiveFormTab("photoshoot");
-    }
-  }
-
-  // Lock background scroll when modal is open
+  // Derive active tab safely from initialService on open (guarded against non-string event objects)
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "unset";
+    if (!isOpen) return;
+    const isFraming =
+      typeof initialService === "string" && initialService.toLowerCase().includes("framing");
+    setActiveFormTab(isFraming ? "framing" : "photoshoot");
+  }, [isOpen, initialService]);
+
+  // Lock background scroll on both documentElement and body when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [isOpen]);
 
@@ -104,23 +139,29 @@ export default function EnquiryModal({
     setSubmitted(true);
   };
 
+  const updatePhotoshoot = (patch: Partial<typeof photoshootData>) =>
+    setPhotoshootData((prev) => ({ ...prev, ...patch }));
+
+  const updateFraming = (patch: Partial<typeof framingData>) =>
+    setFramingData((prev) => ({ ...prev, ...patch }));
+
   const activeTabName = activeFormTab === "photoshoot" ? photoshootData.name : framingData.name;
   const activeTabService =
     activeFormTab === "photoshoot" ? photoshootData.shootType : framingData.frameMaterial;
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 h-dvh w-screen z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-md overflow-y-auto overscroll-contain">
+      <div className="fixed inset-0 h-dvh w-screen z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-md overflow-y-auto overscroll-none">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="relative max-w-xl w-full my-auto glass-panel rounded-3xl p-6 sm:p-8 border border-amber-500/30 shadow-2xl overflow-hidden bg-zinc-950"
+          className="relative max-w-xl w-full my-auto glass-panel rounded-3xl p-6 sm:p-8 border-amber-500/30 shadow-2xl overflow-hidden"
         >
-          {/* Close Button */}
+          {/* Close */}
           <button
             onClick={onClose}
-            className="sticky top-0 float-right z-30 p-2.5 rounded-full bg-zinc-900/90 text-zinc-400 hover:text-white border border-zinc-700 hover:border-amber-500/50 shadow-md transition-colors -mt-1 -mr-1"
+            className="sticky top-0 float-right z-30 p-2.5 rounded-full bg-zinc-900/90 text-zinc-400 hover:text-white border border-zinc-700 hover:border-amber-500/50 shadow-md transition-colors -mt-1 -mr-1 cursor-pointer"
             title="Close form"
           >
             <X className="size-5" />
@@ -133,7 +174,7 @@ export default function EnquiryModal({
                 key={tab}
                 type="button"
                 onClick={() => setActiveFormTab(tab)}
-                className={`flex-1 py-2 px-3 sm:px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
+                className={`flex-1 py-2 px-3 sm:px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer ${
                   activeFormTab === tab
                     ? "bg-amber-400 text-black shadow-md shadow-amber-500/20 font-black"
                     : "text-zinc-400 hover:text-white"
@@ -183,50 +224,34 @@ export default function EnquiryModal({
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className={LABEL_CLASS}>Full Name *</label>
-                        <div className="relative">
-                          <User className="size-4 text-zinc-500 absolute left-3 top-3" />
-                          <input
-                            type="text"
-                            required
-                            placeholder="e.g. Ramesh & Ananya"
-                            value={photoshootData.name}
-                            onChange={(e) =>
-                              setPhotoshootData({ ...photoshootData, name: e.target.value })
-                            }
-                            className={INPUT_CLASS}
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className={LABEL_CLASS}>Phone / WhatsApp *</label>
-                        <div className="relative">
-                          <Phone className="size-4 text-zinc-500 absolute left-3 top-3" />
-                          <input
-                            type="tel"
-                            required
-                            placeholder="+91 9876543210"
-                            value={photoshootData.phone}
-                            onChange={(e) =>
-                              setPhotoshootData({ ...photoshootData, phone: e.target.value })
-                            }
-                            className={INPUT_CLASS}
-                          />
-                        </div>
-                      </div>
+                      <FormField label="Full Name *" icon={<User className="size-4" />}>
+                        <IconInput
+                          icon={<User className="size-4" />}
+                          type="text"
+                          required
+                          placeholder="e.g. Ramesh & Ananya"
+                          value={photoshootData.name}
+                          onChange={(e) => updatePhotoshoot({ name: e.target.value })}
+                        />
+                      </FormField>
+                      <FormField label="Phone / WhatsApp *" icon={<Phone className="size-4" />}>
+                        <IconInput
+                          icon={<Phone className="size-4" />}
+                          type="tel"
+                          required
+                          placeholder="+91 9876543210"
+                          value={photoshootData.phone}
+                          onChange={(e) => updatePhotoshoot({ phone: e.target.value })}
+                        />
+                      </FormField>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className={LABEL_CLASS}>Photoshoot Category *</label>
+                      <FormField label="Photoshoot Category *">
                         <select
                           value={photoshootData.shootType}
-                          onChange={(e) =>
-                            setPhotoshootData({ ...photoshootData, shootType: e.target.value })
-                          }
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400"
+                          onChange={(e) => updatePhotoshoot({ shootType: e.target.value })}
+                          className={`${INPUT_BASE} px-3`}
                         >
                           {SHOOT_TYPES.map((type) => (
                             <option key={type} value={type}>
@@ -234,73 +259,53 @@ export default function EnquiryModal({
                             </option>
                           ))}
                         </select>
-                      </div>
-
-                      <div>
-                        <label className={LABEL_CLASS}>Event Date *</label>
-                        <div className="relative">
-                          <Calendar className="size-4 text-zinc-500 absolute left-3 top-3" />
-                          <input
-                            type="date"
-                            required
-                            value={photoshootData.eventDate}
-                            onChange={(e) =>
-                              setPhotoshootData({ ...photoshootData, eventDate: e.target.value })
-                            }
-                            className={INPUT_CLASS}
-                          />
-                        </div>
-                      </div>
+                      </FormField>
+                      <FormField label="Event Date *" icon={<Calendar className="size-4" />}>
+                        <IconInput
+                          icon={<Calendar className="size-4" />}
+                          type="date"
+                          required
+                          value={photoshootData.eventDate}
+                          onChange={(e) => updatePhotoshoot({ eventDate: e.target.value })}
+                        />
+                      </FormField>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className={LABEL_CLASS}>Email Address</label>
-                        <div className="relative">
-                          <Mail className="size-4 text-zinc-500 absolute left-3 top-3" />
-                          <input
-                            type="email"
-                            placeholder="name@gmail.com"
-                            value={photoshootData.email}
-                            onChange={(e) =>
-                              setPhotoshootData({ ...photoshootData, email: e.target.value })
-                            }
-                            className={INPUT_CLASS}
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className={LABEL_CLASS}>Shoot Location / Venue</label>
-                        <div className="relative">
-                          <MapPin className="size-4 text-zinc-500 absolute left-3 top-3" />
-                          <input
-                            type="text"
-                            placeholder="e.g. Virudhunagar, Madurai, Resort, Beach"
-                            value={photoshootData.location}
-                            onChange={(e) =>
-                              setPhotoshootData({ ...photoshootData, location: e.target.value })
-                            }
-                            className={INPUT_CLASS}
-                          />
-                        </div>
-                      </div>
+                      <FormField label="Email Address" icon={<Mail className="size-4" />}>
+                        <IconInput
+                          icon={<Mail className="size-4" />}
+                          type="email"
+                          placeholder="name@gmail.com"
+                          value={photoshootData.email}
+                          onChange={(e) => updatePhotoshoot({ email: e.target.value })}
+                        />
+                      </FormField>
+                      <FormField
+                        label="Shoot Location / Venue"
+                        icon={<MapPin className="size-4" />}
+                      >
+                        <IconInput
+                          icon={<MapPin className="size-4" />}
+                          type="text"
+                          placeholder="e.g. Virudhunagar, Madurai, Resort, Beach"
+                          value={photoshootData.location}
+                          onChange={(e) => updatePhotoshoot({ location: e.target.value })}
+                        />
+                      </FormField>
                     </div>
 
-                    <div>
-                      <label className={LABEL_CLASS}>Event Notes &amp; Special Requests</label>
+                    <FormField label="Event Notes & Special Requests">
                       <textarea
                         rows={3}
                         placeholder="Share details about wedding rituals, outdoor locations, or budget preferences..."
                         value={photoshootData.message}
-                        onChange={(e) =>
-                          setPhotoshootData({ ...photoshootData, message: e.target.value })
-                        }
-                        className={TEXTAREA_CLASS}
+                        onChange={(e) => updatePhotoshoot({ message: e.target.value })}
+                        className={`${INPUT_BASE} p-3`}
                       />
-                    </div>
+                    </FormField>
 
-                    <button type="submit" className={SUBMIT_BTN_CLASS}>
+                    <button type="submit" className={`${SUBMIT_BTN_CLASS} cursor-pointer`}>
                       <Send className="size-4" />
                       <span>Submit Enquiry</span>
                     </button>
@@ -320,52 +325,41 @@ export default function EnquiryModal({
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className={LABEL_CLASS}>Full Name *</label>
-                        <div className="relative">
-                          <User className="size-4 text-zinc-500 absolute left-3 top-3" />
-                          <input
-                            type="text"
-                            required
-                            placeholder="Your Name"
-                            value={framingData.name}
-                            onChange={(e) =>
-                              setFramingData({ ...framingData, name: e.target.value })
-                            }
-                            className={INPUT_CLASS}
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className={LABEL_CLASS}>Phone / WhatsApp *</label>
-                        <div className="relative">
-                          <Phone className="size-4 text-zinc-500 absolute left-3 top-3" />
-                          <input
-                            type="tel"
-                            required
-                            placeholder="+91 9876543210"
-                            value={framingData.phone}
-                            onChange={(e) =>
-                              setFramingData({ ...framingData, phone: e.target.value })
-                            }
-                            className={INPUT_CLASS}
-                          />
-                        </div>
-                      </div>
+                      <FormField label="Full Name *" icon={<User className="size-4" />}>
+                        <IconInput
+                          icon={<User className="size-4" />}
+                          type="text"
+                          required
+                          placeholder="Your Name"
+                          value={framingData.name}
+                          onChange={(e) => updateFraming({ name: e.target.value })}
+                        />
+                      </FormField>
+                      <FormField label="Phone / WhatsApp *" icon={<Phone className="size-4" />}>
+                        <IconInput
+                          icon={<Phone className="size-4" />}
+                          type="tel"
+                          required
+                          placeholder="+91 9876543210"
+                          value={framingData.phone}
+                          onChange={(e) => updateFraming({ phone: e.target.value })}
+                        />
+                      </FormField>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className={LABEL_CLASS}>Frame Material / Style *</label>
+                      <FormField
+                        label="Frame Material / Style *"
+                        icon={<Layers className="size-4" />}
+                      >
                         <div className="relative">
-                          <Layers className="size-4 text-zinc-500 absolute left-3 top-3" />
+                          <span className="absolute left-3 top-3 text-zinc-500">
+                            <Layers className="size-4" />
+                          </span>
                           <select
                             value={framingData.frameMaterial}
-                            onChange={(e) =>
-                              setFramingData({ ...framingData, frameMaterial: e.target.value })
-                            }
-                            className={SELECT_WITH_ICON_CLASS}
+                            onChange={(e) => updateFraming({ frameMaterial: e.target.value })}
+                            className={`${INPUT_BASE} pl-9`}
                           >
                             {FRAMING_MATERIALS.map((mat) => (
                               <option key={mat} value={mat}>
@@ -374,18 +368,19 @@ export default function EnquiryModal({
                             ))}
                           </select>
                         </div>
-                      </div>
-
-                      <div>
-                        <label className={LABEL_CLASS}>Frame Dimension / Size *</label>
+                      </FormField>
+                      <FormField
+                        label="Frame Dimension / Size *"
+                        icon={<Ruler className="size-4" />}
+                      >
                         <div className="relative">
-                          <Ruler className="size-4 text-zinc-500 absolute left-3 top-3" />
+                          <span className="absolute left-3 top-3 text-zinc-500">
+                            <Ruler className="size-4" />
+                          </span>
                           <select
                             value={framingData.frameSize}
-                            onChange={(e) =>
-                              setFramingData({ ...framingData, frameSize: e.target.value })
-                            }
-                            className={SELECT_WITH_ICON_CLASS}
+                            onChange={(e) => updateFraming({ frameSize: e.target.value })}
+                            className={`${INPUT_BASE} pl-9`}
                           >
                             {ENQUIRY_FRAME_SIZES.map((sz) => (
                               <option key={sz} value={sz}>
@@ -394,40 +389,33 @@ export default function EnquiryModal({
                             ))}
                           </select>
                         </div>
-                      </div>
+                      </FormField>
                     </div>
 
-                    <div>
-                      <label className={LABEL_CLASS}>Delivery Address &amp; City *</label>
-                      <div className="relative">
-                        <MapPin className="size-4 text-zinc-500 absolute left-3 top-3" />
-                        <input
-                          type="text"
-                          required
-                          placeholder="Street Address, City, Pincode (e.g. Virudhunagar, Madurai, Chennai)"
-                          value={framingData.deliveryAddress}
-                          onChange={(e) =>
-                            setFramingData({ ...framingData, deliveryAddress: e.target.value })
-                          }
-                          className={INPUT_CLASS}
-                        />
-                      </div>
-                    </div>
+                    <FormField
+                      label="Delivery Address & City *"
+                      icon={<MapPin className="size-4" />}
+                    >
+                      <IconInput
+                        icon={<MapPin className="size-4" />}
+                        type="text"
+                        required
+                        placeholder="Street Address, City, Pincode (e.g. Virudhunagar, Madurai, Chennai)"
+                        value={framingData.deliveryAddress}
+                        onChange={(e) => updateFraming({ deliveryAddress: e.target.value })}
+                      />
+                    </FormField>
 
-                    <div>
-                      <label className={LABEL_CLASS}>
-                        Custom Framing Notes / Photo Upload Details
-                      </label>
+                    <FormField label="Custom Framing Notes / Photo Upload Details">
                       <textarea
                         rows={3}
                         placeholder="Specify matting border colors, quantity needed, or photo softcopy link..."
                         value={framingData.notes}
-                        onChange={(e) => setFramingData({ ...framingData, notes: e.target.value })}
-                        className={TEXTAREA_CLASS}
+                        onChange={(e) => updateFraming({ notes: e.target.value })}
+                        className={`${INPUT_BASE} p-3`}
                       />
-                    </div>
+                    </FormField>
 
-                    {/* Variable Price Note */}
                     <p className="text-xs text-zinc-400 font-light italic flex items-center gap-1.5 pt-1">
                       <Info className="size-3.5 text-amber-400 shrink-0" />
                       <span>
@@ -437,7 +425,7 @@ export default function EnquiryModal({
                       </span>
                     </p>
 
-                    <button type="submit" className={SUBMIT_BTN_CLASS}>
+                    <button type="submit" className={`${SUBMIT_BTN_CLASS} cursor-pointer`}>
                       <Send className="size-4" />
                       <span>Submit Enquiry</span>
                     </button>
@@ -479,7 +467,7 @@ export default function EnquiryModal({
                     setSubmitted(false);
                     onClose();
                   }}
-                  className="px-6 py-2.5 rounded-full bg-amber-400 text-black font-bold text-xs uppercase tracking-wider hover:bg-amber-300 transition-colors"
+                  className="px-6 py-2.5 rounded-full bg-amber-400 text-black font-bold text-xs uppercase tracking-wider hover:bg-amber-300 transition-colors cursor-pointer"
                 >
                   Back to Portfolio
                 </button>

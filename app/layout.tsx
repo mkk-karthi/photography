@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import { STUDIO_INFO, SEO_METADATA } from "@/data/portfolioData";
+import AppLayout from "@/components/Common/AppLayout";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   description: SEO_METADATA.description,
   keywords: SEO_METADATA.keywords,
   icons: {
-    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
+    icon: [{ url: "/favicon.ico" }, { url: "/logo.svg", type: "image/svg+xml" }],
     shortcut: "/logo.svg",
     apple: "/logo.svg",
   },
@@ -74,10 +75,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className="min-h-screen bg-[#09090b] text-[#f4f4f5] antialiased selection:bg-amber-400 selection:text-black"
+        className="min-h-screen antialiased bg-deep text-text-primary selection:bg-amber-400/30 selection:text-amber-200"
         suppressHydrationWarning
       >
-        {children}
+        <AppLayout>{children}</AppLayout>
       </body>
     </html>
   );
