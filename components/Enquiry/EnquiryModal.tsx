@@ -37,7 +37,7 @@ const INPUT_BASE =
   "w-full bg-zinc-900 border border-zinc-800 rounded-xl py-2.5 pr-3 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400";
 const LABEL_CLASS = "text-xs font-semibold text-zinc-300 uppercase block mb-1";
 const SUBMIT_BTN_CLASS =
-  "w-full py-3.5 rounded-xl bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-bold uppercase tracking-wider text-xs shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 mt-2";
+  "px-5 py-3.5 rounded-xl bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-bold uppercase tracking-wider text-xs shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 mx-auto my-4";
 
 // ── FormField: reusable label + optional icon + input/select/textarea ─────────
 
@@ -82,6 +82,7 @@ export default function EnquiryModal({
   initialQuote,
 }: EnquiryModalProps) {
   const [activeFormTab, setActiveFormTab] = useState<"photoshoot" | "framing">("photoshoot");
+  const [direction, setDirection] = useState<number>(0);
   const [submitted, setSubmitted] = useState(false);
 
   // Photoshoot form state
@@ -113,8 +114,19 @@ export default function EnquiryModal({
     if (!isOpen) return;
     const isFraming =
       typeof initialService === "string" && initialService.toLowerCase().includes("framing");
-    setActiveFormTab(isFraming ? "framing" : "photoshoot");
+    const targetTab = isFraming ? "framing" : "photoshoot";
+    if (activeFormTab !== targetTab) {
+      setDirection(targetTab === "framing" ? 1 : -1);
+      setActiveFormTab(targetTab);
+    }
   }, [isOpen, initialService]);
+
+  const handleTabSwitch = (newTab: "photoshoot" | "framing") => {
+    if (newTab !== activeFormTab) {
+      setDirection(newTab === "framing" ? 1 : -1);
+      setActiveFormTab(newTab);
+    }
+  };
 
   // Lock background scroll on both documentElement and body when modal is open
   useEffect(() => {
@@ -130,8 +142,6 @@ export default function EnquiryModal({
       document.documentElement.style.overflow = "";
     };
   }, [isOpen]);
-
-  if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,333 +159,395 @@ export default function EnquiryModal({
   const activeTabService =
     activeFormTab === "photoshoot" ? photoshootData.shootType : framingData.frameMaterial;
 
+  const formSlideVariants = {
+    initial: (dir: number) => ({
+      x: dir >= 0 ? 50 : -50,
+      opacity: 0,
+    }),
+    animate: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        x: { type: "spring" as const, stiffness: 380, damping: 32 },
+        opacity: { duration: 0.2 },
+      },
+    },
+    exit: (dir: number) => ({
+      x: dir >= 0 ? -50 : 50,
+      opacity: 0,
+      transition: {
+        x: { duration: 0.15 },
+        opacity: { duration: 0.15 },
+      },
+    }),
+  };
+
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 h-dvh w-screen z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-md overflow-y-auto overscroll-none">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          className="relative max-w-xl w-full my-auto glass-panel rounded-3xl p-6 sm:p-8 border-amber-500/30 shadow-2xl overflow-hidden"
-        >
-          {/* Close */}
-          <button
-            onClick={onClose}
-            className="sticky top-0 float-right z-30 p-2.5 rounded-full bg-zinc-900/90 text-zinc-400 hover:text-white border border-zinc-700 hover:border-amber-500/50 shadow-md transition-colors -mt-1 -mr-1 cursor-pointer"
-            title="Close form"
+      {isOpen && (
+        <div className="fixed inset-0 h-dvh w-screen z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-md overflow-y-auto overscroll-none">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: 15 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="relative max-w-xl w-full my-auto glass-panel rounded-3xl p-6 sm:p-8 border-amber-500/30 shadow-2xl overflow-hidden"
           >
-            <X className="size-5" />
-          </button>
+            {/* Close */}
+            <button
+              onClick={onClose}
+              className="sticky top-0 float-right z-30 p-2.5 rounded-full bg-zinc-900/90 text-zinc-400 hover:text-white border border-zinc-700 hover:border-amber-500/50 shadow-md transition-colors -mt-1 -mr-1 cursor-pointer"
+              title="Close form"
+            >
+              <X className="size-5" />
+            </button>
 
-          {/* Tab Switcher */}
-          <div className="flex items-center justify-center gap-2 p-1.5 bg-zinc-900/90 rounded-2xl border border-zinc-800 max-w-xs sm:max-w-sm mx-auto mt-12 mb-6 clear-both">
-            {(["photoshoot", "framing"] as const).map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setActiveFormTab(tab)}
-                className={`flex-1 py-2 px-3 sm:px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                  activeFormTab === tab
-                    ? "bg-amber-400 text-black shadow-md shadow-amber-500/20 font-black"
-                    : "text-zinc-400 hover:text-white"
-                }`}
-              >
-                {tab === "photoshoot" ? (
-                  <>
-                    <Camera className="size-3.5" />
-                    <span>Photoshoot</span>
-                  </>
-                ) : (
-                  <>
-                    <Frame className="size-3.5" />
-                    <span>Frame</span>
-                  </>
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Form Body */}
-          <div>
-            {!submitted ? (
-              <div>
-                {/* Estimated Quote Banner */}
-                {initialQuote && (
-                  <div className="mb-5 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs">
-                    <span className="text-zinc-300 font-medium">
-                      Estimated Package / Order Value:
-                    </span>
-                    <span className="text-amber-300 font-extrabold text-base">
-                      ₹{initialQuote.toLocaleString("en-IN")}
-                    </span>
-                  </div>
-                )}
-
-                {/* ── PHOTOSHOOT FORM ── */}
-                {activeFormTab === "photoshoot" && (
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="mb-2">
-                      <h3 className="text-xl sm:text-2xl font-extrabold text-white">
-                        Book Photoshoot <span className="text-amber-400">Consultation</span>
-                      </h3>
-                      <p className="text-xs text-zinc-400 font-light mt-0.5">
-                        Wedding, pre-wedding, beach photoshoot, baby shower &amp; bridal portraits.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <FormField label="Full Name *" icon={<User className="size-4" />}>
-                        <IconInput
-                          icon={<User className="size-4" />}
-                          type="text"
-                          required
-                          placeholder="e.g. Ramesh & Ananya"
-                          value={photoshootData.name}
-                          onChange={(e) => updatePhotoshoot({ name: e.target.value })}
-                        />
-                      </FormField>
-                      <FormField label="Phone / WhatsApp *" icon={<Phone className="size-4" />}>
-                        <IconInput
-                          icon={<Phone className="size-4" />}
-                          type="tel"
-                          required
-                          placeholder="+91 9876543210"
-                          value={photoshootData.phone}
-                          onChange={(e) => updatePhotoshoot({ phone: e.target.value })}
-                        />
-                      </FormField>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <FormField label="Photoshoot Category *">
-                        <select
-                          value={photoshootData.shootType}
-                          onChange={(e) => updatePhotoshoot({ shootType: e.target.value })}
-                          className={`${INPUT_BASE} px-3`}
-                        >
-                          {SHOOT_TYPES.map((type) => (
-                            <option key={type} value={type}>
-                              {type}
-                            </option>
-                          ))}
-                        </select>
-                      </FormField>
-                      <FormField label="Event Date *" icon={<Calendar className="size-4" />}>
-                        <IconInput
-                          icon={<Calendar className="size-4" />}
-                          type="date"
-                          required
-                          value={photoshootData.eventDate}
-                          onChange={(e) => updatePhotoshoot({ eventDate: e.target.value })}
-                        />
-                      </FormField>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <FormField label="Email Address" icon={<Mail className="size-4" />}>
-                        <IconInput
-                          icon={<Mail className="size-4" />}
-                          type="email"
-                          placeholder="name@gmail.com"
-                          value={photoshootData.email}
-                          onChange={(e) => updatePhotoshoot({ email: e.target.value })}
-                        />
-                      </FormField>
-                      <FormField
-                        label="Shoot Location / Venue"
-                        icon={<MapPin className="size-4" />}
-                      >
-                        <IconInput
-                          icon={<MapPin className="size-4" />}
-                          type="text"
-                          placeholder="e.g. Virudhunagar, Madurai, Resort, Beach"
-                          value={photoshootData.location}
-                          onChange={(e) => updatePhotoshoot({ location: e.target.value })}
-                        />
-                      </FormField>
-                    </div>
-
-                    <FormField label="Event Notes & Special Requests">
-                      <textarea
-                        rows={3}
-                        placeholder="Share details about wedding rituals, outdoor locations, or budget preferences..."
-                        value={photoshootData.message}
-                        onChange={(e) => updatePhotoshoot({ message: e.target.value })}
-                        className={`${INPUT_BASE} p-3`}
+            {/* Tab Switcher with Sliding Active Pill */}
+            <div className="relative flex items-center justify-center gap-2 p-1.5 bg-zinc-900/90 rounded-2xl border border-zinc-800 max-w-xs sm:max-w-sm mx-auto mt-12 mb-6 clear-both">
+              {(["photoshoot", "framing"] as const).map((tab) => {
+                const isActive = activeFormTab === tab;
+                return (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => handleTabSwitch(tab)}
+                    className="relative flex-1 py-2 px-3 sm:px-4 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer outline-none select-none"
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeEnquiryTabPill"
+                        className="absolute inset-0 bg-linear-to-r from-amber-400 to-amber-500 rounded-xl shadow-md shadow-amber-500/20 z-0"
+                        transition={{ type: "spring", stiffness: 450, damping: 32 }}
                       />
-                    </FormField>
-
-                    <button type="submit" className={`${SUBMIT_BTN_CLASS} cursor-pointer`}>
-                      <Send className="size-4" />
-                      <span>Submit Enquiry</span>
-                    </button>
-                  </form>
-                )}
-
-                {/* ── FRAMING FORM ── */}
-                {activeFormTab === "framing" && (
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="mb-2">
-                      <h3 className="text-xl sm:text-2xl font-extrabold text-white">
-                        Custom Photo Frame <span className="text-amber-400">Order</span>
-                      </h3>
-                      <p className="text-xs text-zinc-400 font-light mt-0.5">
-                        Acrylic, Teak Wood, Museum Canvas &amp; Flush Mount Albums.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <FormField label="Full Name *" icon={<User className="size-4" />}>
-                        <IconInput
-                          icon={<User className="size-4" />}
-                          type="text"
-                          required
-                          placeholder="Your Name"
-                          value={framingData.name}
-                          onChange={(e) => updateFraming({ name: e.target.value })}
-                        />
-                      </FormField>
-                      <FormField label="Phone / WhatsApp *" icon={<Phone className="size-4" />}>
-                        <IconInput
-                          icon={<Phone className="size-4" />}
-                          type="tel"
-                          required
-                          placeholder="+91 9876543210"
-                          value={framingData.phone}
-                          onChange={(e) => updateFraming({ phone: e.target.value })}
-                        />
-                      </FormField>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <FormField
-                        label="Frame Material / Style *"
-                        icon={<Layers className="size-4" />}
-                      >
-                        <div className="relative">
-                          <span className="absolute left-3 top-3 text-zinc-500">
-                            <Layers className="size-4" />
-                          </span>
-                          <select
-                            value={framingData.frameMaterial}
-                            onChange={(e) => updateFraming({ frameMaterial: e.target.value })}
-                            className={`${INPUT_BASE} pl-9`}
-                          >
-                            {FRAMING_MATERIALS.map((mat) => (
-                              <option key={mat} value={mat}>
-                                {mat}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </FormField>
-                      <FormField
-                        label="Frame Dimension / Size *"
-                        icon={<Ruler className="size-4" />}
-                      >
-                        <div className="relative">
-                          <span className="absolute left-3 top-3 text-zinc-500">
-                            <Ruler className="size-4" />
-                          </span>
-                          <select
-                            value={framingData.frameSize}
-                            onChange={(e) => updateFraming({ frameSize: e.target.value })}
-                            className={`${INPUT_BASE} pl-9`}
-                          >
-                            {ENQUIRY_FRAME_SIZES.map((sz) => (
-                              <option key={sz} value={sz}>
-                                {sz}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </FormField>
-                    </div>
-
-                    <FormField
-                      label="Delivery Address & City *"
-                      icon={<MapPin className="size-4" />}
+                    )}
+                    <span
+                      className={`relative z-10 flex items-center justify-center gap-2 transition-colors ${
+                        isActive
+                          ? "text-black font-black"
+                          : "text-zinc-400 hover:text-white font-bold"
+                      }`}
                     >
-                      <IconInput
-                        icon={<MapPin className="size-4" />}
-                        type="text"
-                        required
-                        placeholder="Street Address, City, Pincode (e.g. Virudhunagar, Madurai, Chennai)"
-                        value={framingData.deliveryAddress}
-                        onChange={(e) => updateFraming({ deliveryAddress: e.target.value })}
-                      />
-                    </FormField>
-
-                    <FormField label="Custom Framing Notes / Photo Upload Details">
-                      <textarea
-                        rows={3}
-                        placeholder="Specify matting border colors, quantity needed, or photo softcopy link..."
-                        value={framingData.notes}
-                        onChange={(e) => updateFraming({ notes: e.target.value })}
-                        className={`${INPUT_BASE} p-3`}
-                      />
-                    </FormField>
-
-                    <p className="text-xs text-zinc-400 font-light italic flex items-center gap-1.5 pt-1">
-                      <Info className="size-3.5 text-amber-400 shrink-0" />
-                      <span>
-                        <strong className="text-amber-300 not-italic font-semibold">* Note:</strong>{" "}
-                        Prices are variable depending on custom finish &amp; bulk order
-                        requirements.
-                      </span>
-                    </p>
-
-                    <button type="submit" className={`${SUBMIT_BTN_CLASS} cursor-pointer`}>
-                      <Send className="size-4" />
-                      <span>Submit Enquiry</span>
-                    </button>
-                  </form>
-                )}
-              </div>
-            ) : (
-              /* ── Success State ── */
-              <div className="text-center py-8 space-y-4">
-                <div className="size-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mx-auto flex items-center justify-center">
-                  <CheckCircle2 className="size-10" />
-                </div>
-                <h3 className="text-2xl font-bold text-white">
-                  {activeFormTab === "photoshoot"
-                    ? "Photoshoot Enquiry Received!"
-                    : "Frame Order Enquiry Received!"}
-                </h3>
-                <p className="text-xs text-zinc-300 max-w-md mx-auto leading-relaxed">
-                  Thank you{" "}
-                  <span className="text-amber-300 font-bold">{activeTabName || "Customer"}</span>.
-                  Your enquiry for{" "}
-                  <span className="text-amber-300 font-bold">{activeTabService}</span> has been
-                  received by {STUDIO_INFO.name}.
-                </p>
-                <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-xs text-zinc-400">
-                  <p>
-                    Reference ID:{" "}
-                    <span className="text-white font-mono font-bold">
-                      {refId || `${STUDIO_INFO.helplinePrefix}-8842`}
+                      {tab === "photoshoot" ? (
+                        <>
+                          <Camera className="size-3.5" />
+                          <span>Photoshoot</span>
+                        </>
+                      ) : (
+                        <>
+                          <Frame className="size-3.5" />
+                          <span>Frame</span>
+                        </>
+                      )}
                     </span>
-                  </p>
-                  <p className="mt-1">
-                    {STUDIO_INFO.city} Studio Helpline:{" "}
-                    <span className="text-amber-400 font-bold">{STUDIO_INFO.phone}</span>
-                  </p>
-                </div>
-                <button
-                  onClick={() => {
-                    setSubmitted(false);
-                    onClose();
-                  }}
-                  className="px-6 py-2.5 rounded-full bg-amber-400 text-black font-bold text-xs uppercase tracking-wider hover:bg-amber-300 transition-colors cursor-pointer"
-                >
-                  Back to Portfolio
-                </button>
-              </div>
-            )}
-          </div>
-        </motion.div>
-      </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Form Body Container with Sliding Animation */}
+            <div className="overflow-hidden">
+              <AnimatePresence mode="wait" custom={direction} initial={false}>
+                {!submitted ? (
+                  <motion.div
+                    key={activeFormTab}
+                    custom={direction}
+                    variants={formSlideVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className="w-full"
+                  >
+                    {/* Estimated Quote Banner */}
+                    {initialQuote && (
+                      <div className="mb-5 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs">
+                        <span className="text-zinc-300 font-medium">
+                          Estimated Package / Order Value:
+                        </span>
+                        <span className="text-amber-300 font-extrabold text-base">
+                          ₹{initialQuote.toLocaleString("en-IN")}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* ── PHOTOSHOOT FORM ── */}
+                    {activeFormTab === "photoshoot" && (
+                      <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="mb-6">
+                          <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                            Book Photoshoot <span className="text-amber-400">Consultation</span>
+                          </h3>
+                          <p className="text-xs text-zinc-400 font-light mt-0.5">
+                            Wedding, pre-wedding, beach photoshoot, baby shower &amp; bridal
+                            portraits.
+                          </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <FormField label="Full Name *" icon={<User className="size-4" />}>
+                            <IconInput
+                              icon={<User className="size-4" />}
+                              type="text"
+                              required
+                              placeholder="e.g. Ramesh & Ananya"
+                              value={photoshootData.name}
+                              onChange={(e) => updatePhotoshoot({ name: e.target.value })}
+                            />
+                          </FormField>
+                          <FormField label="Phone / WhatsApp *" icon={<Phone className="size-4" />}>
+                            <IconInput
+                              icon={<Phone className="size-4" />}
+                              type="tel"
+                              required
+                              placeholder="+91 9876543210"
+                              value={photoshootData.phone}
+                              onChange={(e) => updatePhotoshoot({ phone: e.target.value })}
+                            />
+                          </FormField>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <FormField label="Photoshoot Category *">
+                            <select
+                              value={photoshootData.shootType}
+                              onChange={(e) => updatePhotoshoot({ shootType: e.target.value })}
+                              className={`${INPUT_BASE} px-3`}
+                            >
+                              {SHOOT_TYPES.map((type) => (
+                                <option key={type} value={type}>
+                                  {type}
+                                </option>
+                              ))}
+                            </select>
+                          </FormField>
+                          <FormField label="Event Date *" icon={<Calendar className="size-4" />}>
+                            <IconInput
+                              icon={<Calendar className="size-4" />}
+                              type="date"
+                              required
+                              value={photoshootData.eventDate}
+                              onChange={(e) => updatePhotoshoot({ eventDate: e.target.value })}
+                            />
+                          </FormField>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <FormField label="Email Address" icon={<Mail className="size-4" />}>
+                            <IconInput
+                              icon={<Mail className="size-4" />}
+                              type="email"
+                              placeholder="name@gmail.com"
+                              value={photoshootData.email}
+                              onChange={(e) => updatePhotoshoot({ email: e.target.value })}
+                            />
+                          </FormField>
+                          <FormField
+                            label="Shoot Location / Venue"
+                            icon={<MapPin className="size-4" />}
+                          >
+                            <IconInput
+                              icon={<MapPin className="size-4" />}
+                              type="text"
+                              placeholder="e.g. Virudhunagar, Madurai, Resort, Beach"
+                              value={photoshootData.location}
+                              onChange={(e) => updatePhotoshoot({ location: e.target.value })}
+                            />
+                          </FormField>
+                        </div>
+
+                        <FormField label="Event Notes & Special Requests">
+                          <textarea
+                            rows={3}
+                            placeholder="Share details about wedding rituals, outdoor locations, or budget preferences..."
+                            value={photoshootData.message}
+                            onChange={(e) => updatePhotoshoot({ message: e.target.value })}
+                            className={`${INPUT_BASE} p-3`}
+                          />
+                        </FormField>
+
+                        <button type="submit" className={`${SUBMIT_BTN_CLASS} cursor-pointer`}>
+                          <Send className="size-4" />
+                          <span>Submit Enquiry</span>
+                        </button>
+                      </form>
+                    )}
+
+                    {/* ── FRAMING FORM ── */}
+                    {activeFormTab === "framing" && (
+                      <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="mb-6">
+                          <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                            Custom Photo Frame <span className="text-amber-400">Order</span>
+                          </h3>
+                          <p className="text-xs text-zinc-400 font-light mt-0.5">
+                            Acrylic, Teak Wood, Museum Canvas &amp; Flush Mount Albums.
+                          </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <FormField label="Full Name *" icon={<User className="size-4" />}>
+                            <IconInput
+                              icon={<User className="size-4" />}
+                              type="text"
+                              required
+                              placeholder="Your Name"
+                              value={framingData.name}
+                              onChange={(e) => updateFraming({ name: e.target.value })}
+                            />
+                          </FormField>
+                          <FormField label="Phone / WhatsApp *" icon={<Phone className="size-4" />}>
+                            <IconInput
+                              icon={<Phone className="size-4" />}
+                              type="tel"
+                              required
+                              placeholder="+91 9876543210"
+                              value={framingData.phone}
+                              onChange={(e) => updateFraming({ phone: e.target.value })}
+                            />
+                          </FormField>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <FormField
+                            label="Frame Material / Style *"
+                            icon={<Layers className="size-4" />}
+                          >
+                            <div className="relative">
+                              <span className="absolute left-3 top-3 text-zinc-500">
+                                <Layers className="size-4" />
+                              </span>
+                              <select
+                                value={framingData.frameMaterial}
+                                onChange={(e) => updateFraming({ frameMaterial: e.target.value })}
+                                className={`${INPUT_BASE} pl-9`}
+                              >
+                                {FRAMING_MATERIALS.map((mat) => (
+                                  <option key={mat} value={mat}>
+                                    {mat}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </FormField>
+                          <FormField
+                            label="Frame Dimension / Size *"
+                            icon={<Ruler className="size-4" />}
+                          >
+                            <div className="relative">
+                              <span className="absolute left-3 top-3 text-zinc-500">
+                                <Ruler className="size-4" />
+                              </span>
+                              <select
+                                value={framingData.frameSize}
+                                onChange={(e) => updateFraming({ frameSize: e.target.value })}
+                                className={`${INPUT_BASE} pl-9`}
+                              >
+                                {ENQUIRY_FRAME_SIZES.map((sz) => (
+                                  <option key={sz} value={sz}>
+                                    {sz}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </FormField>
+                        </div>
+
+                        <FormField
+                          label="Delivery Address & City *"
+                          icon={<MapPin className="size-4" />}
+                        >
+                          <IconInput
+                            icon={<MapPin className="size-4" />}
+                            type="text"
+                            required
+                            placeholder="Street Address, City, Pincode (e.g. Virudhunagar, Madurai, Chennai)"
+                            value={framingData.deliveryAddress}
+                            onChange={(e) => updateFraming({ deliveryAddress: e.target.value })}
+                          />
+                        </FormField>
+
+                        <FormField label="Custom Framing Notes / Photo Upload Details">
+                          <textarea
+                            rows={3}
+                            placeholder="Specify matting border colors, quantity needed, or photo softcopy link..."
+                            value={framingData.notes}
+                            onChange={(e) => updateFraming({ notes: e.target.value })}
+                            className={`${INPUT_BASE} p-3`}
+                          />
+                        </FormField>
+
+                        <p className="text-xs text-zinc-400 font-light italic flex items-center gap-1.5 pt-1">
+                          <Info className="size-3.5 text-amber-400 shrink-0" />
+                          <span>
+                            <strong className="text-amber-300 not-italic font-semibold">
+                              * Note:
+                            </strong>{" "}
+                            Prices are variable depending on custom finish &amp; bulk order
+                            requirements.
+                          </span>
+                        </p>
+
+                        <button type="submit" className={`${SUBMIT_BTN_CLASS} cursor-pointer`}>
+                          <Send className="size-4" />
+                          <span>Submit Enquiry</span>
+                        </button>
+                      </form>
+                    )}
+                  </motion.div>
+                ) : (
+                  /* ── Success State ── */
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.25 }}
+                    className="text-center py-8 space-y-4"
+                  >
+                    <div className="size-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mx-auto flex items-center justify-center">
+                      <CheckCircle2 className="size-10" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">
+                      {activeFormTab === "photoshoot"
+                        ? "Photoshoot Enquiry Received!"
+                        : "Frame Order Enquiry Received!"}
+                    </h3>
+                    <p className="text-xs text-zinc-300 max-w-md mx-auto leading-relaxed">
+                      Thank you{" "}
+                      <span className="text-amber-300 font-bold">
+                        {activeTabName || "Customer"}
+                      </span>
+                      . Your enquiry for{" "}
+                      <span className="text-amber-300 font-bold">{activeTabService}</span> has been
+                      received by {STUDIO_INFO.name}.
+                    </p>
+                    <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-xs text-zinc-400">
+                      <p>
+                        Reference ID:{" "}
+                        <span className="text-white font-mono font-bold">
+                          {refId || `${STUDIO_INFO.helplinePrefix}-8842`}
+                        </span>
+                      </p>
+                      <p className="mt-1">
+                        {STUDIO_INFO.city} Studio Helpline:{" "}
+                        <span className="text-amber-400 font-bold">{STUDIO_INFO.phone}</span>
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setSubmitted(false);
+                        onClose();
+                      }}
+                      className="px-6 py-2.5 rounded-full bg-amber-400 text-black font-bold text-xs uppercase tracking-wider hover:bg-amber-300 transition-colors cursor-pointer"
+                    >
+                      Back to Portfolio
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </AnimatePresence>
   );
 }

@@ -13,3 +13,15 @@ test('renders EnquiryModal tabs and handles closing', () => {
 
   expect(handleClose).toHaveBeenCalledTimes(1);
 });
+
+test('switches form when clicking tabs', async () => {
+  render(<EnquiryModal isOpen={true} onClose={() => {}} />);
+
+  expect(screen.getByText(/Book Photoshoot/i)).toBeInTheDocument();
+
+  const frameTabButton = screen.getByRole('button', { name: /Frame/i });
+  fireEvent.click(frameTabButton);
+
+  expect(await screen.findByText(/Custom Photo Frame/i)).toBeInTheDocument();
+});
+

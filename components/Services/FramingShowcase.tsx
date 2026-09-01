@@ -129,7 +129,7 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
             </div>
 
             {/* Photo preset selector */}
-            <div className="mt-4 flex items-center justify-center gap-2 overflow-x-auto max-w-full pb-1">
+            <div className="mt-4 flex items-center justify-center gap-2 overflow-hidden max-w-full pb-1">
               <span className="text-[11px] font-semibold text-text-secondary mr-1 shrink-0 flex items-center gap-1">
                 <ImageIcon className="size-3 text-amber-400" /> Photo:
               </span>
@@ -137,12 +137,12 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
                 <button
                   key={i}
                   onClick={() => {
-                      if (samplePhoto === src.url) return;
-                      handleStyleChange(() => setSamplePhoto(src.url));
-                    }}
+                    if (samplePhoto === src.url) return;
+                    handleStyleChange(() => setSamplePhoto(src.url));
+                  }}
                   className={`size-9 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
                     samplePhoto === src.url
-                      ? "border-amber-400 scale-105 shadow-md shadow-amber-400/30"
+                      ? "border-amber-400 scale-105"
                       : "border-white/10 opacity-60 hover:opacity-100 hover:border-white/40"
                   }`}
                 >
@@ -174,7 +174,9 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
                         : "border-white/10 bg-card hover:bg-card-hover text-text-secondary hover:text-text-primary"
                     }`}
                   >
-                    <p className="text-[11px] sm:text-xs text-text-primary leading-tight">{frame.name}</p>
+                    <p className="text-[11px] sm:text-xs text-text-primary leading-tight">
+                      {frame.name}
+                    </p>
                     <p className="text-[9px] sm:text-[10px] text-amber-300/80 mt-0.5 sm:mt-1 font-medium">
                       {frame.material}
                     </p>
