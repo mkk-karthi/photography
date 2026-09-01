@@ -37,10 +37,7 @@ export default function ReviewsSection() {
   }, [isPaused, handleNext]);
 
   // Touch drag / swipe gesture handler with smooth threshold
-  const handleDragEnd = (
-    _: unknown,
-    info: { offset: { x: number }; velocity: { x: number } }
-  ) => {
+  const handleDragEnd = (_: unknown, info: { offset: { x: number }; velocity: { x: number } }) => {
     const swipeThreshold = 50;
     if (info.offset.x < -swipeThreshold || info.velocity.x < -300) {
       handleNext();
@@ -76,10 +73,7 @@ export default function ReviewsSection() {
   };
 
   return (
-    <section
-      id="reviews"
-      className="py-20 sm:py-28 relative overflow-hidden bg-deep select-none"
-    >
+    <section id="reviews" className="py-20 sm:py-28 relative overflow-hidden bg-deep select-none">
       {/* Ambient background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -110,7 +104,7 @@ export default function ReviewsSection() {
           onTouchEnd={() => setIsPaused(false)}
         >
           {/* Swiper Viewport (Strict even height & width container) */}
-          <div className="relative overflow-hidden h-85 sm:h-75 p-1">
+          <div className="relative overflow-hidden h-68 p-1">
             <AnimatePresence mode="popLayout" custom={direction} initial={false}>
               <motion.div
                 key={page}
@@ -145,7 +139,7 @@ export default function ReviewsSection() {
                   </div>
 
                   {/* Quote Text */}
-                  <p className="text-text-primary text-sm sm:text-base md:text-lg font-light leading-relaxed italic line-clamp-4">
+                  <p className="text-text-primary text-sm sm:text-base md:text-lg font-light leading-relaxed italic line-clamp-5 sm:line-clamp-3">
                     &quot;{activeTestimonial.quote}&quot;
                   </p>
                 </div>

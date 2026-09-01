@@ -137,7 +137,7 @@ export default function AboutStudio() {
               transition={{ duration: 0.45, delay: idx * 0.08, ease: "easeOut" }}
               whileHover={{ y: -4 }}
               whileTap={{ scale: 0.98 }}
-              className="flex items-start gap-4 p-5 rounded-2xl border border-white/5 hover:border-amber-500/25 group bg-elevated will-change-transform"
+              className="flex items-center flex-row sm:flex-col lg:flex-row gap-4 p-5 rounded-2xl border border-white/5 hover:border-amber-500/25 group bg-elevated will-change-transform"
             >
               <div className="p-3 rounded-xl bg-amber-500/8 border border-amber-500/15 shrink-0 group-hover:bg-amber-500/15 group-hover:border-amber-500/30 transition-all duration-300">
                 {PHILOSOPHY_ICONS[item.iconName]}
