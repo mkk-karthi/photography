@@ -12,9 +12,7 @@ export default function GalleryPage() {
 
   return (
     <main className="min-h-screen bg-void overflow-x-hidden">
-      <div className="pt-20">
-        <PortfolioGallery />
-      </div>
+      <PortfolioGallery />
     </main>
   );
 }

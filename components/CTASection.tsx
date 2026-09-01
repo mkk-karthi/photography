@@ -167,7 +167,7 @@ export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-40px" }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
         >
           {CONTACT_CARDS.map((card) => (
             <motion.a
@@ -176,7 +176,7 @@ export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
               href={card.href}
               target={EXTERNAL_LABELS.has(card.label) ? "_blank" : undefined}
               rel={EXTERNAL_LABELS.has(card.label) ? "noopener noreferrer" : undefined}
-              className="flex flex-col sm:flex-row items-start gap-3 p-4 sm:p-5 rounded-2xl border border-white/10 hover:border-amber-400/50 group cursor-pointer hover:-translate-y-1 transition-transform duration-300 bg-card hover:bg-card-hover shadow-lg shadow-black/40"
+              className="flex flex-row items-center gap-3 p-4 sm:p-5 rounded-2xl border border-white/10 hover:border-amber-400/50 group cursor-pointer hover:-translate-y-1 transition-transform duration-300 bg-card hover:bg-card-hover shadow-lg shadow-black/40"
             >
               <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0 group-hover:bg-amber-500/20 group-hover:border-amber-400/40 transition-colors">
                 {CONTACT_ICONS[card.iconName]}

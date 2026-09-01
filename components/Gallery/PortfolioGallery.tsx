@@ -27,7 +27,12 @@ interface PhotoCardProps {
 }
 
 // Memoized card — only re-renders if its own photo/index/handler changes
-const PhotoCard = memo(function PhotoCard({ photo, index, onClick, isSquarePreview = false }: PhotoCardProps) {
+const PhotoCard = memo(function PhotoCard({
+  photo,
+  index,
+  onClick,
+  isSquarePreview = false,
+}: PhotoCardProps) {
   const handleClick = useCallback(() => onClick(photo), [photo, onClick]);
 
   return (
@@ -158,7 +163,6 @@ function GalleryPreview() {
   );
 }
 
-
 // ── Full gallery (with filters, used on /gallery page) ────────────────────────
 
 function FullGallery() {
@@ -170,14 +174,17 @@ function FullGallery() {
       activeCategory === "all"
         ? PORTFOLIO_PHOTOS
         : PORTFOLIO_PHOTOS.filter((photo) => photo.category === activeCategory),
-    [activeCategory]
+    [activeCategory],
   );
 
   const handlePhotoClick = useCallback((photo: PhotoItem) => setActivePhoto(photo), []);
   const handleClose = useCallback(() => setActivePhoto(null), []);
 
   return (
-    <section id="gallery" className="py-20 sm:py-28 relative overflow-hidden min-h-200 bg-deep">
+    <section
+      id="gallery"
+      className="py-20 sm:py-28 mt-10 relative overflow-hidden min-h-200 bg-deep"
+    >
       {/* Ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -190,7 +197,6 @@ function FullGallery() {
         className="absolute bottom-0 right-0 size-150 rounded-full blur-[150px] pointer-events-none opacity-30"
         style={{ background: "rgba(120,20,20,0.08)" }}
       />
-      <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-amber-500/15 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeader
