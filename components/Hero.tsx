@@ -286,15 +286,19 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
               </div>
 
               {/* Booking Callout */}
-              <div className="p-3 rounded-xl bg-linear-to-r from-amber-500/10 to-transparent border border-amber-500/15 flex items-center justify-between">
+              <button
+                onClick={onOpenEnquiry}
+                type="button"
+                className="w-full text-left p-3 rounded-xl bg-linear-to-r from-amber-500/10 to-transparent border border-amber-500/15 hover:border-amber-400/30 hover:from-amber-500/5 hover:to-amber-500/10 transition-all flex items-center justify-between cursor-pointer group"
+              >
                 <div>
                   <p className="text-xs text-amber-300 font-semibold uppercase tracking-wide">
                     Accepting Bookings
                   </p>
                   <p className="text-xs text-zinc-400 font-light mt-0.5">Mon–Sat · Free consult</p>
                 </div>
-                <ChevronDown className="size-4 text-amber-400 -rotate-90 shrink-0" />
-              </div>
+                <ChevronDown className="size-4 text-amber-400 -rotate-90 shrink-0 group-hover:translate-x-0.5 transition-transform" />
+              </button>
             </div>
           </div>
         </div>

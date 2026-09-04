@@ -44,13 +44,16 @@ const SUBMIT_BTN_CLASS =
 interface FormFieldProps {
   label: string;
   icon?: React.ReactNode;
+  htmlFor?: string;
   children: React.ReactNode;
 }
 
-function FormField({ label, icon, children }: FormFieldProps) {
+function FormField({ label, icon, htmlFor, children }: FormFieldProps) {
   return (
     <div>
-      <label className={LABEL_CLASS}>{label}</label>
+      <label htmlFor={htmlFor} className={LABEL_CLASS}>
+        {label}
+      </label>
       {icon ? (
         <div className="relative">
           <span className="absolute left-3 top-3 text-zinc-500">{icon}</span>
@@ -115,9 +118,24 @@ export default function EnquiryModal({
     const isFraming =
       typeof initialService === "string" && initialService.toLowerCase().includes("framing");
     const targetTab = isFraming ? "framing" : "photoshoot";
-    if (activeFormTab !== targetTab) {
-      setDirection(targetTab === "framing" ? 1 : -1);
-      setActiveFormTab(targetTab);
+    setActiveFormTab(targetTab);
+    setDirection(0);
+
+    if (isFraming && initialService) {
+      // Auto pre-fill matching frame material and size from initialService string if present
+      const matchedMat = FRAMING_MATERIALS.find((mat) =>
+        initialService.toLowerCase().includes(mat.toLowerCase())
+      );
+      const matchedSize = ENQUIRY_FRAME_SIZES.find((optionStr) => {
+        const sizeLabel = optionStr.split(" (")[0].toLowerCase();
+        return initialService.toLowerCase().includes(sizeLabel);
+      });
+
+      setFramingData((prev) => ({
+        ...prev,
+        frameMaterial: matchedMat || prev.frameMaterial,
+        frameSize: matchedSize || prev.frameSize,
+      }));
     }
   }, [isOpen, initialService]);
 
@@ -202,7 +220,7 @@ export default function EnquiryModal({
               <X className="size-5" />
             </button>
 
-            {/* Tab Switcher with Sliding Active Pill */}
+            {/* Tab Switcher: Always show 2 tabs (Photoshoot & Frame) */}
             <div className="relative flex items-center justify-center gap-2 p-1.5 bg-zinc-900/90 rounded-2xl border border-zinc-800 max-w-xs sm:max-w-sm mx-auto mt-12 mb-6 clear-both">
               {(["photoshoot", "framing"] as const).map((tab) => {
                 const isActive = activeFormTab === tab;
@@ -257,18 +275,6 @@ export default function EnquiryModal({
                     exit="exit"
                     className="w-full"
                   >
-                    {/* Estimated Quote Banner */}
-                    {initialQuote && (
-                      <div className="mb-5 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs">
-                        <span className="text-zinc-300 font-medium">
-                          Estimated Package / Order Value:
-                        </span>
-                        <span className="text-amber-300 font-extrabold text-base">
-                          ₹{initialQuote.toLocaleString("en-IN")}
-                        </span>
-                      </div>
-                    )}
-
                     {/* ── PHOTOSHOOT FORM ── */}
                     {activeFormTab === "photoshoot" && (
                       <form onSubmit={handleSubmit} className="space-y-4">
@@ -374,6 +380,18 @@ export default function EnquiryModal({
                     {/* ── FRAMING FORM ── */}
                     {activeFormTab === "framing" && (
                       <form onSubmit={handleSubmit} className="space-y-4">
+                        {/* Estimated Quote Banner - displayed on Framing tab only */}
+                        {initialQuote && (
+                          <div className="mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs">
+                            <span className="text-zinc-300 font-medium">
+                              Estimated Frame Order Value:
+                            </span>
+                            <span className="text-amber-300 font-extrabold text-base">
+                              ₹{initialQuote.toLocaleString("en-IN")}
+                            </span>
+                          </div>
+                        )}
+
                         <div className="mb-6">
                           <h3 className="text-xl sm:text-2xl font-extrabold text-white">
                             Custom Photo Frame <span className="text-amber-400">Order</span>
@@ -409,6 +427,7 @@ export default function EnquiryModal({
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <FormField
                             label="Frame Material / Style *"
+                            htmlFor="frameMaterialSelect"
                             icon={<Layers className="size-4" />}
                           >
                             <div className="relative">
@@ -416,6 +435,7 @@ export default function EnquiryModal({
                                 <Layers className="size-4" />
                               </span>
                               <select
+                                id="frameMaterialSelect"
                                 value={framingData.frameMaterial}
                                 onChange={(e) => updateFraming({ frameMaterial: e.target.value })}
                                 className={`${INPUT_BASE} pl-9`}
@@ -430,6 +450,7 @@ export default function EnquiryModal({
                           </FormField>
                           <FormField
                             label="Frame Dimension / Size *"
+                            htmlFor="frameSizeSelect"
                             icon={<Ruler className="size-4" />}
                           >
                             <div className="relative">
@@ -437,6 +458,7 @@ export default function EnquiryModal({
                                 <Ruler className="size-4" />
                               </span>
                               <select
+                                id="frameSizeSelect"
                                 value={framingData.frameSize}
                                 onChange={(e) => updateFraming({ frameSize: e.target.value })}
                                 className={`${INPUT_BASE} pl-9`}

@@ -14,6 +14,22 @@ export default function PageLoader() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    setTimeout(() => {
+      if (isLoading) {
+        document.body.style.overflow = "hidden";
+        document.documentElement.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+        document.documentElement.style.overflow = "auto";
+      }
+    }, 0);
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isLoading]);
+
+  useEffect(() => {
     if (hasInitiallyLoaded) {
       setIsLoading(false);
       return;
