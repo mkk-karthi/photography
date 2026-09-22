@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { Camera, MapPin, Phone, Mail, ArrowUp, CalendarCheck } from "lucide-react";
 import { STUDIO_INFO, FOOTER_CONTENT } from "@/data/portfolioData";
 import Link from "next/link";
@@ -10,7 +10,7 @@ interface FooterProps {
   onOpenEnquiry: () => void;
 }
 
-export default function Footer({ onOpenEnquiry }: FooterProps) {
+function Footer({ onOpenEnquiry }: FooterProps) {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const pathname = usePathname();
 
@@ -36,7 +36,7 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
   return (
     <footer
       id="contact"
-      className="relative text-zinc-500 pt-16 sm:pt-20 pb-12 border-t border-white/5 bg-void"
+      className="relative text-zinc-400 pt-16 sm:pt-20 pb-12 border-t border-white/5 bg-void"
     >
       {/* Top aperture motif border */}
       <div className="absolute top-0 inset-x-0 h-px bg-linear-to-r from-transparent via-amber-500/25 to-transparent" />
@@ -105,9 +105,9 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
 
           {/* Quick Links */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-zinc-300">
+            <h3 className="text-[10px] font-bold uppercase tracking-widest text-zinc-300">
               Our Services
-            </h4>
+            </h3>
             <ul className="space-y-2.5 text-xs font-light">
               {FOOTER_CONTENT.specialtiesList.map((item) => {
                 const targetHref = item.href.startsWith("#") ? `/${item.href}` : item.href;
@@ -115,6 +115,7 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
                   <li key={item.label}>
                     <Link
                       href={targetHref}
+                      prefetch={false}
                       className="text-zinc-400 hover:text-amber-300 transition-colors"
                     >
                       {item.label}
@@ -128,9 +129,9 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
           {/* Booking Callout */}
           <div className="lg:col-span-4 p-5 sm:p-6 rounded-2xl border border-amber-500/12 flex flex-col justify-between bg-surface">
             <div>
-              <h4 className="text-sm font-bold text-white mb-2">
+              <h3 className="text-sm font-bold text-white mb-2">
                 {FOOTER_CONTENT.eventPlanningTitle}
-              </h4>
+              </h3>
               <p className="text-xs text-zinc-400 font-light mb-5 leading-relaxed">
                 {FOOTER_CONTENT.eventPlanningSubtitle}
               </p>
@@ -147,7 +148,7 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
         </div>
 
         {/* Bottom copyright & Developer Credit */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-500">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-400">
           <p>
             © {new Date().getFullYear()} {STUDIO_INFO.name}. All Rights Reserved. {STUDIO_INFO.city}
             , {STUDIO_INFO.state}.
@@ -158,7 +159,7 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
               href="https://mkkcreation.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber-500/80 font-semibold hover:underline hover:text-amber-400 transition-colors"
+              className="text-amber-400 font-semibold hover:underline hover:text-amber-300 transition-colors"
             >
               MKK Creation
             </a>
@@ -181,3 +182,6 @@ export default function Footer({ onOpenEnquiry }: FooterProps) {
     </footer>
   );
 }
+
+export default memo(Footer);
+

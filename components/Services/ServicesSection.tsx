@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
+import Image from "next/image";
 import { SERVICE_PACKAGES, SERVICES_SECTION_TEXT } from "@/data/portfolioData";
 import { Camera, CheckCircle2, Sparkles, ArrowRight, Star } from "lucide-react";
 
@@ -10,7 +11,7 @@ interface ServicesSectionProps {
   onSelectService: (serviceTitle: string) => void;
 }
 
-export default function ServicesSection({ onSelectService }: ServicesSectionProps) {
+function ServicesSection({ onSelectService }: ServicesSectionProps) {
   return (
     <section id="services" className="py-20 sm:py-28 relative overflow-hidden bg-deep">
       {/* Ambient glows */}
@@ -42,11 +43,13 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
               <div>
                 {/* Image Banner */}
                 <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-surface">
-                  <img
+                  <Image
                     src={pkg.image}
                     alt={pkg.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    quality={75}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="lazy"
                   />
                   {/* Film noir gradient */}
                   <div className="absolute inset-0 bg-linear-to-t from-card via-card/30 to-transparent" />
@@ -127,10 +130,10 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
         {/* Custom Event Notice Banner */}
         <div className="mt-12 sm:mt-16 p-6 sm:p-8 rounded-3xl border border-amber-500/20 bg-linear-to-r from-card via-elevated to-surface shadow-xl shadow-black/40 text-center max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-left max-w-xl">
-            <h4 className="text-base sm:text-lg font-bold text-text-primary flex items-center gap-2">
+            <h3 className="text-base sm:text-lg font-bold text-text-primary flex items-center gap-2">
               <Star className="size-4 text-amber-400 fill-amber-400 shrink-0" />
               <span>{SERVICES_SECTION_TEXT.customPackageTitle}</span>
-            </h4>
+            </h3>
             <p className="text-xs text-text-secondary mt-1 font-light leading-relaxed">
               {SERVICES_SECTION_TEXT.customPackageDesc}
             </p>
@@ -147,3 +150,5 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
     </section>
   );
 }
+
+export default memo(ServicesSection);

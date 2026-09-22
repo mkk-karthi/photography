@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -78,7 +78,7 @@ function IconInput({ icon: _icon, ...props }: IconInputProps) {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function EnquiryModal({
+function EnquiryModal({
   isOpen,
   onClose,
   initialService,
@@ -573,3 +573,6 @@ export default function EnquiryModal({
     </AnimatePresence>
   );
 }
+
+export default memo(EnquiryModal);
+

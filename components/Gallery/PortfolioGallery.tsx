@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useCallback, memo } from "react";
+import Image from "next/image";
 import {
   PORTFOLIO_PHOTOS,
   PORTFOLIO_CATEGORIES,
@@ -48,14 +49,26 @@ const PhotoCard = memo(function PhotoCard({
       <div
         className={`relative w-full overflow-hidden bg-surface ${isSquarePreview ? "aspect-4/3 sm:aspect-4/3" : ""}`}
       >
-        <img
-          src={photo.imageUrl}
-          alt={photo.title}
-          className={`w-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out block ${
-            isSquarePreview ? "h-full" : "h-auto"
-          }`}
-          loading="lazy"
-        />
+        {isSquarePreview ? (
+          <Image
+            src={photo.imageUrl}
+            alt={photo.title}
+            fill
+            sizes="(max-width: 640px) 100vw, 33vw"
+            quality={75}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out block"
+          />
+        ) : (
+          <Image
+            src={photo.imageUrl}
+            alt={photo.title}
+            width={600}
+            height={400}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            quality={75}
+            className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-out block"
+          />
+        )}
 
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-300" />
@@ -269,6 +282,8 @@ function FullGallery() {
 
 // ── Default export ─────────────────────────────────────────────────────────────
 
-export default function PortfolioGallery({ preview = false }: PortfolioGalleryProps) {
+function PortfolioGallery({ preview = false }: PortfolioGalleryProps) {
   return preview ? <GalleryPreview /> : <FullGallery />;
 }
+
+export default memo(PortfolioGallery);

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo, memo } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Camera, Frame, MapPin, Award, ChevronDown } from "lucide-react";
 import { STUDIO_INFO, HERO_SLIDES, HERO_SECTION_TEXT } from "@/data/portfolioData";
@@ -86,7 +87,7 @@ const HERO_STATS = [
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function Hero({ onOpenEnquiry }: HeroProps) {
+function Hero({ onOpenEnquiry }: HeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
@@ -97,7 +98,10 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
     return () => clearTimeout(timer);
   }, [currentSlide]);
 
-  const slide = HERO_SLIDES[currentSlide];
+  const slide = useMemo(() => HERO_SLIDES[currentSlide], [currentSlide]);
+  const handleSelectSlide = useCallback((index: number) => {
+    setCurrentSlide(index);
+  }, []);
 
   return (
     <section
@@ -105,19 +109,32 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
       className="relative min-h-150 sm:h-dvh sm:max-h-dvh w-full flex flex-col justify-between pt-16 sm:pt-20 pb-16 sm:pb-20 overflow-hidden film-grain bg-void"
     >
       {/* Background Images with Cross-Fade */}
-      {HERO_SLIDES.map((s, index) => (
-        <div
-          key={s.bgUrl}
-          className={`absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-all ease-out ${
-            currentSlide === index
-              ? "opacity-100 scale-[1.03] pointer-events-auto"
-              : "opacity-0 scale-100 pointer-events-none"
-          }`}
-          style={{ backgroundImage: `url(${s.bgUrl})`, transitionDuration: "1400ms" }}
-        >
-          <img src={s.bgUrl} alt="" className="hidden" aria-hidden="true" />
-        </div>
-      ))}
+      {HERO_SLIDES.map((s, index) => {
+        const isCurrent = currentSlide === index;
+        const isNext = (currentSlide + 1) % HERO_SLIDES.length === index;
+        if (!isCurrent && !isNext) return null;
+
+        return (
+          <div
+            key={s.bgUrl}
+            className={`absolute inset-0 z-0 overflow-hidden transition-opacity ease-out ${
+              isCurrent ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            }`}
+            style={{ transitionDuration: currentSlide > 0 ? "1000ms" : "0ms" }}
+          >
+            <Image
+              src={s.bgUrl}
+              alt={s.title}
+              fill
+              priority={index === 0}
+              fetchPriority={index === 0 ? "high" : "low"}
+              sizes="100vw"
+              quality={index === 0 ? 80 : 70}
+              className="object-cover object-center w-full h-full"
+            />
+          </div>
+        );
+      })}
 
       {/* Multi-layer Gradient Overlays — Cinematic */}
       <div className="absolute inset-0 z-1 bg-black/40 pointer-events-none" />
@@ -126,27 +143,22 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
       {/* Bottom fade to page background */}
       <div className="absolute inset-x-0 bottom-0 h-32 sm:h-40 z-1 pointer-events-none bg-linear-to-t from-deep to-transparent" />
 
-      {/* Animated Bokeh / Lens Flare Particles */}
+      {/* Animated Bokeh / Lens Flare Particles — GPU accelerated */}
       <div className="absolute inset-0 z-2 pointer-events-none overflow-hidden">
         {BOKEH_PARTICLES.map((p, i) => (
-          <motion.div
+          <div
             key={i}
-            className="absolute rounded-full"
+            className="absolute rounded-full will-change-transform"
             style={{
               width: p.size,
               height: p.size * 0.7,
               top: p.top,
               left: p.left,
+              opacity: p.opacity,
               background: `radial-gradient(ellipse at 30% 30%, ${p.color} 0%, rgba(212,175,55,0.08) 55%, transparent 80%)`,
               filter: `blur(${p.size * 0.22}px)`,
+              animation: `float-bokeh ${p.dur}s ease-in-out ${p.delay}s infinite`,
             }}
-            animate={{
-              y: [0, -35, -60, -25, 0],
-              x: [0, 20, -15, 40, 0],
-              scale: [1, 1.08, 0.92, 1.12, 1],
-              opacity: [p.opacity, p.opacity * 1.5, p.opacity * 0.7, p.opacity * 1.3, p.opacity],
-            }}
-            transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
           />
         ))}
       </div>
@@ -168,7 +180,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 items-center">
           {/* Left — Hero Copy */}
           <div className="lg:col-span-8 flex flex-col text-left justify-center">
-            <AnimatePresence mode="wait">
+            <AnimatePresence initial={false} mode="wait">
               <motion.div
                 key={currentSlide}
                 initial={{ opacity: 0, y: 16 }}
@@ -178,29 +190,19 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
                 className="flex flex-col justify-between"
               >
                 {/* Category Tag with ISO style */}
-                <motion.div
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1, duration: 0.4 }}
-                  className="mb-2.5 sm:mb-4 flex items-center gap-2.5"
-                >
+                <div className="mb-2.5 sm:mb-4 flex items-center gap-2.5">
                   {/* Category tag */}
                   <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] sm:text-xs font-bold uppercase tracking-widest backdrop-blur-md">
                     <Camera className="size-3 sm:size-3.5 text-amber-400 shrink-0" />
                     <span>{slide.tag}</span>
                   </div>
-                </motion.div>
+                </div>
 
                 {/* Studio Name + Title */}
                 <div className="mb-2.5 sm:mb-4 min-h-22.5 sm:min-h-32.5 lg:min-h-37.5 flex flex-col justify-end">
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.15, duration: 0.5 }}
-                    className="block font-serif text-amber-300/90 italic font-normal text-base sm:text-2xl lg:text-3xl mb-1 sm:mb-1.5 drop-shadow-lg"
-                  >
+                  <span className="block font-serif text-amber-300/90 italic font-normal text-base sm:text-2xl lg:text-3xl mb-1 sm:mb-1.5 drop-shadow-lg">
                     {STUDIO_INFO.name}
-                  </motion.span>
+                  </span>
                   <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white leading-[1.05] gold-gradient-text">
                     {slide.title}
                   </h1>
@@ -214,12 +216,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
                 </div>
 
                 {/* Action Buttons */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2, duration: 0.4 }}
-                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3"
-                >
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
                   <button
                     onClick={onOpenEnquiry}
                     className="group relative inline-flex items-center justify-center px-6 sm:px-7 py-3 sm:py-3.5 text-xs sm:text-sm font-bold text-black uppercase tracking-wider bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 rounded-full shadow-xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 active:scale-95 transition-all duration-300 whitespace-nowrap"
@@ -244,7 +241,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
                       <span>Framing</span>
                     </a>
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -253,14 +250,13 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
           <div className="lg:col-span-4 hidden lg:block">
             <div
               data-aos="zoom-in"
-              data-aos-delay="20"
               className="glass-panel rounded-2xl p-5 border-amber-500/15 cinematic-shadow relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 size-36 bg-amber-500/8 rounded-full blur-3xl pointer-events-none" />
 
               <div className="flex items-center justify-between pb-3.5 border-b border-white/5 mb-4">
                 <div>
-                  <h3 className="text-white font-semibold text-sm">{STUDIO_INFO.city} Studio</h3>
+                  <h2 className="text-white font-semibold text-sm">{STUDIO_INFO.city} Studio</h2>
                   <p className="text-zinc-500 text-xs flex items-center gap-1 mt-0.5">
                     <MapPin className="size-3 text-amber-400" />
                     <span>
@@ -310,7 +306,7 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
           {HERO_SLIDES.map((s, index) => (
             <button
               key={s.tag}
-              onClick={() => setCurrentSlide(index)}
+              onClick={() => handleSelectSlide(index)}
               className={`px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold transition-all whitespace-nowrap shrink-0 tracking-wider uppercase ${
                 currentSlide === index
                   ? "bg-amber-400 text-black font-bold shadow-md shadow-amber-500/30"
@@ -325,3 +321,5 @@ export default function Hero({ onOpenEnquiry }: HeroProps) {
     </section>
   );
 }
+
+export default memo(Hero);

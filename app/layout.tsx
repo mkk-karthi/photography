@@ -7,7 +7,8 @@ import "./globals.css";
 const cormorant = Cormorant_Garamond({
   variable: "--font-serif",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -18,6 +19,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://photography.mkkcreation.com"),
   title: {
     default: SEO_METADATA.titleDefault,
     template: SEO_METADATA.titleTemplate,

@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useCallback, useRef, memo } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { TESTIMONIALS, REVIEWS_SECTION_TEXT } from "@/data/portfolioData";
 import { Star, Heart, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 import SectionHeader from "@/components/Common/SectionHeader";
 
-export default function ReviewsSection() {
+function ReviewsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(sectionRef, { margin: "100px" });
+
   // Monotonic page count for continuous infinite looping slide direction
   const [[page, direction], setPage] = useState<[number, number]>([0, 1]);
   const [isPaused, setIsPaused] = useState(false);
@@ -24,9 +28,9 @@ export default function ReviewsSection() {
     setPage(([prevPage]) => [prevPage - 1, -1]);
   }, []);
 
-  // Auto-play swiping timer (4.5s interval, pauses on hover/touch)
+  // Auto-play swiping timer (4.5s interval, only runs when section is in view)
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !inView) return;
     timerRef.current = setInterval(() => {
       handleNext();
     }, 4500);
@@ -34,7 +38,7 @@ export default function ReviewsSection() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPaused, handleNext]);
+  }, [isPaused, inView, handleNext]);
 
   // Touch drag / swipe gesture handler with smooth threshold
   const handleDragEnd = (_: unknown, info: { offset: { x: number }; velocity: { x: number } }) => {
@@ -73,7 +77,7 @@ export default function ReviewsSection() {
   };
 
   return (
-    <section id="reviews" className="py-20 sm:py-28 relative overflow-hidden bg-deep select-none">
+    <section id="reviews" ref={sectionRef} className="py-20 sm:py-28 relative overflow-hidden bg-deep select-none">
       {/* Ambient background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -147,16 +151,17 @@ export default function ReviewsSection() {
                 {/* Author Profile Footer */}
                 <div className="flex items-center justify-between pt-4 border-t border-white/10 relative z-10 mt-auto">
                   <div className="flex items-center gap-3.5">
-                    <img
+                    <Image
                       src={activeTestimonial.avatar}
                       alt={activeTestimonial.coupleName}
-                      loading="lazy"
+                      width={44}
+                      height={44}
                       className="size-11 rounded-full object-cover border-2 border-amber-400/40 shadow-md shrink-0"
                     />
                     <div className="min-w-0">
-                      <h4 className="text-sm sm:text-base font-bold text-text-primary group-hover:text-amber-200 transition-colors truncate">
+                      <h3 className="text-sm sm:text-base font-bold text-text-primary group-hover:text-amber-200 transition-colors truncate">
                         {activeTestimonial.coupleName}
-                      </h4>
+                      </h3>
                       <p className="text-xs text-amber-400/90 font-medium truncate">
                         {activeTestimonial.eventType} · {activeTestimonial.location}
                       </p>
@@ -166,8 +171,8 @@ export default function ReviewsSection() {
                   {/* Slide Counter Pill */}
                   <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs font-mono font-bold text-amber-400 shrink-0">
                     <span>0{currentIndex + 1}</span>
-                    <span className="text-zinc-600">/</span>
-                    <span className="text-zinc-500">0{total}</span>
+                    <span className="text-zinc-400">/</span>
+                    <span className="text-zinc-400">0{total}</span>
                   </div>
                 </div>
               </motion.div>
@@ -186,7 +191,7 @@ export default function ReviewsSection() {
             </button>
 
             {/* Pagination Dots */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               {TESTIMONIALS.map((t, idx) => (
                 <button
                   key={t.id}
@@ -195,13 +200,17 @@ export default function ReviewsSection() {
                     const diff = idx - currentIndex;
                     setPage(([prevPage]) => [prevPage + diff, targetDirection]);
                   }}
-                  className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                    idx === currentIndex
-                      ? "w-8 bg-amber-400 shadow-md shadow-amber-500/30"
-                      : "w-2.5 bg-zinc-700 hover:bg-zinc-500"
-                  }`}
+                  className="p-2 min-h-6 min-w-6 flex items-center justify-center cursor-pointer touch-target"
                   aria-label={`Go to slide ${idx + 1}`}
-                />
+                >
+                  <span
+                    className={`h-2.5 rounded-full transition-all duration-300 block ${
+                      idx === currentIndex
+                        ? "w-8 bg-amber-400 shadow-md shadow-amber-500/30"
+                        : "w-2.5 bg-zinc-700 hover:bg-zinc-500"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 
@@ -229,3 +238,5 @@ export default function ReviewsSection() {
     </section>
   );
 }
+
+export default memo(ReviewsSection);

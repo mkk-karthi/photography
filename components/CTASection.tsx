@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import { motion } from "framer-motion";
 import {
   CalendarCheck,
@@ -49,7 +49,7 @@ const itemVariants = {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
+function CTASection({ onOpenEnquiry }: CTASectionProps) {
   return (
     <section id="cta" className="relative py-20 sm:py-28 overflow-hidden film-strip-top bg-surface">
       {/* Pulsing aperture rings */}
@@ -197,3 +197,5 @@ export default function CTASection({ onOpenEnquiry }: CTASectionProps) {
     </section>
   );
 }
+
+export default memo(CTASection);

@@ -8,7 +8,7 @@ import { STUDIO_INFO } from "@/data/portfolioData";
 // Module-level state: persists during client-side route navigation, resets on browser refresh/initial load
 let hasInitiallyLoaded = false;
 
-export default function PageLoader() {
+function PageLoader() {
   // If already loaded in this browser session/SPA runtime, don't show loader again
   const [isLoading, setIsLoading] = useState(() => !hasInitiallyLoaded);
   const [progress, setProgress] = useState(0);
@@ -49,8 +49,6 @@ export default function PageLoader() {
 
     return () => clearInterval(interval);
   }, []);
-
-  if (!isLoading) return null;
 
   return (
     <AnimatePresence>
@@ -180,3 +178,4 @@ export default function PageLoader() {
     </AnimatePresence>
   );
 }
+export default React.memo(PageLoader);

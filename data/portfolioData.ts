@@ -22,27 +22,27 @@ import type {
    Central source of truth for branding, location, contact, and system dates.
    ═════════════════════════════════════════════════════════════════════════════ */
 
-const ESTABLISHED_YEAR = 2014;
+const ESTABLISHED_YEAR = 2020;
 const CURRENT_YEAR = new Date().getFullYear();
 const EXPERIENCE_YEARS = CURRENT_YEAR - ESTABLISHED_YEAR;
 
 export const STUDIO_INFO = {
-  name: "Nanban Photography",
-  brandFirstName: "NANBAN",
-  brandSecondName: "PHOTOGRAPHY",
+  name: "SAMPLE Photography",
+  brandFirstName: "SAMPLE",
+  brandSecondName: "Photography",
   establishedYear: ESTABLISHED_YEAR,
   experienceYears: EXPERIENCE_YEARS,
   currentYear: CURRENT_YEAR,
   nextYear: CURRENT_YEAR + 1,
-  phone: "+91 9786152034",
-  email: "nanbanphotographyvnr@gmail.com",
-  address: "No.60 Keelakadai Street (near Makesh Bakery), Virudhunagar, Tamil Nadu - 626001, India",
+  phone: "+91 9791934388",
+  email: "mkk2001vnr@gmail.com",
+  address: "Virudhunagar, Tamil Nadu - 626001, India",
   city: "Virudhunagar",
   state: "Tamil Nadu",
   country: "India",
   zipCode: "626001",
   region: "South India",
-  instagram: "@nanbanphotography",
+  instagram: "@mkk.creation",
   weddingsCovered: "850+",
   framedPrintsDelivered: "4,500+",
   clientSatisfaction: "99.8%",

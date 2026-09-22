@@ -64,7 +64,7 @@ const BrandLogo = memo(function BrandLogo() {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function Navbar({ onOpenEnquiry }: NavbarProps) {
+function Navbar({ onOpenEnquiry }: NavbarProps) {
   let pathname = "/";
   let router: any = null;
   try {
@@ -99,32 +99,36 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
   // through, causing the layoutId pill to sweep across unrelated menu items.
   const isNavigatingRef = useRef(false);
 
-  // Active section tracker on scroll
+  // Active section tracker on scroll with requestAnimationFrame throttling
   useEffect(() => {
     if (isGalleryPage) {
       setActiveSection("gallery");
       return;
     }
 
+    let ticking = false;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 40);
 
-      // Skip scroll-spy updates while a click-triggered navigation is in flight
-      if (isNavigatingRef.current) return;
+          // Skip scroll-spy updates while a click-triggered navigation is in flight
+          if (!isNavigatingRef.current) {
+            const current = SECTION_IDS.find((id) => {
+              const el = document.getElementById(id);
+              if (!el) return false;
+              const { top, bottom } = el.getBoundingClientRect();
+              return top <= 250 && bottom >= 150;
+            });
 
-      const current = SECTION_IDS.find((id) => {
-        const el = document.getElementById(id);
-        if (!el) return false;
-        const { top, bottom } = el.getBoundingClientRect();
-        return top <= 250 && bottom >= 150;
-      });
-
-      if (current) {
-        if (current === "reviews") {
-          setActiveSection("about");
-        } else {
-          setActiveSection(current);
-        }
+            if (current) {
+              setActiveSection(current === "reviews" ? "about" : current);
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
@@ -211,6 +215,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                   <Link
                     key={link.label}
                     href={link.href}
+                    prefetch={false}
                     onClick={(e) => handleNavClick(e, link)}
                     className={`relative px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 whitespace-nowrap border border-transparent ${
                       isActive
@@ -316,6 +321,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                       <Link
                         key={link.label}
                         href={link.href}
+                        prefetch={false}
                         onClick={(e) => handleNavClick(e, link)}
                         className={`flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all duration-200 touch-target ${
                           isActive
@@ -365,3 +371,5 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
     </>
   );
 }
+
+export default memo(Navbar);

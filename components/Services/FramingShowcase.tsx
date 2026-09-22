@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, memo } from "react";
+import Image from "next/image";
 import {
   FRAMING_OPTIONS,
   FRAME_SIZES,
@@ -15,7 +16,7 @@ interface FramingShowcaseProps {
   onOrderFrame: (frameName: string, sizeLabel: string, calculatedPrice: number) => void;
 }
 
-export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) {
+function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) {
   const [selectedFrame, setSelectedFrame] = useState<FramingOption>(FRAMING_OPTIONS[0]);
   const [selectedSize, setSelectedSize] = useState(FRAME_SIZES[7]); // Default 12x18 (₹850)
   const [samplePhoto, setSamplePhoto] = useState(SAMPLE_PHOTOS[0].url);
@@ -140,13 +141,19 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
                     if (samplePhoto === src.url) return;
                     handleStyleChange(() => setSamplePhoto(src.url));
                   }}
-                  className={`size-9 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
+                  className={`size-9 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer my-1 ${
                     samplePhoto === src.url
                       ? "border-amber-400 scale-105"
                       : "border-white/10 opacity-60 hover:opacity-100 hover:border-white/40"
                   }`}
                 >
-                  <img src={src.thumb} alt={src.label} className="w-full h-full object-cover" />
+                  <Image
+                    src={src.thumb}
+                    alt={src.label}
+                    width={36}
+                    height={36}
+                    className="w-full h-full object-cover"
+                  />
                 </button>
               ))}
             </div>
@@ -225,14 +232,14 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
 
             {/* 3. Spec & Price Card */}
             <div className="p-4 sm:p-5 rounded-2xl border border-amber-500/20 bg-card shadow-xl shadow-black/40">
-              <h4 className="text-sm font-bold text-text-primary mb-1.5 sm:mb-2 flex items-center justify-between">
+              <h3 className="text-sm font-bold text-text-primary mb-1.5 sm:mb-2 flex items-center justify-between">
                 <span className="truncate pr-2">
                   {selectedFrame.name} ({selectedSize.label})
                 </span>
                 <span className="text-amber-400 text-xl sm:text-2xl font-black shrink-0">
                   ₹{calculatedPrice.toLocaleString("en-IN")}
                 </span>
-              </h4>
+              </h3>
               <p className="text-xs text-text-secondary font-light mb-3 sm:mb-4 leading-relaxed">
                 {selectedFrame.description}
               </p>
@@ -270,3 +277,5 @@ export default function FramingShowcase({ onOrderFrame }: FramingShowcaseProps) 
     </section>
   );
 }
+
+export default memo(FramingShowcase);

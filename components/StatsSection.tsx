@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 import { motion, useInView } from "framer-motion";
 import { Camera, Award, Frame, Users } from "lucide-react";
 import { STUDIO_STATS, TRUST_BADGES, STATS_SECTION_TEXT } from "@/data/portfolioData";
@@ -32,7 +32,7 @@ const STAT_GLOW: Record<StatItem["iconName"], string> = {
 
 // ── Animated counter ──────────────────────────────────────────────────────────
 
-function AnimatedCounter({
+const AnimatedCounter = memo(function AnimatedCounter({
   target,
   suffix,
   duration = 2,
@@ -50,19 +50,28 @@ function AnimatedCounter({
     if (!parentInView || startedRef.current) return;
     startedRef.current = true;
 
-    let start = 0;
-    const step = target / (duration * 60);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 1000 / 60);
+    let rafId: number;
+    const startTime = performance.now();
+    const durationMs = duration * 1000;
 
-    return () => clearInterval(timer);
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / durationMs, 1);
+      // easeOutCubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
+
+      if (progress < 1) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        setCount(target);
+      }
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [parentInView, target, duration]);
 
   return (
@@ -71,7 +80,7 @@ function AnimatedCounter({
       {suffix}
     </span>
   );
-}
+});
 
 // ── Animation variants ────────────────────────────────────────────────────────
 
@@ -87,7 +96,7 @@ const cardVariants = {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function StatsSection() {
+function StatsSection() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -174,3 +183,5 @@ export default function StatsSection() {
     </section>
   );
 }
+
+export default memo(StatsSection);

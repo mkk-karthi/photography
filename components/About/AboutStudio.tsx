@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Camera, MapPin, CheckCircle2, Shield, Clock, ThumbsUp } from "lucide-react";
 import {
@@ -20,7 +21,7 @@ const PHILOSOPHY_ICONS: Record<PhilosophyIconName, React.ReactNode> = {
 
 import SectionHeader from "@/components/Common/SectionHeader";
 
-export default function AboutStudio() {
+function AboutStudio() {
   return (
     <section id="about" className="py-20 sm:py-28 relative overflow-hidden bg-surface">
       {/* Ambient glow orbs */}
@@ -59,12 +60,16 @@ export default function AboutStudio() {
 
             {/* Studio Photo */}
             <div className="relative rounded-3xl overflow-hidden p-2.5 shadow-2xl h-full flex flex-col justify-between border border-white/5 bg-elevated">
-              <img
-                src="/images/about/about-1.webp"
-                alt={`${STUDIO_INFO.name} Studio`}
-                loading="lazy"
-                className="w-full h-72 sm:h-96 lg:h-full object-cover rounded-2xl block"
-              />
+              <div className="relative w-full h-72 sm:h-96 lg:h-full min-h-[280px] rounded-2xl overflow-hidden">
+                <Image
+                  src="/images/about/about-1.webp"
+                  alt={`${STUDIO_INFO.name} Studio`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  quality={80}
+                  className="object-cover rounded-2xl block"
+                />
+              </div>
               <div className="absolute inset-0 bg-linear-to-t from-black/85 via-transparent to-transparent rounded-2xl pointer-events-none" />
 
               {/* Studio Badge */}
@@ -155,3 +160,5 @@ export default function AboutStudio() {
     </section>
   );
 }
+
+export default memo(AboutStudio);
