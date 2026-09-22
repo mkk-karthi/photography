@@ -11,16 +11,14 @@ import ReviewsSection from "@/components/Testimonials/ReviewsSection";
 import CTASection from "@/components/CTASection";
 import { useEnquiry } from "@/components/Common/EnquiryContext";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 export default function Home() {
   const { openEnquiry } = useEnquiry();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      import("aos").then((AOS) => {
-        AOS.default.init({ duration: 800, once: true, easing: "ease-out-cubic", offset: 50 });
-      });
-    }, 10);
-    return () => clearTimeout(timer);
+    AOS.init({ duration: 800, once: true, easing: "ease-out-cubic", offset: 50 });
   }, []);
 
   const handleSelectService = useCallback(

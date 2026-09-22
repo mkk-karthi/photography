@@ -250,6 +250,7 @@ function Hero({ onOpenEnquiry }: HeroProps) {
           <div className="lg:col-span-4 hidden lg:block">
             <div
               data-aos="zoom-in"
+              data-aos-delay="600"
               className="glass-panel rounded-2xl p-5 border-amber-500/15 cinematic-shadow relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 size-36 bg-amber-500/8 rounded-full blur-3xl pointer-events-none" />
